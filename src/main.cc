@@ -14,9 +14,7 @@ UserInput read_input(int argc, char **argv)
 
     if (argc != 7 && argc != 8)
     {
-        std::cout
-            << "You did not enter the right number of parameters. Terminating..."
-            << std::endl;
+        std::cout << "You did not enter the right number of parameters." << std::endl;
     }
     else
     {
