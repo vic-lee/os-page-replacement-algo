@@ -14,7 +14,8 @@ UserInput read_input(int argc, char **argv)
 
     if (argc != 7 && argc != 8)
     {
-        std::cout << "You did not enter the right number of parameters." << std::endl;
+        std::cout << "You did not enter the right number of parameters. Terminating..." << std::endl;
+        exit(10);
     }
     else
     {
@@ -32,8 +33,9 @@ UserInput read_input(int argc, char **argv)
         }
         catch (const std::exception &e)
         {
-            std::cout << "An error has occured while reading user input." << std::endl;
+            std::cout << "An error has occured while reading user input. Terminating..." << std::endl;
             std::cerr << e.what() << '\n';
+            exit(10);
         }
     }
 
