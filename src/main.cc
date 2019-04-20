@@ -4,7 +4,9 @@
 namespace demandpaging
 {
 
-std::tuple<int, int, int, int, int, std::string, bool> read_input(int argc, char **argv)
+typedef std::tuple<int, int, int, int, int, std::string, bool> UserInput;
+
+UserInput read_input(int argc, char **argv)
 {
     int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT = -1;
     std::string ALGO_NAME = "";
@@ -37,9 +39,7 @@ std::tuple<int, int, int, int, int, std::string, bool> read_input(int argc, char
         }
     }
 
-    return std::make_tuple(
-        MACHINE_SIZE, PAGE_SIZE, PROC_SIZE,
-        JOB_MIX, REF_COUNT, ALGO_NAME, DEBUG);
+    return std::make_tuple(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT, ALGO_NAME, DEBUG);
 }
 
 } // namespace demandpaging
@@ -50,8 +50,8 @@ int main(int argc, char **argv)
     std::string ALGO_NAME;
     bool DEBUG;
 
-    std::tie(
-        MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT, ALGO_NAME, DEBUG) = demandpaging::read_input(argc, argv);
+    demandpaging::UserInput uin = demandpaging::read_input(argc, argv);
+    std::tie(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT, ALGO_NAME, DEBUG) = uin;
 
     std::cout << "Machine size is " << MACHINE_SIZE << "\n"
               << "Page size is " << PAGE_SIZE << "\n"
