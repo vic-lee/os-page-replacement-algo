@@ -12,4 +12,18 @@ Driver::Driver(int proc_size, int job_mix, int ref_count)
     JOB_MIX_ = driver::jobmixspecs::get_jobmix(JOB_MIX_DEF_);
     JOB_MIX_->print();
 }
+
+void Driver::roundrobin()
+{
+    while (is_all_process_terminated())
+    {
+        /* Do process */
+    }
+}
+
+bool Driver::is_all_process_terminated()
+{
+    return runnable_processes_.size() == 0;
+}
+
 } // namespace driver
