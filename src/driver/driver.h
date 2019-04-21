@@ -26,7 +26,6 @@ private:
     void roundrobin();
     bool is_all_process_terminated() const;
     RefType determine_next_ref_type(int pid);
-    void do_reference(Process &p, RefType ref_type);
 
     const int PROC_SIZE_;
     const int JOB_MIX_DEF_;

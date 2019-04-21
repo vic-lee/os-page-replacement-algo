@@ -3,6 +3,8 @@
 
 namespace driver
 {
+typedef int RefType;
+
 class Process
 {
 public:
@@ -10,8 +12,9 @@ public:
     void do_next_sequential_reference();
     void do_next_backward_reference();
     void do_next_jump_reference();
-    void do_next_random_reference();
+    void do_next_random_reference(int randref_num);
     void do_initial_reference();
+    void do_reference_of_type(RefType ref_type, int randref_num);
 
     bool should_terminate() const;
     int id() const;

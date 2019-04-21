@@ -38,6 +38,7 @@ Driver::~Driver()
 void Driver::roundrobin()
 {
     int quantum_ctr = 0;
+    int randref_num = 0;
     RefType next_ref_type = INIT_REF;
 
     while (!is_all_process_terminated())
@@ -52,9 +53,14 @@ void Driver::roundrobin()
 
         Process current_process = runnable_processes_.front();
         
-        do_reference(current_process, next_ref_type);
+        current_process.do_reference_of_type(next_ref_type, randref_num);
 
         next_ref_type = determine_next_ref_type(current_process.id());
+
+        if (next_ref_type == RAND_REF)
+        {
+            randref_num = randintreader_->read_next_int();
+        }
 
         quantum_ctr++;
 
@@ -76,24 +82,6 @@ RefType Driver::determine_next_ref_type(int pid)
     double quotient = randintreader_->calc_next_probability();
     RefType reftype = JOB_MIX_->next_ref_type(quotient, pid);
     return reftype;
-}
-
-void Driver::do_reference(Process &p, RefType ref_type)
-{
-    if (ref_type == INIT_REF)
-        p.do_initial_reference();
-
-    else if (ref_type == SEQ_REF)
-        p.do_next_sequential_reference();
-
-    else if (ref_type == BACK_REF)
-        p.do_next_backward_reference();
-
-    else if (ref_type == JMP_REF)
-        p.do_next_jump_reference();
-
-    else if (ref_type == RAND_REF)
-        p.do_next_random_reference();
 }
 
 } // namespace driver
