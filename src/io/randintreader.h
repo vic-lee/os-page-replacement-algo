@@ -1,4 +1,8 @@
+#ifndef H_RANDINTREADER
+#define H_RANDINTREADER
+
 #include <iostream>
+#include <fstream>
 
 namespace io
 {
@@ -16,3 +20,5 @@ private:
     std::ifstream infile;
 };
 }
+
+#endif
