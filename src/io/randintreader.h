@@ -15,8 +15,8 @@ public:
 
 private:
     int read_next_int();
-    const int MAX_INT_;
     std::ifstream infile_;
+    static const int MAX_INT_;
 };
 } // namespace io
 

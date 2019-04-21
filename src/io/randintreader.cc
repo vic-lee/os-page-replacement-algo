@@ -5,10 +5,12 @@
 
 namespace io
 {
-RandIntReader::RandIntReader() : MAX_INT_(2147483647) 
+const int RandIntReader::MAX_INT_ = 2147483647;
+
+RandIntReader::RandIntReader()
 {
     infile_.open("random-numbers.txt");
-    
+
     if (!infile_)
     {
         std::cout << "ERROR: Could not open rand-num file." << std::endl;
