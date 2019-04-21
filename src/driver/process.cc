@@ -45,6 +45,15 @@ void Process::do_next_jump_reference()
     do_next_reference(delta);
 }
 
+void Process::do_next_random_reference(int randref_num)
+{
+    auto calc_rand_ref = [this](int rand) -> int { return (rand + SIZE_) % SIZE_; };
+
+    current_ref_addr_ = calc_rand_ref(randref_num);
+    
+    remaining_ref_count_ = (remaining_ref_count_ == 0) ? 0 : remaining_ref_count_--;    
+}
+
 void Process::do_next_reference(int delta)
 {
     auto calc_new_ref = [this](int delta) -> int { return (current_ref_addr_ + delta + SIZE_) % SIZE_; };
