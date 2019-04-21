@@ -2,9 +2,11 @@
 
 namespace driver
 {
+const int Process::INIT_CONST_ = 111;
+
 Process::Process(int id, int proc_size, int ref_count)
     : ID_(id), SIZE_(proc_size), TOTAL_REF_COUNT_(ref_count),
-      INIT_CONST_(111), current_ref_addr_(-1), remaining_ref_count_(ref_count) {}
+      current_ref_addr_(-1), remaining_ref_count_(ref_count) {}
 
 void Process::do_next_sequential_reference()
 {
@@ -26,10 +28,18 @@ void Process::do_next_jump_reference()
 
 void Process::do_next_reference(int delta)
 {
-    auto init_ref = [this]() -> int { return INIT_CONST_ * ID_ % SIZE_; };
     auto calc_new_ref = [this](int delta) -> int { return (current_ref_addr_ + delta + SIZE_) % SIZE_; };
 
-    current_ref_addr_ = (current_ref_addr_ == -1) ? init_ref() : calc_new_ref(delta);
+    current_ref_addr_ = calc_new_ref(delta);
+
+    remaining_ref_count_ = (remaining_ref_count_ == 0) ? 0 : remaining_ref_count_--;
+}
+
+void Process::do_initial_reference()
+{
+    auto init_ref = [this]() -> int { return INIT_CONST_ * ID_ % SIZE_; };
+
+    current_ref_addr_ = init_ref();
 
     remaining_ref_count_ = (remaining_ref_count_ == 0) ? 0 : remaining_ref_count_--;
 }

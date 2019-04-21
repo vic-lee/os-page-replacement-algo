@@ -10,6 +10,9 @@ public:
     void do_next_sequential_reference();
     void do_next_backward_reference();
     void do_next_jump_reference();
+    void do_next_random_reference();
+    void do_initial_reference();
+
     bool should_terminate() const;
     int id() const;
 
@@ -19,7 +22,7 @@ private:
     const int ID_;
     const int SIZE_;
     const int TOTAL_REF_COUNT_;
-    const int INIT_CONST_;
+    static const int INIT_CONST_;
 
     int current_ref_addr_;
     int remaining_ref_count_;
