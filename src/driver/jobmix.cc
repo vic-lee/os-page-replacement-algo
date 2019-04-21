@@ -18,16 +18,23 @@ JobMix::JobMix(int id, int proc_count, bool is_uniform, std::vector<JobMixPerPro
     }
 }
 
+int JobMix::process_count()
+{
+    return PROC_COUNT_;
+}
+
 void JobMix::print()
 {
-    std::cout << "JobMix " << ID_ << ":\n" << std::endl;
+    std::cout << "JobMix " << ID_ << ":\n"
+              << std::endl;
 
     for (auto &jobmix : JOBMIXES_)
     {
         std::cout << "JobMix sequential ref dist (A): " << jobmix.sequential_ref_dist << "\n"
                   << "JobMix backward ref dist (B): " << jobmix.backward_ref_dist << "\n"
                   << "JobMix jump ref dist (C): " << jobmix.jump_ref_dist << "\n"
-                  << "JobMix rand ref dist (D): " << jobmix.rand_ref_dist << "\n" << std::endl;
+                  << "JobMix rand ref dist (D): " << jobmix.rand_ref_dist << "\n"
+                  << std::endl;
     }
 }
 } // namespace driver
