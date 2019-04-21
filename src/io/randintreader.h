@@ -11,10 +11,10 @@ class RandIntReader
 public:
     RandIntReader();
     ~RandIntReader();
+    int read_next_int();
     double calc_next_probability();
 
 private:
-    int read_next_int();
     std::ifstream infile_;
     static const int MAX_INT_;
 };
