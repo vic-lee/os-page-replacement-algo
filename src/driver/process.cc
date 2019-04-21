@@ -27,7 +27,7 @@ void Process::do_next_jump_reference()
 void Process::do_next_reference(int delta)
 {
     auto init_ref = [this]() -> int { return INIT_CONST_ * ID_ % SIZE_; };
-    auto calc_new_ref = [this](int delta) -> int { return (current_ref_addr_ + delta) % SIZE_; };
+    auto calc_new_ref = [this](int delta) -> int { return (current_ref_addr_ + delta + SIZE_) % SIZE_; };
 
     current_ref_addr_ = (current_ref_addr_ == -1) ? init_ref() : calc_new_ref(delta);
 
