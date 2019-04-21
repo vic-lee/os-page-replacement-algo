@@ -4,6 +4,7 @@ CXXFLAGS = -Wall -g -std=c++11
 src = $(wildcard src/*.cc) \
 		$(wildcard src/driver/*.cc) \
 		$(wildcard src/pager/*.cc) \
+		$(wildcard src/io/*.cc) 
 
 obj = $(src:.cc=.o)
 
