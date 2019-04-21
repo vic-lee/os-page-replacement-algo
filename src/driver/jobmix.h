@@ -19,6 +19,7 @@ public:
     void print();
 
 private:
+    const int ID_;
     const int PROC_COUNT_;
     const bool IS_UNIFORM_;
     std::vector<JobMixPerProcess> JOBMIXES_;
