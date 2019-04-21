@@ -48,7 +48,7 @@ void Driver::roundrobin()
     }
 }
 
-bool Driver::is_all_process_terminated()
+bool Driver::is_all_process_terminated() const
 {
     return runnable_processes_.size() == 0;
 }

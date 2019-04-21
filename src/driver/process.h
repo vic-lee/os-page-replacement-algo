@@ -7,7 +7,7 @@ public:
     void do_next_sequential_reference();
     void do_next_backward_reference();
     void do_next_jump_reference();
-    bool should_terminate();
+    bool should_terminate() const;
 
 private:
     void do_next_reference(int delta);

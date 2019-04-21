@@ -16,8 +16,8 @@ class JobMix
 public:
     JobMix(int id, int proc_count, bool is_uniform, std::vector<JobMixPerProcess> jobmixes);
     JobMix();
-    int process_count();
-    void print();
+    int process_count() const;
+    void print() const;
 
 private:
     const int ID_;

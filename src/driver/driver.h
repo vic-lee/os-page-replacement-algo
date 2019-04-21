@@ -14,7 +14,7 @@ public:
 
 private:
     void roundrobin();
-    bool is_all_process_terminated();
+    bool is_all_process_terminated() const;
 
     const int PROC_SIZE_;
     const int JOB_MIX_DEF_;

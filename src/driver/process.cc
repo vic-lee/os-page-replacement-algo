@@ -34,7 +34,7 @@ void Process::do_next_reference(int delta)
     remaining_ref_count_ = (remaining_ref_count_ == 0) ? 0 : remaining_ref_count_--;
 }
 
-bool Process::should_terminate()
+bool Process::should_terminate() const
 {
     return remaining_ref_count_ == 0;
 }

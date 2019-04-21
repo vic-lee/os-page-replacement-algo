@@ -18,12 +18,12 @@ JobMix::JobMix(int id, int proc_count, bool is_uniform, std::vector<JobMixPerPro
     }
 }
 
-int JobMix::process_count()
+int JobMix::process_count() const
 {
     return PROC_COUNT_;
 }
 
-void JobMix::print()
+void JobMix::print() const
 {
     std::cout << "JobMix " << ID_ << ":\n"
               << std::endl;
