@@ -1,6 +1,9 @@
 #include <tuple>
 #include <iostream>
 
+#include "driver/driver.h"
+#include "pager/pager.h"
+
 namespace demandpaging
 {
 
@@ -60,6 +63,9 @@ int main(int argc, char **argv)
               << "Name of algorithm is " << ALGO_NAME << "\n"
               << "Debug mode is " << DEBUG << "\n"
               << std::endl;
+
+    driver::Driver driver = driver::Driver(PROC_SIZE, JOB_MIX, REF_COUNT);
+    pager::Pager pager = pager::Pager(MACHINE_SIZE, PAGE_SIZE, ALGO_NAME);
 
     return 0;
 }
