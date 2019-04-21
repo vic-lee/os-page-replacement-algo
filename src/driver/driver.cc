@@ -8,14 +8,14 @@
 
 namespace driver
 {
+const int Driver::QUANTUM_ = 3;
+
 Driver::Driver(int proc_size, int job_mix, int ref_count)
     : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count)
 {
     /* Initialize variables */
 
-    const int QUANTUM_ = 3;
-
-    randintreader_ = &io::RandIntReader();
+    randintreader_ = new io::RandIntReader();
 
     /* Initialize job mix */
 
@@ -27,7 +27,12 @@ Driver::Driver(int proc_size, int job_mix, int ref_count)
     int num_of_processes = JOB_MIX_->process_count();
 
     for (int id = 1; id < (num_of_processes + 1); id++)
-        runnable_processes_.push_back(&Process(id, PROC_SIZE_, REF_COUNT_));
+        runnable_processes_.push_back(Process(id, PROC_SIZE_, REF_COUNT_));
+}
+
+Driver::~Driver()
+{
+    delete randintreader_;
 }
 
 void Driver::roundrobin()
@@ -38,17 +43,17 @@ void Driver::roundrobin()
     {
         if (quantum_ctr == QUANTUM_)
         {
-            Process *front_process = runnable_processes_.front();
+            Process front_process = runnable_processes_.front();
             runnable_processes_.push_back(front_process);
             runnable_processes_.pop_front();
             quantum_ctr = 0;
         }
 
-        Process *current_process = runnable_processes_.front();
-        current_process->do_next_sequential_reference();
+        Process current_process = runnable_processes_.front();
+        current_process.do_next_sequential_reference();
         quantum_ctr++;
 
-        if (current_process->should_terminate())
+        if (current_process.should_terminate())
         {
             runnable_processes_.pop_front();
             quantum_ctr = 0;
