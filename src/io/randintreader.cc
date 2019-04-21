@@ -5,7 +5,7 @@
 
 namespace io
 {
-RandIntReader::RandIntReader() : line_cursor_(1), MAX_INT_(2147483647) 
+RandIntReader::RandIntReader() : MAX_INT_(2147483647) 
 {
     infile_.open("random-numbers.txt");
     
