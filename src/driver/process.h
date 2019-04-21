@@ -1,3 +1,6 @@
+#ifndef H_PROCESS
+#define H_PROCESS
+
 namespace driver
 {
 class Process
@@ -21,3 +24,5 @@ private:
     int remaining_ref_count_;
 };
 } // namespace driverß
+
+#endif
