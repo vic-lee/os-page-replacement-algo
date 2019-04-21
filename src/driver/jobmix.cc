@@ -7,7 +7,7 @@ namespace driver
 JobMix::JobMix(int proc_count, bool is_uniform, std::vector<JobMixPerProcess> jobmixes)
     : PROC_COUNT_(proc_count), IS_UNIFORM_(is_uniform), JOBMIXES_(jobmixes)
 {
-    auto calc_rand_ref_dist = [](double a, double b, double c, int s) { return (1 - a - b - c) / (double)s; };
+    auto calc_rand_ref_dist = [](double a, double b, double c, int s) -> double { return (1 - a - b - c) / (double)s; };
 
     for (auto &jobmix : JOBMIXES_)
     {
