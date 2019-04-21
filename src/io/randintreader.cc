@@ -7,9 +7,9 @@ namespace io
 {
 RandIntReader::RandIntReader() : line_cursor_(1), MAX_INT_(2147483647) 
 {
-    infile.open("random-numbers.txt");
+    infile_.open("random-numbers.txt");
     
-    if (!infile)
+    if (!infile_)
     {
         std::cout << "ERROR: Could not open rand-num file." << std::endl;
         exit(10);
@@ -18,7 +18,7 @@ RandIntReader::RandIntReader() : line_cursor_(1), MAX_INT_(2147483647)
 
 RandIntReader::~RandIntReader()
 {
-    infile.close();
+    infile_.close();
 }
 
 double RandIntReader::calc_next_probability()
@@ -31,7 +31,7 @@ double RandIntReader::calc_next_probability()
 int RandIntReader::read_next_int()
 {
     int nextint;
-    infile >> nextint;
+    infile_ >> nextint;
     return nextint;
 }
 } // namespace io
