@@ -26,9 +26,8 @@ void Driver::roundrobin()
 {
     int quantum_ctr = 0;
 
-    while (is_all_process_terminated())
+    while (!is_all_process_terminated())
     {
-        /* Do process */
         if (quantum_ctr == QUANTUM_)
         {
             Process *front_process = runnable_processes_.front();
