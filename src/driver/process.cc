@@ -39,4 +39,9 @@ bool Process::should_terminate() const
     return remaining_ref_count_ == 0;
 }
 
+int Process::id() const
+{
+    return ID_;
+}
+
 } // namespace driver

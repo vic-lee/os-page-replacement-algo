@@ -11,6 +11,7 @@ public:
     void do_next_backward_reference();
     void do_next_jump_reference();
     bool should_terminate() const;
+    int id() const;
 
 private:
     void do_next_reference(int delta);
