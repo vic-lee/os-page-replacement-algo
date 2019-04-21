@@ -12,9 +12,11 @@ public:
 private:
     void roundrobin();
     const int PROC_SIZE_;
-    const int JOB_MIX_;
+    const int JOB_MIX_DEF_;
     const int REF_COUNT_;
     const int QUANTUM_;
+
+    JobMix *JOB_MIX_;
 };
 
 } // namespace driver
