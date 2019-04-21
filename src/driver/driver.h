@@ -3,8 +3,15 @@
 
 #include <list>
 
+namespace io
+{
+class RandIntReader;
+}
+
 namespace driver
 {
+typedef int RefType;
+
 class JobMix;
 class Process;
 class Driver
@@ -15,19 +22,15 @@ public:
 private:
     void roundrobin();
     bool is_all_process_terminated() const;
-    int determine_next_ref_type();
+    RefType Driver::determine_next_ref_type(int pid);
 
     const int PROC_SIZE_;
     const int JOB_MIX_DEF_;
     const int REF_COUNT_;
-    
+
     static const int QUANTUM_;
 
-    static const int SEQ_REF_;  /* Sequential memory reference keyword */
-    static const int BACK_REF_; /* Backward memory reference keyword */
-    static const int JMP_REF_;  /* Jump memory reference keyword */
-    static const int RAND_REF_; /* Random memory reference keyword */
-
+    io::RandIntReader *randintreader_;
     JobMix *JOB_MIX_;
 
     std::list<Process *> runnable_processes_;

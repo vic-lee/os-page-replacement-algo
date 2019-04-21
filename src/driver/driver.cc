@@ -1,6 +1,7 @@
 #include "driver.h"
 #include "jobmix.h"
 #include "process.h"
+#include "mrefspec.h"
 #include "jobmixspec.h"
 #include "../pager/pager.h"
 #include "../io/randintreader.h"
@@ -10,12 +11,11 @@ namespace driver
 Driver::Driver(int proc_size, int job_mix, int ref_count)
     : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count)
 {
+    /* Initialize variables */
+
     const int QUANTUM_ = 3;
 
-    const int SEQ_REF_ = 10;
-    const int BACK_REF_ = 20;
-    const int JMP_REF_ = 30;
-    const int RAND_REF_ = 40;
+    randintreader_ = &io::RandIntReader();
 
     /* Initialize job mix */
 
@@ -59,6 +59,13 @@ void Driver::roundrobin()
 bool Driver::is_all_process_terminated() const
 {
     return runnable_processes_.size() == 0;
+}
+
+RefType Driver::determine_next_ref_type(int pid)
+{
+    double quotient = randintreader_->calc_next_probability();
+    RefType reftype = JOB_MIX_->next_ref_type(quotient, pid);
+    return reftype;
 }
 
 } // namespace driver
