@@ -4,6 +4,8 @@
 namespace driver
 {
 const int Process::INIT_CONST_ = 111;
+const int Process::RANDREF_UNDEF_ = 0;
+const int Process::DELTA_UNDEF_ = 0;
 
 Process::Process(int id, int proc_size, int ref_count)
     : ID_(id), SIZE_(proc_size), TOTAL_REF_COUNT_(ref_count),
@@ -30,44 +32,40 @@ void Process::do_reference_of_type(RefType ref_type, int randref_num)
 void Process::do_next_sequential_reference()
 {
     int delta = 1;
-    do_next_reference(delta);
+    do_next_reference(delta, RANDREF_UNDEF_);
 }
 
 void Process::do_next_backward_reference()
 {
     int delta = -5;
-    do_next_reference(delta);
+    do_next_reference(delta, RANDREF_UNDEF_);
 }
 
 void Process::do_next_jump_reference()
 {
     int delta = 4;
-    do_next_reference(delta);
+    do_next_reference(delta, RANDREF_UNDEF_);
 }
 
 void Process::do_next_random_reference(int randref_num)
 {
-    auto calc_rand_ref = [this](int rand) -> int { return (rand + SIZE_) % SIZE_; };
-
-    current_ref_addr_ = calc_rand_ref(randref_num);
-    
-    remaining_ref_count_ = (remaining_ref_count_ == 0) ? 0 : remaining_ref_count_--;    
+    do_next_reference(DELTA_UNDEF_, randref_num);
 }
 
-void Process::do_next_reference(int delta)
-{
-    auto calc_new_ref = [this](int delta) -> int { return (current_ref_addr_ + delta + SIZE_) % SIZE_; };
-
-    current_ref_addr_ = calc_new_ref(delta);
-
-    remaining_ref_count_ = (remaining_ref_count_ == 0) ? 0 : remaining_ref_count_--;
-}
-
-void Process::do_initial_reference()
+void Process::do_next_reference(int delta, int randref_num)
 {
     auto init_ref = [this]() -> int { return INIT_CONST_ * ID_ % SIZE_; };
+    auto calc_rand_ref = [this](int rand) -> int { return (rand + SIZE_) % SIZE_; };
+    auto calc_new_ref = [this](int delta) -> int { return (current_ref_addr_ + delta + SIZE_) % SIZE_; };
 
-    current_ref_addr_ = init_ref();
+    if (randref_num >= 0) /* If the randef_num provided is valid */
+        current_ref_addr_ = calc_rand_ref(randref_num);
+
+    else if (current_ref_addr_ == -1) /* If the current ref address has not been initialized */
+        current_ref_addr_ = init_ref();
+
+    else /* Perform normal current address calculation based on the delta provided */
+        current_ref_addr_ = calc_rand_ref(delta);
 
     remaining_ref_count_ = (remaining_ref_count_ == 0) ? 0 : remaining_ref_count_--;
 }

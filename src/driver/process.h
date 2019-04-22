@@ -20,12 +20,14 @@ private:
     void do_next_jump_reference();
     void do_next_random_reference(int randref_num);
     void do_initial_reference();
-    void do_next_reference(int delta);
+    void do_next_reference(int delta, int randref_num);
 
     const int ID_;
     const int SIZE_;
     const int TOTAL_REF_COUNT_;
     static const int INIT_CONST_;
+    static const int RANDREF_UNDEF_;
+    static const int DELTA_UNDEF_;
 
     int current_ref_addr_;
     int remaining_ref_count_;
