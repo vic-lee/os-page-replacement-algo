@@ -10,6 +10,8 @@ struct Frame
 {
     int pageid;
     int pid;
+
+    int latest_access_time = -10;
 };
 
 class Pager
@@ -17,7 +19,7 @@ class Pager
 public:
     Pager(int machine_size, int page_size, std::string algo_name);
     ~Pager();
-    void reference_by_virtual_addr(int viraddr, int pid);
+    void reference_by_virtual_addr(int viraddr, int pid, int time_accessed);
 
 private:
     bool push_new_frame(Frame frame);

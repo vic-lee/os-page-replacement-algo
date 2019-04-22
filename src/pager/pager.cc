@@ -17,21 +17,19 @@ Pager::~Pager()
     delete frame_table_;
 }
 
-void Pager::reference_by_virtual_addr(int viraddr, int pid)
+void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 {
     int to_visit_pageid = viraddr % PAGE_SIZE_;
 
     int frame_loc = search_frame(pid, to_visit_pageid);
 
-    if (frame_loc == ERR_PAGE_NOT_FOUND_)
+    if (frame_loc == ERR_PAGE_NOT_FOUND_) /* Page Fault */
     {
-
     }
     else
     {
-        /* code */
+        frame_table_[frame_loc].latest_access_time = time_accessed;
     }
-    
 }
 
 int Pager::search_frame(int pid, int pageid)
@@ -40,7 +38,7 @@ int Pager::search_frame(int pid, int pageid)
      * Attempts to find a frame by process ID and page ID. 
      * Returns the frame's location if found; PageNotFound error if not found.
      */
-    
+
     for (int i = 0; i < FRAME_COUNT_; i++)
     {
         if (frame_table_[i].pid == pid && frame_table_[i].pageid == pageid)
