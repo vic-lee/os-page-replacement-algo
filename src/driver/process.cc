@@ -35,6 +35,9 @@ void Process::do_reference_of_type(RefType ref_type, int randref_num, pager::Pag
 
 void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager, int access_time)
 {
+    if (remaining_ref_count_ == 0)
+        return;
+
     auto init_ref = [this]() -> int { return INIT_CONST_ * ID_ % SIZE_; };
     auto calc_rand_ref = [this](int rand) -> int { return (rand + SIZE_) % SIZE_; };
     auto calc_new_ref = [this](int delta) -> int { return (current_ref_addr_ + delta + SIZE_) % SIZE_; };
