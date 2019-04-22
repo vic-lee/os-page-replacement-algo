@@ -27,7 +27,7 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
     {
         Frame new_frame = Frame{to_visit_pageid, pid};
 
-        bool is_insert_sucessful = push_new_frame(new_frame);
+        bool is_insert_sucessful = insert_front(new_frame);
 
         if (!is_insert_sucessful)
         {
@@ -60,7 +60,7 @@ bool Pager::can_insert()
     return next_insertion_idx_ >= 0;
 }
 
-bool Pager::push_new_frame(Frame frame)
+bool Pager::insert_front(Frame frame)
 {
     if (!can_insert())
     {

@@ -23,7 +23,7 @@ public:
 
 private:
     bool can_insert();
-    bool push_new_frame(Frame frame);
+    bool insert_front(Frame frame);
     int search_frame(int pid, int pageid);
 
     const int MACHINE_SIZE_;
