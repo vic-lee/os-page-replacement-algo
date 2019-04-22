@@ -19,7 +19,7 @@ Pager::~Pager()
 
 void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 {
-    int to_visit_pageid = viraddr % PAGE_SIZE_;
+    int to_visit_pageid = viraddr / PAGE_SIZE_;
 
     int frame_loc = search_frame(pid, to_visit_pageid);
 
