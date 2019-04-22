@@ -2,9 +2,11 @@
 
 namespace pager
 {
+const int Pager::ERR_PAGE_NOT_FOUND_ = -10;
+
 Pager::Pager(int machine_size, int page_size, std::string algo_name)
     : MACHINE_SIZE_(machine_size), PAGE_SIZE_(page_size),
-      FRAME_COUNT_(MACHINE_SIZE_ / PAGE_SIZE_), ALGO_NAME_(algo_name) 
+      FRAME_COUNT_(MACHINE_SIZE_ / PAGE_SIZE_), ALGO_NAME_(algo_name)
 {
     frame_table_ = new Frame[FRAME_COUNT_];
     next_insertion_idx_ = FRAME_COUNT_ - 1;
@@ -13,6 +15,38 @@ Pager::Pager(int machine_size, int page_size, std::string algo_name)
 Pager::~Pager()
 {
     delete frame_table_;
+}
+
+void Pager::reference_by_virtual_addr(int viraddr, int pid)
+{
+    int to_visit_pageid = viraddr % PAGE_SIZE_;
+
+    int frame_loc = search_frame(pid, to_visit_pageid);
+
+    if (frame_loc == ERR_PAGE_NOT_FOUND_)
+    {
+
+    }
+    else
+    {
+        /* code */
+    }
+    
+}
+
+int Pager::search_frame(int pid, int pageid)
+{
+    /**
+     * Attempts to find a frame by process ID and page ID. 
+     * Returns the frame's location if found; PageNotFound error if not found.
+     */
+    
+    for (int i = 0; i < FRAME_COUNT_; i++)
+    {
+        if (frame_table_[i].pid == pid && frame_table_[i].pageid == pageid)
+            return i;
+    }
+    return ERR_PAGE_NOT_FOUND_;
 }
 
 bool Pager::push_new_frame(Frame frame)
@@ -27,7 +61,6 @@ bool Pager::push_new_frame(Frame frame)
         next_insertion_idx_--;
         return true;
     }
-    
 }
 
 } // namespace pager
