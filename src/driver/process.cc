@@ -8,7 +8,7 @@ const int Process::INIT_CONST_ = 111;
 const int Process::RANDREF_UNDEF_ = 0;
 const int Process::DELTA_UNDEF_ = 0;
 const int Process::DELTA_SEQ_ = 1;
-const int Prcoess::DELTA_BACK_ = -5;
+const int Process::DELTA_BACK_ = -5;
 const int Process::DELTA_JMP_ = 4;
 
 Process::Process(int id, int proc_size, int ref_count)
@@ -46,7 +46,7 @@ void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager)
         current_ref_addr_ = init_ref();
 
     else /* Perform normal current address calculation based on the delta provided */
-        current_ref_addr_ = calc_rand_ref(delta);
+        current_ref_addr_ = calc_new_ref(delta);
 
     
 
