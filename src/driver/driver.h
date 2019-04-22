@@ -3,12 +3,16 @@
 
 #include <list>
 
-// #include "../io/randintreader.h"
 #include "process.h"
 
 namespace io
 {
 class RandIntReader;
+}
+
+namespace pager
+{
+class Pager;
 }
 
 namespace driver
@@ -19,7 +23,7 @@ class JobMix;
 class Driver
 {
 public:
-    Driver(int proc_size, int job_mix, int ref_count);
+    Driver(int proc_size, int job_mix, int ref_count, pager::Pager *pager);
     ~Driver();
 
 private:
@@ -35,6 +39,7 @@ private:
 
     io::RandIntReader *randintreader_;
     JobMix *JOB_MIX_;
+    pager::Pager *pager_;
 
     std::list<Process> runnable_processes_;
 };

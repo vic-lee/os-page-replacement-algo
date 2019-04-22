@@ -10,11 +10,9 @@ namespace driver
 {
 const int Driver::QUANTUM_ = 3;
 
-Driver::Driver(int proc_size, int job_mix, int ref_count)
-    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count)
+Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager *pager)
+    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count), pager_(pager)
 {
-    /* Initialize variables */
-
     randintreader_ = new io::RandIntReader();
 
     /* Initialize job mix */
