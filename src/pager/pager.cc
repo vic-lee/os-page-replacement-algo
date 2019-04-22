@@ -25,6 +25,14 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 
     if (frame_loc == ERR_PAGE_NOT_FOUND_) /* Page Fault */
     {
+        Frame new_frame = Frame{to_visit_pageid, pid};
+
+        bool is_insert_sucessful = push_new_frame(new_frame);
+
+        if (!is_insert_sucessful)
+        {
+            
+        }
     }
     else
     {
@@ -47,9 +55,14 @@ int Pager::search_frame(int pid, int pageid)
     return ERR_PAGE_NOT_FOUND_;
 }
 
+bool Pager::can_insert()
+{
+    return next_insertion_idx_ >= 0;
+}
+
 bool Pager::push_new_frame(Frame frame)
 {
-    if (next_insertion_idx_-- < 0)
+    if (!can_insert())
     {
         return false;
     }

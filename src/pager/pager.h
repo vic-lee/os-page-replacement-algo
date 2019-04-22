@@ -22,6 +22,7 @@ public:
     void reference_by_virtual_addr(int viraddr, int pid, int time_accessed);
 
 private:
+    bool can_insert();
     bool push_new_frame(Frame frame);
     int search_frame(int pid, int pageid);
 
