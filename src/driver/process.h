@@ -14,13 +14,13 @@ class Process
 {
 public:
     Process(int id, int proc_size, int ref_count);
-    void do_reference_of_type(RefType ref_type, int randref_num, pager::Pager pager);
+    void do_reference_of_type(RefType ref_type, int randref_num, pager::Pager *pager);
 
     bool should_terminate() const;
     int id() const;
 
 private:
-    void do_next_reference(int delta, int randref_num);
+    void do_next_reference(int delta, int randref_num, pager::Pager *pager);
 
     const int ID_;
     const int SIZE_;
