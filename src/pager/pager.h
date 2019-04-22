@@ -2,7 +2,6 @@
 #define H_PAGER
 
 #include <iostream>
-#include <vector>
 
 namespace pager
 {
