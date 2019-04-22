@@ -11,7 +11,7 @@ namespace driver
 const int Driver::QUANTUM_ = 3;
 
 Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager *pager)
-    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count), pager_(pager)
+    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count), pager_(pager), runtime_(0)
 {
     randintreader_ = new io::RandIntReader();
 
@@ -51,7 +51,7 @@ void Driver::roundrobin()
 
         Process current_process = runnable_processes_.front();
         
-        current_process.do_reference_of_type(next_ref_type, randref_num);
+        current_process.do_reference_of_type(next_ref_type, randref_num, pager_, runtime_);
 
         next_ref_type = determine_next_ref_type(current_process.id());
 
@@ -67,6 +67,7 @@ void Driver::roundrobin()
             runnable_processes_.pop_front();
             quantum_ctr = 0;
         }
+        runtime_++;
     }
 }
 
