@@ -13,6 +13,8 @@ struct Frame
     int latest_access_time = -10;
 };
 
+typedef std::string AlgoName;
+
 class Pager
 {
 public:
@@ -31,6 +33,10 @@ private:
     const std::string ALGO_NAME_;
 
     static const int ERR_PAGE_NOT_FOUND_;
+
+    static const AlgoName FIFO_;
+    static const AlgoName RANDOM_;
+    static const AlgoName LRU_;
 
     Frame *frame_table_;
     int next_insertion_idx_;

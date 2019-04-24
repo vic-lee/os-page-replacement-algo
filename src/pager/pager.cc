@@ -3,6 +3,9 @@
 namespace pager
 {
 const int Pager::ERR_PAGE_NOT_FOUND_ = -10;
+const AlgoName Pager::LRU_ = "LRU";
+const AlgoName Pager::FIFO_ = "FIFO";
+const AlgoName Pager::RANDOM_ = "RANDOM";
 
 Pager::Pager(int machine_size, int page_size, std::string algo_name)
     : MACHINE_SIZE_(machine_size), PAGE_SIZE_(page_size),
