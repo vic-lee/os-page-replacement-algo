@@ -43,6 +43,7 @@ void Driver::roundrobin()
     {
         if (quantum_ctr == QUANTUM_)
         {
+            /* Perform context switch */
             Process front_process = runnable_processes_.front();
             runnable_processes_.push_back(front_process);
             runnable_processes_.pop_front();
@@ -50,7 +51,7 @@ void Driver::roundrobin()
         }
 
         Process current_process = runnable_processes_.front();
-        
+
         current_process.do_reference_of_type(next_ref_type, randref_num, pager_, runtime_);
 
         next_ref_type = determine_next_ref_type(current_process.id());
