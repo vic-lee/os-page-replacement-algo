@@ -27,13 +27,15 @@ public:
 private:
     bool can_insert();
     bool insert_front(Frame frame);
+    bool write_frame_at_index(int lowest_frame_id, Frame newframe);
+
     int search_frame(int pid, int pageid);
     int search_frame_with_oldest_access_time();
 
-    void swap_frame();
-    void fifo_swap();
-    void random_swap();
-    void lru_swap();
+    void swap_frame(Frame newframe);
+    void fifo_swap(Frame newframe);
+    void random_swap(Frame newframe);
+    void lru_swap(Frame newframe);
 
     const int MACHINE_SIZE_;
     const int PAGE_SIZE_;

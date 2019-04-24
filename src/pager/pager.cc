@@ -36,7 +36,8 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 
         if (!is_insert_sucessful) /* No free frame(s) remaining */
         {
-            swap_frame();
+            Frame newframe = Frame(to_visit_pageid, pid);
+            swap_frame(newframe);
         }
     }
     else
@@ -45,37 +46,37 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
     }
 }
 
-void Pager::swap_frame()
+void Pager::swap_frame(Frame newframe)
 {
     if (ALGO_NAME_ == LRU_)
-        lru_swap();
+        lru_swap(newframe);
 
     else if (ALGO_NAME_ == FIFO_)
-        fifo_swap();
+        fifo_swap(newframe);
 
     else if (ALGO_NAME_ == RANDOM_)
-        random_swap();
+        random_swap(newframe);
 }
 
-void Pager::fifo_swap()
+void Pager::fifo_swap(Frame newframe)
 {
 }
 
-void Pager::random_swap()
+void Pager::random_swap(Frame newframe)
 {
 }
 
-void Pager::lru_swap()
+void Pager::lru_swap(Frame newframe)
 {
     int lowest_frame_id = search_frame_with_oldest_access_time();
     
     if (lowest_frame_id == WARN_FRAME_TABLE_EMPTY_)
     {
-        insert_front(frame);
+        insert_front(newframe);
     }
     else
     {
-        write_frame_at_index(lowest_frame_id, frame);
+        write_frame_at_index(lowest_frame_id, newframe);
     }
     
 }
