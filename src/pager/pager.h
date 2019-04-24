@@ -9,6 +9,7 @@ struct Frame
 {
     Frame() : pageid(-10), pid(-10), latest_access_time(-10){};
     Frame(int pageid, int pid) : pageid(), pid(), latest_access_time(-10){};
+    Frame(int pageid, int pid, int access_time) : pageid(), pid(), latest_access_time(access_time){};
     int pageid;
     int pid;
     int latest_access_time;
@@ -40,6 +41,7 @@ private:
     const std::string ALGO_NAME_;
 
     static const int ERR_PAGE_NOT_FOUND_;
+    static const int WARN_FRAME_TABLE_EMPTY_;
 
     static const AlgoName FIFO_;
     static const AlgoName RANDOM_;

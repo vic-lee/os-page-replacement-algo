@@ -3,6 +3,8 @@
 namespace pager
 {
 const int Pager::ERR_PAGE_NOT_FOUND_ = -10;
+const int Pager::WARN_FRAME_TABLE_EMPTY_ = -11;
+
 const AlgoName Pager::LRU_ = "LRU";
 const AlgoName Pager::FIFO_ = "FIFO";
 const AlgoName Pager::RANDOM_ = "RANDOM";
@@ -72,13 +74,28 @@ int Pager::search_frame_with_oldest_access_time()
     /**
      * Locate frame with the oldest (least recent) access time. 
      * Returns the location (index) of that frame.
+     * If the frame table is empty, a warning is raised.
      */
 
     int lowest_idx = FRAME_COUNT_ - 1;
-    /* What if the array is empty? */
+    int oldest_access_time = -1;
 
+    if (frame_table_[lowest_idx].pageid == -10)
+    {
+        return WARN_FRAME_TABLE_EMPTY_;
+    }
+    else
+    {
+        oldest_access_time = frame_table_[lowest_idx].latest_access_time;
+    }
+    
     for (int i = lowest_idx; i >= 0; i--)
     {
+        if (frame_table_[i].latest_access_time < oldest_access_time)
+        {
+            lowest_idx = i;
+            oldest_access_time = frame_table_[i].latest_access_time;
+        }
     }
 
     return lowest_idx;
