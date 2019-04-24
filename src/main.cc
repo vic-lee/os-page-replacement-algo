@@ -1,5 +1,6 @@
 #include <tuple>
 #include <iostream>
+#include <algorithm>
 
 #include "driver/driver.h"
 #include "pager/pager.h"
@@ -7,12 +8,30 @@
 namespace demandpaging
 {
 
-typedef std::tuple<int, int, int, int, int, std::string, bool> UserInput;
+typedef std::tuple<int, int, int, int, int, pager::AlgoName, bool> UserInput;
+
+pager::AlgoName map_to_algoname(std::string raw_algoname)
+{
+    std::transform(raw_algoname.begin(), raw_algoname.end(), raw_algoname.begin(), ::tolower);
+    
+    if (raw_algoname == "lru")
+        return pager::LRU;
+    else if (raw_algoname == "fifo")
+        return pager::FIFO;
+    else if (raw_algoname == "random")
+        return pager::RANDOM;
+    else
+    {
+        std::cout << "The algorithm name entered is not correct. Please double check." << std::endl;
+        exit(10);
+    }
+}
 
 UserInput read_input(int argc, char **argv)
 {
     int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT = -1;
-    std::string ALGO_NAME = "";
+    pager::AlgoName ALGO_NAME;
+    std::string RAW_ALGO_NAME = "";
     bool DEBUG = false;
 
     if (argc != 7 && argc != 8)
@@ -29,7 +48,7 @@ UserInput read_input(int argc, char **argv)
             PROC_SIZE = atoi(argv[3]);
             JOB_MIX = atoi(argv[4]);
             REF_COUNT = atoi(argv[5]);
-            ALGO_NAME = argv[6];
+            RAW_ALGO_NAME = argv[6];
 
             if (argc == 8 && (atoi(argv[7]) == 1))
                 DEBUG = true;
@@ -40,6 +59,8 @@ UserInput read_input(int argc, char **argv)
             std::cerr << e.what() << '\n';
             exit(10);
         }
+
+        ALGO_NAME = map_to_algoname(RAW_ALGO_NAME);
     }
 
     return std::make_tuple(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT, ALGO_NAME, DEBUG);
@@ -50,7 +71,7 @@ UserInput read_input(int argc, char **argv)
 int main(int argc, char **argv)
 {
     int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT;
-    std::string ALGO_NAME;
+    pager::AlgoName ALGO_NAME;
     bool DEBUG;
 
     demandpaging::UserInput uin = demandpaging::read_input(argc, argv);
