@@ -5,12 +5,13 @@
 
 namespace pager
 {
-struct Frame 
+struct Frame
 {
+    Frame() : pageid(-10), pid(-10), latest_access_time(-10){};
+    Frame(int pageid, int pid) : pageid(), pid(), latest_access_time(-10){};
     int pageid;
     int pid;
-
-    int latest_access_time = -10;
+    int latest_access_time;
 };
 
 typedef std::string AlgoName;
@@ -26,6 +27,8 @@ private:
     bool can_insert();
     bool insert_front(Frame frame);
     int search_frame(int pid, int pageid);
+    int search_frame_with_oldest_access_time();
+
     void swap_frame();
     void fifo_swap();
     void random_swap();
