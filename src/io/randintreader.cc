@@ -9,7 +9,7 @@ const int RandIntReader::MAX_INT_ = 2147483647;
 
 RandIntReader::RandIntReader()
 {
-    infile_.open("random-numbers.txt");
+    infile_.open("src/io/random-numbers.txt");
 
     if (!infile_)
     {
