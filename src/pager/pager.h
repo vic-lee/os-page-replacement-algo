@@ -26,6 +26,10 @@ private:
     bool can_insert();
     bool insert_front(Frame frame);
     int search_frame(int pid, int pageid);
+    void swap_frame();
+    void fifo_swap();
+    void random_swap();
+    void lru_swap();
 
     const int MACHINE_SIZE_;
     const int PAGE_SIZE_;

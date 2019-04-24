@@ -32,15 +32,40 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 
         bool is_insert_sucessful = insert_front(new_frame);
 
-        if (!is_insert_sucessful)
+        if (!is_insert_sucessful) /* No free frame(s) remaining */
         {
-            
+            swap_frame();
         }
     }
     else
     {
         frame_table_[frame_loc].latest_access_time = time_accessed;
     }
+}
+
+void Pager::swap_frame()
+{
+    if (ALGO_NAME_ == LRU_)
+    {
+    }
+    else if (ALGO_NAME_ == FIFO_)
+    {
+    }
+    else if (ALGO_NAME_ == RANDOM_)
+    {
+    }
+}
+
+void Pager::fifo_swap()
+{
+}
+
+void Pager::random_swap()
+{
+}
+
+void Pager::lru_swap()
+{
 }
 
 int Pager::search_frame(int pid, int pageid)
