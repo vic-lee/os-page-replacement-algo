@@ -17,7 +17,7 @@ Pager::Pager(int machine_size, int page_size, std::string algo_name)
 
 Pager::~Pager()
 {
-    delete frame_table_;
+    delete[] frame_table_;
 }
 
 void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
@@ -46,14 +46,13 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 void Pager::swap_frame()
 {
     if (ALGO_NAME_ == LRU_)
-    {
-    }
+        lru_swap();
+
     else if (ALGO_NAME_ == FIFO_)
-    {
-    }
+        fifo_swap();
+
     else if (ALGO_NAME_ == RANDOM_)
-    {
-    }
+        random_swap();
 }
 
 void Pager::fifo_swap()
@@ -66,6 +65,23 @@ void Pager::random_swap()
 
 void Pager::lru_swap()
 {
+}
+
+int Pager::search_frame_with_oldest_access_time()
+{
+    /**
+     * Locate frame with the oldest (least recent) access time. 
+     * Returns the location (index) of that frame.
+     */
+
+    int lowest_idx = FRAME_COUNT_ - 1;
+    /* What if the array is empty? */
+
+    for (int i = lowest_idx; i >= 0; i--)
+    {
+    }
+
+    return lowest_idx;
 }
 
 int Pager::search_frame(int pid, int pageid)
