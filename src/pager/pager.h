@@ -15,12 +15,17 @@ struct Frame
     int latest_access_time;
 };
 
-typedef std::string AlgoName;
+enum AlgoName
+{
+    FIFO_,
+    RANDOM_,
+    LRU_
+};
 
 class Pager
 {
 public:
-    Pager(int machine_size, int page_size, std::string algo_name);
+    Pager(int machine_size, int page_size, AlgoName algo_name);
     ~Pager();
     void reference_by_virtual_addr(int viraddr, int pid, int time_accessed);
 
@@ -40,14 +45,10 @@ private:
     const int MACHINE_SIZE_;
     const int PAGE_SIZE_;
     const int FRAME_COUNT_;
-    const std::string ALGO_NAME_;
+    const AlgoName ALGO_NAME_;
 
     static const int ERR_PAGE_NOT_FOUND_;
     static const int WARN_FRAME_TABLE_EMPTY_;
-
-    static const AlgoName FIFO_;
-    static const AlgoName RANDOM_;
-    static const AlgoName LRU_;
 
     Frame *frame_table_;
     int next_insertion_idx_;
