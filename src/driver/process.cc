@@ -66,4 +66,11 @@ int Process::id() const
     return ID_;
 }
 
+std::ostream &operator<<(std::ostream &stream, const Process &p)
+{
+    stream << "Process " << p.ID_ << ":\t"
+           << " size " << p.SIZE_ << ", total reference count " << p.TOTAL_REF_COUNT_;
+    return stream;
+}
+
 } // namespace driver

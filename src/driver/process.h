@@ -1,6 +1,8 @@
 #ifndef H_PROCESS
 #define H_PROCESS
 
+#include <iostream>
+
 namespace pager
 {
 class Pager;
@@ -19,12 +21,15 @@ public:
     bool should_terminate() const;
     int id() const;
 
+    friend std::ostream &operator<<(std::ostream &stream, const Process &p);
+
 private:
     void do_next_reference(int delta, int randref_num, pager::Pager *pager, int access_time);
 
     const int ID_;
     const int SIZE_;
     const int TOTAL_REF_COUNT_;
+
     static const int INIT_CONST_;
 
     static const int DELTA_SEQ_;     /* Change in memory reference when in sequential reference mode */
