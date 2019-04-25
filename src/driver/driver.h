@@ -25,11 +25,13 @@ class Driver
 public:
     Driver(int proc_size, int job_mix, int ref_count, pager::Pager *pager);
     ~Driver();
+    void roundrobin();
 
 private:
-    void roundrobin();
     bool is_all_process_terminated() const;
     RefType determine_next_ref_type(int pid);
+
+    void debug_print_runnable_processes() const;
 
     const int PROC_SIZE_;
     const int JOB_MIX_DEF_;

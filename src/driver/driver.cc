@@ -11,14 +11,14 @@ namespace driver
 const int Driver::QUANTUM_ = 3;
 
 Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager *pager)
-    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count), pager_(pager), runtime_(0)
+    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count), runtime_(0), pager_(pager)
 {
     randintreader_ = new io::RandIntReader();
 
     /* Initialize job mix */
 
     JOB_MIX_ = driver::jobmixspecs::get_jobmix(JOB_MIX_DEF_);
-    JOB_MIX_->print();
+    // JOB_MIX_->print();
 
     /* Initialize runnable processes */
 
@@ -39,7 +39,7 @@ void Driver::roundrobin()
     int randref_num = 0;
     RefType next_ref_type = INIT_REF;
 
-    while (!is_all_process_terminated())
+    while (!is_all_process_terminated() && runtime_ < 11)
     {
         if (quantum_ctr == QUANTUM_)
         {
@@ -48,6 +48,9 @@ void Driver::roundrobin()
             runnable_processes_.push_back(front_process);
             runnable_processes_.pop_front();
             quantum_ctr = 0;
+
+            std::cout << "Quantum reached; popping front..." << std::endl;
+            debug_print_runnable_processes();
         }
 
         Process current_process = runnable_processes_.front();
@@ -82,6 +85,12 @@ RefType Driver::determine_next_ref_type(int pid)
     double quotient = randintreader_->calc_next_probability();
     RefType reftype = JOB_MIX_->next_ref_type(quotient, pid);
     return reftype;
+}
+
+void Driver::debug_print_runnable_processes() const
+{
+    for (auto &proc : runnable_processes_)
+        std::cout << proc << std::endl;
 }
 
 } // namespace driver
