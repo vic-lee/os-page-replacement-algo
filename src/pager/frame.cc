@@ -4,10 +4,14 @@
 
 namespace pager
 {
-Frame::Frame() : page_id_(-10), pid_(-10), latest_access_time_(-10){};
+const int Frame::UNDEF_ = -10;
+
+Frame::Frame() : page_id_(UNDEF_), pid_(UNDEF_), latest_access_time_(UNDEF_){};
 
 Frame::Frame(int pageid, int pid, int access_time)
     : page_id_(pageid), pid_(pid), latest_access_time_(access_time){};
+
+bool Frame::is_initialized() const { return pid_ == -10; }
 
 int Frame::pid() const { return pid_; }
 

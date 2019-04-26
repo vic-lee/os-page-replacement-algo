@@ -11,6 +11,8 @@ public:
     Frame();
     Frame(int pageid, int pid, int access_time);
 
+    bool is_initialized() const;
+
     int pid() const;
     int page_id() const;
     int latest_access_time() const;
@@ -21,6 +23,7 @@ public:
     friend std::ostream &operator<<(std::ostream &stream, const Frame &fr);
 
 private:
+    static const int UNDEF_;
     int page_id_;
     int pid_;
     int latest_access_time_;
