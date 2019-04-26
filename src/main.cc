@@ -10,6 +10,10 @@ namespace demandpaging
 
 typedef std::tuple<int, int, int, int, int, pager::AlgoName, bool> UserInput;
 
+static bool debug_status;
+
+bool debug() { return debug_status; }
+
 pager::AlgoName map_to_algoname(std::string raw_algoname)
 {
     std::transform(raw_algoname.begin(), raw_algoname.end(), raw_algoname.begin(), ::tolower);
@@ -70,19 +74,20 @@ UserInput read_input(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
+    namespace dp = demandpaging;
+
     int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT;
     pager::AlgoName ALGO_NAME;
-    bool DEBUG;
 
     demandpaging::UserInput uin = demandpaging::read_input(argc, argv);
-    std::tie(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT, ALGO_NAME, DEBUG) = uin;
+    std::tie(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT, ALGO_NAME, dp::debug_status) = uin;
 
     std::cout << "Machine size is " << MACHINE_SIZE << "\n"
               << "Page size is " << PAGE_SIZE << "\n"
               << "Process size is " << PROC_SIZE << "\n"
               << "Reference count is " << REF_COUNT << "\n"
               << "Name of algorithm is " << ALGO_NAME << "\n"
-              << "Debug mode is " << DEBUG << "\n"
+              << "Debug mode is " << dp::debug_status << "\n"
               << std::endl;
 
     pager::Pager pager = pager::Pager(MACHINE_SIZE, PAGE_SIZE, ALGO_NAME);
