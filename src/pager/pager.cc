@@ -75,15 +75,8 @@ void Pager::random_swap(Frame newframe)
 void Pager::lru_swap(Frame newframe)
 {
     int lowest_frame_id = search_frame_with_oldest_access_time();
-
-    if (lowest_frame_id == WARN_FRAME_TABLE_EMPTY_)
-    {
-        insert_front(newframe);
-    }
-    else
-    {
-        write_frame_at_index(lowest_frame_id, newframe);
-    }
+    
+    write_frame_at_index(lowest_frame_id, newframe);
 }
 
 int Pager::search_frame_with_oldest_access_time()
