@@ -23,16 +23,17 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 {
     int to_visit_pageid = viraddr / PAGE_SIZE_;
 
+    std::cout << "Process " << pid
+              << " references word " << viraddr
+              << " (page " << to_visit_pageid << ") at time " << time_accessed << ": ";
+
     Frame target_frame = Frame(to_visit_pageid, pid, time_accessed);
 
     int frame_loc = search_frame(target_frame);
 
     if (frame_loc == ERR_PAGE_NOT_FOUND_) /* Page Fault */
     {
-        std::cout
-            << pid << " Page Fault:\tframe for word " << viraddr
-            << " at time " << time_accessed << " not found"
-            << std::endl;
+        std::cout << "Fault, ";
 
         bool is_insert_sucessful = insert_front(target_frame);
 
@@ -43,8 +44,11 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
     }
     else
     {
+        std::cout << "Hit in frame " << frame_loc;
         frame_table_[frame_loc].set_latest_access_time(time_accessed);
     }
+
+    std::cout << std::endl;
 }
 
 void Pager::swap_frame(Frame newframe)
@@ -132,6 +136,7 @@ bool Pager::insert_front(Frame frame)
     }
     else
     {
+        std::cout << "using free frame " << next_insertion_idx_;
         frame_table_[next_insertion_idx_] = frame;
         next_insertion_idx_--;
         return true;

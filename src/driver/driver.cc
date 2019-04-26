@@ -36,10 +36,10 @@ Driver::~Driver()
 void Driver::roundrobin()
 {
     int quantum_ctr = 0;
-    int randref_num = 0;
+    int randref_num = -10;
     RefType next_ref_type = INIT_REF;
 
-    while (!is_all_process_terminated() && runtime_ < 11)
+    while (!is_all_process_terminated() && runtime_ < 111)
     {
         if (quantum_ctr == QUANTUM_)
         {
