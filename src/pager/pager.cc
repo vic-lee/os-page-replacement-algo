@@ -23,7 +23,9 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 {
     int to_visit_pageid = viraddr / PAGE_SIZE_;
 
-    std::cout << "Viraddr: " << viraddr << "; pid: " << pid << "; pageid to visit: " << to_visit_pageid << std::endl;
+    std::cout << "Viraddr: " << viraddr
+              << "; pid: " << pid
+              << "; pageid to visit: " << to_visit_pageid << std::endl;
 
     Frame target_frame = Frame(to_visit_pageid, pid, time_accessed);
 
@@ -95,7 +97,7 @@ int Pager::search_frame_with_oldest_access_time()
     int lowest_idx = FRAME_COUNT_ - 1;
     int oldest_access_time = -1;
 
-    if (frame_table_[lowest_idx].page_id() == -10)
+    if (!frame_table_[lowest_idx].is_initialized())
     {
         return WARN_FRAME_TABLE_EMPTY_;
     }
@@ -106,7 +108,8 @@ int Pager::search_frame_with_oldest_access_time()
 
     for (int i = lowest_idx; i >= 0; i--)
     {
-        if (frame_table_[i].latest_access_time() < oldest_access_time)
+        if (frame_table_[i].is_initialized() &&
+            frame_table_[i].latest_access_time() < oldest_access_time)
         {
             lowest_idx = i;
             oldest_access_time = frame_table_[i].latest_access_time();
@@ -133,7 +136,7 @@ int Pager::search_frame(Frame target)
         if (frame_table_[i] == target)
             return i;
     }
-    
+
     return ERR_PAGE_NOT_FOUND_;
 }
 
