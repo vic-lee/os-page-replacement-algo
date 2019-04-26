@@ -5,6 +5,7 @@ namespace demandpaging
 {
 
 bool debug();
+bool showrand();
 
 } // namespace demandpaging
 
