@@ -1,6 +1,8 @@
 #ifndef H_FRAME
 #define H_FRAME
 
+#include <iosfwd>
+
 namespace pager
 {
 class Frame
@@ -8,6 +10,8 @@ class Frame
 public:
     Frame();
     Frame(int pageid, int pid, int access_time);
+
+    friend std::ostream &operator<<(std::ostream &stream, const Frame &fr);
 
 private:
     const int PAGE_ID_;
