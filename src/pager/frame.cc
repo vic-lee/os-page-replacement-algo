@@ -7,7 +7,7 @@ namespace pager
 Frame::Frame() : PAGE_ID_(-10), PID_(-10), latest_access_time_(-10){};
 
 Frame::Frame(int pageid, int pid, int access_time)
-    : PAGE_ID_(), PID_(), latest_access_time_(access_time){};
+    : PAGE_ID_(pageid), PID_(pid), latest_access_time_(access_time){};
 
 int Frame::pid() const { return PID_; }
 
