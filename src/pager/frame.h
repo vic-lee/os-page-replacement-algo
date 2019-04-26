@@ -16,12 +16,12 @@ public:
     int latest_access_time() const;
     void set_latest_access_time(int t);
 
-    Frame& operator=(Frame&);
+    Frame &operator=(Frame &rhs);
     friend std::ostream &operator<<(std::ostream &stream, const Frame &fr);
 
 private:
-    const int PAGE_ID_;
-    const int PID_;
+    int PAGE_ID_;
+    int PID_;
     int latest_access_time_;
 };
 } // namespace pager
