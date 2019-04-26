@@ -2,10 +2,13 @@
 #include <iostream>
 
 #include "randintreader.h"
+#include "../debug.h"
 
 namespace io
 {
 const int RandIntReader::MAX_INT_ = 2147483647;
+
+namespace dp = demandpaging;
 
 RandIntReader::RandIntReader()
 {
@@ -34,6 +37,10 @@ int RandIntReader::read_next_int()
 {
     int nextint;
     infile_ >> nextint;
+    
+    if (dp::debug())
+        std::cout << "uses random number " << nextint << std::endl;
+        
     return nextint;
 }
 } // namespace io

@@ -1,10 +1,13 @@
 #include "pager.h"
 #include "frame.h"
+#include "../debug.h"
 
 namespace pager
 {
 const int Pager::ERR_PAGE_NOT_FOUND_ = -10;
 const int Pager::WARN_FRAME_TABLE_EMPTY_ = -11;
+
+namespace dp = demandpaging;
 
 Pager::Pager(int machine_size, int page_size, AlgoName algo_name)
     : MACHINE_SIZE_(machine_size), PAGE_SIZE_(page_size),
@@ -23,9 +26,12 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 {
     int to_visit_pageid = viraddr / PAGE_SIZE_;
 
-    std::cout << "Process " << pid
-              << " references word " << viraddr
-              << " (page " << to_visit_pageid << ") at time " << time_accessed << ": ";
+    if (dp::debug())
+    {
+        std::cout << "Process " << pid
+                  << " references word " << viraddr
+                  << " (page " << to_visit_pageid << ") at time " << time_accessed << ": ";
+    }
 
     Frame target_frame = Frame(to_visit_pageid, pid, time_accessed);
 
@@ -33,7 +39,8 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 
     if (frame_loc == ERR_PAGE_NOT_FOUND_) /* Page Fault */
     {
-        std::cout << "Fault, ";
+        if (dp::debug())
+            std::cout << "Fault, ";
 
         bool is_insert_sucessful = insert_front(target_frame);
 
@@ -44,11 +51,14 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
     }
     else
     {
-        std::cout << "Hit in frame " << frame_loc;
+        if (dp::debug())
+            std::cout << "Hit in frame " << frame_loc;
+
         frame_table_[frame_loc].set_latest_access_time(time_accessed);
     }
 
-    std::cout << std::endl;
+    if (dp::debug())
+        std::cout << std::endl;
 }
 
 void Pager::swap_frame(Frame newframe)
@@ -90,7 +100,9 @@ int Pager::search_least_recently_used_frame() const
 
     if (!frame_table_[oldest_idx].is_initialized())
     {
-        std::cout << "Warning: encounter empty frame table when searching LRU frame";
+        if (dp::debug())
+            std::cout << "WARNING: encounter empty frame table when searching LRU frame";
+
         return WARN_FRAME_TABLE_EMPTY_;
     }
 
@@ -107,9 +119,12 @@ bool Pager::write_frame_at_index(int idx, Frame newframe)
 {
     Frame &oldframe = frame_table_[idx];
 
-    std::cout << "evicting page " << oldframe.page_id()
-              << " of process " << oldframe.pid() << " from frame " << idx;
-              
+    if (dp::debug())
+    {
+        std::cout << "evicting page " << oldframe.page_id()
+                  << " of process " << oldframe.pid() << " from frame " << idx;
+    }
+
     frame_table_[idx] = newframe;
 
     return true;
@@ -144,9 +159,12 @@ bool Pager::insert_front(Frame frame)
     }
     else
     {
-        std::cout << "using free frame " << next_insertion_idx_;
+        if (dp::debug())
+            std::cout << "using free frame " << next_insertion_idx_;
+
         frame_table_[next_insertion_idx_] = frame;
         next_insertion_idx_--;
+
         return true;
     }
 }
