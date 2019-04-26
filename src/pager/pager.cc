@@ -23,7 +23,11 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 {
     int to_visit_pageid = viraddr / PAGE_SIZE_;
 
-    int frame_loc = search_frame(pid, to_visit_pageid);
+    std::cout << "Viraddr: " << viraddr << "; pid: " << pid << "; pageid to visit: " << to_visit_pageid << std::endl;
+
+    Frame target_frame = Frame(to_visit_pageid, pid, time_accessed);
+
+    int frame_loc = search_frame(target_frame);
 
     if (frame_loc == ERR_PAGE_NOT_FOUND_) /* Page Fault */
     {
@@ -32,13 +36,11 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
             << " at time " << time_accessed << " not found"
             << std::endl;
 
-        Frame new_frame = Frame(to_visit_pageid, pid, time_accessed);
-
-        bool is_insert_sucessful = insert_front(new_frame);
+        bool is_insert_sucessful = insert_front(target_frame);
 
         if (!is_insert_sucessful) /* No free frame(s) remaining */
         {
-            swap_frame(new_frame);
+            swap_frame(target_frame);
         }
     }
     else
@@ -119,7 +121,7 @@ bool Pager::write_frame_at_index(int lowest_frame_id, Frame newframe)
     return false;
 }
 
-int Pager::search_frame(int pid, int pageid)
+int Pager::search_frame(Frame target)
 {
     /**
      * Attempts to find a frame by process ID and page ID. 
@@ -128,9 +130,10 @@ int Pager::search_frame(int pid, int pageid)
 
     for (int i = 0; i < FRAME_COUNT_; i++)
     {
-        if (frame_table_[i].pid() == pid && frame_table_[i].page_id() == pageid)
+        if (frame_table_[i] == target)
             return i;
     }
+    
     return ERR_PAGE_NOT_FOUND_;
 }
 
@@ -147,7 +150,9 @@ bool Pager::insert_front(Frame frame)
     }
     else
     {
+        std::cout << "Inserting frame " << frame << std::endl;
         frame_table_[next_insertion_idx_] = frame;
+        std::cout << "Inserted frame " << frame_table_[next_insertion_idx_] << std::endl;
         next_insertion_idx_--;
         return true;
     }

@@ -26,7 +26,7 @@ private:
     bool insert_front(Frame frame);
     bool write_frame_at_index(int lowest_frame_id, Frame newframe);
 
-    int search_frame(int pid, int pageid);
+    int search_frame(Frame target);
     int search_frame_with_oldest_access_time();
 
     void swap_frame(Frame newframe);
