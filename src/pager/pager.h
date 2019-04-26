@@ -27,7 +27,7 @@ private:
     bool write_frame_at_index(int lowest_frame_id, Frame newframe);
 
     int search_frame(Frame target);
-    int search_frame_with_oldest_access_time();
+    int search_least_recently_used_frame();
 
     void swap_frame(Frame newframe);
     void fifo_swap(Frame newframe);

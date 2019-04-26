@@ -74,12 +74,12 @@ void Pager::random_swap(Frame newframe)
 
 void Pager::lru_swap(Frame newframe)
 {
-    int lowest_frame_id = search_frame_with_oldest_access_time();
+    int lru_frame_idx = search_least_recently_used_frame();
 
-    write_frame_at_index(lowest_frame_id, newframe);
+    write_frame_at_index(lru_frame_idx, newframe);
 }
 
-int Pager::search_frame_with_oldest_access_time()
+int Pager::search_least_recently_used_frame()
 {
     /**
      * Locate frame with the oldest (least recent) access time. 
