@@ -29,13 +29,15 @@ private:
     const int SIZE_;
     const int TOTAL_REF_COUNT_;
 
-    static const int INIT_CONST_;
+    static const int INIT_CONST_; /* Constant factor for initializing reference address */
 
-    static const int DELTA_SEQ_;     /* Change in memory reference when in sequential reference mode */
-    static const int DELTA_BACK_;    /* Change in memory reference when in backward reference mode */
-    static const int DELTA_JMP_;     /* Change in memory reference when in jump reference mode */
-    static const int DELTA_UNDEF_;   /* Special status code signifying Delta is undefined */
-    static const int RANDREF_UNDEF_; /* Special status code signifying random reference number is undefined */
+    static const int DELTA_SEQ_;  /* Change in memory reference when in sequential reference mode */
+    static const int DELTA_BACK_; /* Change in memory reference when in backward reference mode */
+    static const int DELTA_JMP_;  /* Change in memory reference when in jump reference mode */
+
+    static const int DELTA_UNDEF_;    /* Special status code signifying Delta is undefined */
+    static const int RANDREF_UNDEF_;  /* Special status code signifying random reference number is undefined */
+    static const int REF_ADDR_UNDEF_; /* Current reference address undefined (uninitialized) */
 
     int current_ref_addr_;
     int remaining_ref_count_;

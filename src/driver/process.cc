@@ -7,13 +7,14 @@ namespace driver
 const int Process::INIT_CONST_ = 111;
 const int Process::RANDREF_UNDEF_ = 0;
 const int Process::DELTA_UNDEF_ = 0;
+const int Process::REF_ADDR_UNDEF_ = -1;
 const int Process::DELTA_SEQ_ = 1;
 const int Process::DELTA_BACK_ = -5;
 const int Process::DELTA_JMP_ = 4;
 
 Process::Process(int id, int proc_size, int ref_count)
     : ID_(id), SIZE_(proc_size), TOTAL_REF_COUNT_(ref_count),
-      current_ref_addr_(-1), remaining_ref_count_(ref_count) {}
+      current_ref_addr_(REF_ADDR_UNDEF_), remaining_ref_count_(ref_count) {}
 
 void Process::do_reference_of_type(RefType ref_type, int randref_num, pager::Pager *pager, int access_time)
 {
@@ -45,10 +46,10 @@ void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager,
     if (randref_num > RANDREF_UNDEF_)
         current_ref_addr_ = calc_rand_ref(randref_num);
 
-    else if (current_ref_addr_ == -1) /* If the current ref address has not been initialized */
+    else if (current_ref_addr_ == REF_ADDR_UNDEF_)
         current_ref_addr_ = init_ref();
 
-    else /* Perform normal current address calculation based on the delta provided */
+    else
         current_ref_addr_ = calc_new_ref(delta);
 
     std::cout << "Reference addr: " << current_ref_addr_ << std::endl; // DEBUG
