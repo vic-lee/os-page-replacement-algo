@@ -20,6 +20,7 @@ struct ProcessStats
     int eviction_count;
 
     ProcessStats(int sum_residency_time) : sum_residency_time(), eviction_count(1){};
+    friend std::ostream &operator<<(std::ostream &stream, const ProcessStats &p);
 };
 
 typedef int pid;
@@ -47,6 +48,8 @@ private:
     void fifo_swap(Frame newframe);
     void random_swap(Frame newframe);
     void lru_swap(Frame newframe);
+
+    void print_process_stats_map() const;
 
     const int MACHINE_SIZE_;
     const int PAGE_SIZE_;

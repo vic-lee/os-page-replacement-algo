@@ -19,6 +19,7 @@ Pager::Pager(int machine_size, int page_size, AlgoName algo_name)
 
 Pager::~Pager()
 {
+    print_process_stats_map();
     delete[] frame_table_;
 }
 
@@ -188,6 +189,18 @@ bool Pager::insert_front(Frame frame)
 
         return true;
     }
+}
+
+void Pager::print_process_stats_map() const
+{
+    for (auto pstat : process_stats_map_)
+        std::cout << "Process " << pstat.first << "\t" << pstat.second << std::endl;
+}
+
+std::ostream &operator<<(std::ostream &stream, const ProcessStats &p)
+{
+    stream << "Total residency time " << p.sum_residency_time << " # evictions " << p.eviction_count;
+    return stream;
 }
 
 } // namespace pager
