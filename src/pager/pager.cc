@@ -94,25 +94,20 @@ int Pager::search_frame_with_oldest_access_time()
      * If the frame table is empty, a warning is raised.
      */
 
-    int lowest_idx = FRAME_COUNT_ - 1;
-    int oldest_access_time = -1;
+    int oldest_idx = FRAME_COUNT_ - 1;
 
-    if (!frame_table_[lowest_idx].is_initialized())
+    if (!frame_table_[oldest_idx].is_initialized())
     {
         return WARN_FRAME_TABLE_EMPTY_;
     }
-    else
+
+    for (int i = oldest_idx; i >= 0; i--)
     {
-        oldest_access_time = frame_table_[lowest_idx].latest_access_time();
+        if (frame_table_[i].is_older_than(frame_table_[oldest_idx]))
+            oldest_idx = i;
     }
 
-    for (int i = lowest_idx; i >= 0; i--)
-    {
-        if (frame_table_[i].is_older_than(frame_table_[lowest_idx]))
-            lowest_idx = i;
-    }
-
-    return lowest_idx;
+    return oldest_idx;
 }
 
 bool Pager::write_frame_at_index(int lowest_frame_id, Frame newframe)
