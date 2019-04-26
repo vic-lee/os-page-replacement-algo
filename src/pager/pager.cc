@@ -108,12 +108,8 @@ int Pager::search_frame_with_oldest_access_time()
 
     for (int i = lowest_idx; i >= 0; i--)
     {
-        if (frame_table_[i].is_initialized() &&
-            frame_table_[i].latest_access_time() < oldest_access_time)
-        {
+        if (frame_table_[i].is_older_than(frame_table_[lowest_idx]))
             lowest_idx = i;
-            oldest_access_time = frame_table_[i].latest_access_time();
-        }
     }
 
     return lowest_idx;
