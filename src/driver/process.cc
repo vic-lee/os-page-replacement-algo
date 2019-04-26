@@ -53,7 +53,9 @@ void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager,
 
     pager->reference_by_virtual_addr(current_ref_addr_, ID_, access_time);
 
-    remaining_ref_count_ = (remaining_ref_count_ == 0) ? 0 : remaining_ref_count_--;
+    remaining_ref_count_--;
+    
+    std::cout << "Remaining ref count: " << remaining_ref_count_ << std::endl;  // DEBUG
 }
 
 bool Process::should_terminate() const
@@ -69,7 +71,8 @@ int Process::id() const
 std::ostream &operator<<(std::ostream &stream, const Process &p)
 {
     stream << "Process " << p.ID_ << ":\t"
-           << " size " << p.SIZE_ << ", total reference count " << p.TOTAL_REF_COUNT_;
+           << " size " << p.SIZE_ << ", total reference count " << p.TOTAL_REF_COUNT_ 
+           << ", remaining reference count: " << p.remaining_ref_count_;
     return stream;
 }
 
