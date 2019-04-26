@@ -6,14 +6,19 @@ namespace pager
 {
 const int Frame::UNDEF_ = -10;
 
-Frame::Frame() : page_id_(UNDEF_), pid_(UNDEF_), latest_access_time_(UNDEF_){};
+Frame::Frame() : page_id_(UNDEF_), pid_(UNDEF_), latest_access_time_(UNDEF_), time_loaded_(UNDEF_){};
 
 Frame::Frame(int pageid, int pid, int access_time)
-    : page_id_(pageid), pid_(pid), latest_access_time_(access_time){};
+    : page_id_(pageid), pid_(pid), latest_access_time_(access_time), time_loaded_(access_time){};
 
 bool Frame::is_older_than(Frame &other) const
 {
     return (is_initialized() && (latest_access_time_ < other.latest_access_time()));
+}
+
+int Frame::residency_time(int eviction_time)
+{
+    return (eviction_time - time_loaded_);
 }
 
 Frame &Frame::operator=(Frame &rhs)
@@ -21,6 +26,7 @@ Frame &Frame::operator=(Frame &rhs)
     page_id_ = rhs.page_id_;
     pid_ = rhs.pid_;
     latest_access_time_ = rhs.latest_access_time_;
+    time_loaded_ = rhs.time_loaded_;
     return *this;
 }
 
