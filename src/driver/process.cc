@@ -52,13 +52,9 @@ void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager,
     else
         current_ref_addr_ = calc_new_ref(delta);
 
-    std::cout << "Reference addr: " << current_ref_addr_ << std::endl; // DEBUG
-
     pager->reference_by_virtual_addr(current_ref_addr_, ID_, access_time);
 
     remaining_ref_count_--;
-
-    std::cout << "Remaining ref count: " << remaining_ref_count_ << std::endl; // DEBUG
 }
 
 bool Process::should_terminate() const

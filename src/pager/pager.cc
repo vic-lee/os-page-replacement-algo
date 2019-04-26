@@ -23,10 +23,6 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 {
     int to_visit_pageid = viraddr / PAGE_SIZE_;
 
-    std::cout << "Viraddr: " << viraddr
-              << "; pid: " << pid
-              << "; pageid to visit: " << to_visit_pageid << std::endl;
-
     Frame target_frame = Frame(to_visit_pageid, pid, time_accessed);
 
     int frame_loc = search_frame(target_frame);
@@ -47,7 +43,6 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
     }
     else
     {
-        std::cout << "Frame located at " << frame_loc << std::endl;
         frame_table_[frame_loc].set_latest_access_time(time_accessed);
     }
 }
