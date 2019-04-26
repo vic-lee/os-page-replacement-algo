@@ -17,8 +17,6 @@ class Pager;
 
 namespace driver
 {
-typedef int RefType;
-
 class JobMix;
 class Driver
 {

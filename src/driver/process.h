@@ -2,6 +2,7 @@
 #define H_PROCESS
 
 #include <iostream>
+#include "mrefspec.h"
 
 namespace pager
 {
@@ -10,8 +11,6 @@ class Pager;
 
 namespace driver
 {
-typedef int RefType;
-
 class Process
 {
 public:

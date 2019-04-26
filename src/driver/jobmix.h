@@ -1,9 +1,8 @@
 #include <vector>
+#include "mrefspec.h"
 
 namespace driver
 {
-typedef int RefType;
-
 struct JobMixPerProcess
 {
     double sequential_ref_dist; /* A */
