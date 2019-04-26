@@ -148,7 +148,7 @@ void Pager::record_process_stats_before_eviction(Frame &oldframe, Frame &newfram
     }
     else
     {
-        target->second.eviction_count++;
+        target->second.page_fault_count++;
         target->second.sum_residency_time += residency_time;
     }
 }
@@ -200,7 +200,7 @@ void Pager::print_process_stats_map() const
 
 std::ostream &operator<<(std::ostream &stream, const ProcessStats &p)
 {
-    stream << "Total residency time " << p.sum_residency_time << " # evictions " << p.eviction_count;
+    stream << "Total residency time " << p.sum_residency_time << " # evictions " << p.page_fault_count;
     return stream;
 }
 

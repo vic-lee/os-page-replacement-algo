@@ -17,9 +17,9 @@ enum AlgoName
 struct ProcessStats
 {
     int sum_residency_time;
-    int eviction_count;
+    int page_fault_count;
 
-    ProcessStats(int sum_residency_time) : sum_residency_time(), eviction_count(1){};
+    ProcessStats(int sum_residency_time) : sum_residency_time(), page_fault_count(1){};
     friend std::ostream &operator<<(std::ostream &stream, const ProcessStats &p);
 };
 
