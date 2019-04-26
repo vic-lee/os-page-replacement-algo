@@ -17,6 +17,8 @@ int Frame::latest_access_time() const { return latest_access_time_; }
 
 void Frame::set_latest_access_time(int t) { latest_access_time_ = t; }
 
+Frame &Frame::operator=(Frame &) { return *this; }
+
 std::ostream &operator<<(std::ostream &stream, const Frame &fr)
 {
     stream << "Frame: \tprocess id " << fr.PID_ << " page id " << fr.PAGE_ID_;

@@ -16,6 +16,7 @@ public:
     int latest_access_time() const;
     void set_latest_access_time(int t);
 
+    Frame& operator=(Frame&);
     friend std::ostream &operator<<(std::ostream &stream, const Frame &fr);
 
 private:
