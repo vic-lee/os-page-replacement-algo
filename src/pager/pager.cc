@@ -1,4 +1,5 @@
 #include "pager.h"
+#include "frame.h"
 
 namespace pager
 {
@@ -26,6 +27,11 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
 
     if (frame_loc == ERR_PAGE_NOT_FOUND_) /* Page Fault */
     {
+        std::cout
+            << pid << " Page Fault:\tframe for word " << viraddr
+            << " at time " << time_accessed << " not found"
+            << std::endl;
+
         Frame new_frame = Frame(to_visit_pageid, pid, time_accessed);
 
         bool is_insert_sucessful = insert_front(new_frame);
@@ -37,7 +43,8 @@ void Pager::reference_by_virtual_addr(int viraddr, int pid, int time_accessed)
     }
     else
     {
-        frame_table_[frame_loc].latest_access_time = time_accessed;
+        std::cout << "Frame located at " << frame_loc << std::endl;
+        frame_table_[frame_loc].set_latest_access_time(time_accessed);
     }
 }
 
@@ -86,21 +93,21 @@ int Pager::search_frame_with_oldest_access_time()
     int lowest_idx = FRAME_COUNT_ - 1;
     int oldest_access_time = -1;
 
-    if (frame_table_[lowest_idx].pageid == -10)
+    if (frame_table_[lowest_idx].page_id() == -10)
     {
         return WARN_FRAME_TABLE_EMPTY_;
     }
     else
     {
-        oldest_access_time = frame_table_[lowest_idx].latest_access_time;
+        oldest_access_time = frame_table_[lowest_idx].latest_access_time();
     }
 
     for (int i = lowest_idx; i >= 0; i--)
     {
-        if (frame_table_[i].latest_access_time < oldest_access_time)
+        if (frame_table_[i].latest_access_time() < oldest_access_time)
         {
             lowest_idx = i;
-            oldest_access_time = frame_table_[i].latest_access_time;
+            oldest_access_time = frame_table_[i].latest_access_time();
         }
     }
 
@@ -121,7 +128,7 @@ int Pager::search_frame(int pid, int pageid)
 
     for (int i = 0; i < FRAME_COUNT_; i++)
     {
-        if (frame_table_[i].pid == pid && frame_table_[i].pageid == pageid)
+        if (frame_table_[i].pid() == pid && frame_table_[i].page_id() == pageid)
             return i;
     }
     return ERR_PAGE_NOT_FOUND_;

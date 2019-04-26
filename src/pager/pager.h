@@ -12,6 +12,8 @@ enum AlgoName
     LRU
 };
 
+class Frame;
+
 class Pager
 {
 public:
