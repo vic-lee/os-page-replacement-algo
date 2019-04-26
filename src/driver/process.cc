@@ -38,11 +38,11 @@ void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager,
     if (remaining_ref_count_ == 0)
         return;
 
-    auto init_ref = [this]() -> int { return INIT_CONST_ * ID_ % SIZE_; };
+    auto init_ref = [this]() -> int { return (INIT_CONST_ * ID_) % SIZE_; };
     auto calc_rand_ref = [this](int rand) -> int { return (rand + SIZE_) % SIZE_; };
     auto calc_new_ref = [this](int delta) -> int { return (current_ref_addr_ + delta + SIZE_) % SIZE_; };
 
-    if (randref_num >= 0) /* If the randef_num provided is valid */
+    if (randref_num > RANDREF_UNDEF_)
         current_ref_addr_ = calc_rand_ref(randref_num);
 
     else if (current_ref_addr_ == -1) /* If the current ref address has not been initialized */
@@ -51,11 +51,13 @@ void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager,
     else /* Perform normal current address calculation based on the delta provided */
         current_ref_addr_ = calc_new_ref(delta);
 
+    std::cout << "Reference addr: " << current_ref_addr_ << std::endl; // DEBUG
+
     pager->reference_by_virtual_addr(current_ref_addr_, ID_, access_time);
 
     remaining_ref_count_--;
-    
-    std::cout << "Remaining ref count: " << remaining_ref_count_ << std::endl;  // DEBUG
+
+    std::cout << "Remaining ref count: " << remaining_ref_count_ << std::endl; // DEBUG
 }
 
 bool Process::should_terminate() const
@@ -71,7 +73,7 @@ int Process::id() const
 std::ostream &operator<<(std::ostream &stream, const Process &p)
 {
     stream << "Process " << p.ID_ << ":\t"
-           << " size " << p.SIZE_ << ", total reference count " << p.TOTAL_REF_COUNT_ 
+           << " size " << p.SIZE_ << ", total reference count " << p.TOTAL_REF_COUNT_
            << ", remaining reference count: " << p.remaining_ref_count_;
     return stream;
 }
