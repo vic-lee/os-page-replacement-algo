@@ -22,12 +22,12 @@ public:
     void reference_by_virtual_addr(int viraddr, int pid, int time_accessed);
 
 private:
-    bool can_insert();
+    bool can_insert() const;
     bool insert_front(Frame frame);
-    bool write_frame_at_index(int lowest_frame_id, Frame newframe);
+    bool write_frame_at_index(int idx, Frame newframe);
 
-    int search_frame(Frame target);
-    int search_least_recently_used_frame();
+    int search_frame(Frame target) const;
+    int search_least_recently_used_frame() const;
 
     void swap_frame(Frame newframe);
     void fifo_swap(Frame newframe);

@@ -78,7 +78,7 @@ void Pager::lru_swap(Frame newframe)
     write_frame_at_index(lru_frame_idx, newframe);
 }
 
-int Pager::search_least_recently_used_frame()
+int Pager::search_least_recently_used_frame() const
 {
     /**
      * Locate frame with the oldest (least recent) access time. 
@@ -90,6 +90,7 @@ int Pager::search_least_recently_used_frame()
 
     if (!frame_table_[oldest_idx].is_initialized())
     {
+        std::cout << "Warning: encounter empty frame table when searching LRU frame";
         return WARN_FRAME_TABLE_EMPTY_;
     }
 
@@ -102,12 +103,19 @@ int Pager::search_least_recently_used_frame()
     return oldest_idx;
 }
 
-bool Pager::write_frame_at_index(int lowest_frame_id, Frame newframe)
+bool Pager::write_frame_at_index(int idx, Frame newframe)
 {
-    return false;
+    Frame &oldframe = frame_table_[idx];
+
+    std::cout << "evicting page " << oldframe.page_id()
+              << " of process " << oldframe.pid() << " from frame " << idx;
+              
+    frame_table_[idx] = newframe;
+
+    return true;
 }
 
-int Pager::search_frame(Frame target)
+int Pager::search_frame(Frame target) const
 {
     /**
      * Attempts to find a frame by process ID and page ID. 
@@ -123,7 +131,7 @@ int Pager::search_frame(Frame target)
     return ERR_PAGE_NOT_FOUND_;
 }
 
-bool Pager::can_insert()
+bool Pager::can_insert() const
 {
     return next_insertion_idx_ >= 0;
 }
