@@ -2,15 +2,27 @@
 #define H_PAGER
 
 #include <iostream>
+#include <map>
 
 namespace pager
 {
+
 enum AlgoName
 {
     FIFO,
     RANDOM,
     LRU
 };
+
+struct ProcessStats
+{
+    int sum_residency_time;
+    int eviction_count;
+
+    ProcessStats(int sum_residency_time) : sum_residency_time(), eviction_count(1){};
+};
+
+typedef int pid;
 
 class Frame;
 
@@ -24,6 +36,8 @@ public:
 private:
     bool can_insert() const;
     bool insert_front(Frame frame);
+
+    void record_process_stats_before_eviction(Frame &oldframe, Frame &newframe);
     bool write_frame_at_index(int idx, Frame newframe);
 
     int search_frame(Frame target) const;
@@ -44,6 +58,8 @@ private:
 
     Frame *frame_table_;
     int next_insertion_idx_;
+
+    std::map<pid, ProcessStats> process_stats_map_;
 };
 
 } // namespace pager

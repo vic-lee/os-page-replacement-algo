@@ -119,6 +119,8 @@ bool Pager::write_frame_at_index(int idx, Frame newframe)
 {
     Frame &oldframe = frame_table_[idx];
 
+    record_process_stats_before_eviction(oldframe, newframe);
+
     if (dp::debug())
     {
         std::cout << "evicting page " << oldframe.page_id()
@@ -128,6 +130,25 @@ bool Pager::write_frame_at_index(int idx, Frame newframe)
     frame_table_[idx] = newframe;
 
     return true;
+}
+
+void Pager::record_process_stats_before_eviction(Frame &oldframe, Frame &newframe)
+{
+    int eviction_time = newframe.latest_access_time();
+    int residency_time = oldframe.residency_time(eviction_time);
+
+    auto target = process_stats_map_.find(oldframe.pid());
+
+    if (target == process_stats_map_.end())
+    {
+        ProcessStats ps = ProcessStats(residency_time);
+        process_stats_map_.insert(std::pair<pid, ProcessStats>(oldframe.pid(), ps));
+    }
+    else
+    {
+        target->second.eviction_count++;
+        target->second.sum_residency_time += residency_time;
+    }
 }
 
 int Pager::search_frame(Frame target) const
