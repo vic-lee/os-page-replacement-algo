@@ -25,6 +25,11 @@ Frame &Frame::operator=(Frame &rhs)
     return *this;
 }
 
+bool Frame::operator==(Frame &rhs)
+{
+    return (this->page_id_ == rhs.page_id_ && this->pid_ == rhs.pid_);
+}
+
 std::ostream &operator<<(std::ostream &stream, const Frame &fr)
 {
     stream << "Frame: \tprocess id " << fr.pid_ << " page id " << fr.page_id_;

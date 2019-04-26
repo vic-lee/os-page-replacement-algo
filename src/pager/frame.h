@@ -17,6 +17,7 @@ public:
     void set_latest_access_time(int t);
 
     Frame &operator=(Frame &rhs);
+    bool operator==(Frame &rhs);
     friend std::ostream &operator<<(std::ostream &stream, const Frame &fr);
 
 private:
