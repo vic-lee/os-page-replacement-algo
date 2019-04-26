@@ -5,15 +5,6 @@
 
 namespace pager
 {
-struct Frame
-{
-    Frame() : pageid(-10), pid(-10), latest_access_time(-10){};
-    Frame(int pageid, int pid, int access_time) : pageid(), pid(), latest_access_time(access_time){};
-    int pageid;
-    int pid;
-    int latest_access_time;
-};
-
 enum AlgoName
 {
     FIFO,
