@@ -19,7 +19,9 @@ struct ProcessStats
     int sum_residency_time;
     int page_fault_count;
 
+    ProcessStats() : sum_residency_time(0), page_fault_count(1){};
     ProcessStats(int sum_residency_time) : sum_residency_time(), page_fault_count(1){};
+
     friend std::ostream &operator<<(std::ostream &stream, const ProcessStats &p);
 };
 
@@ -38,6 +40,7 @@ private:
     bool can_insert() const;
     bool insert_front(Frame frame);
 
+    void init_process_stats(Frame &frame);
     void record_process_stats_before_eviction(Frame &oldframe, Frame &newframe);
     bool write_frame_at_index(int idx, Frame newframe);
 

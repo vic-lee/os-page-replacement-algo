@@ -15,6 +15,8 @@ Pager::Pager(int machine_size, int page_size, AlgoName algo_name)
 {
     frame_table_ = new Frame[FRAME_COUNT_];
     next_insertion_idx_ = FRAME_COUNT_ - 1;
+
+    std::cout << "Frame count is " << FRAME_COUNT_ << std::endl;
 }
 
 Pager::~Pager()
@@ -185,11 +187,20 @@ bool Pager::insert_front(Frame frame)
         if (dp::debug())
             std::cout << "using free frame " << next_insertion_idx_;
 
+        init_process_stats(frame);
+
         frame_table_[next_insertion_idx_] = frame;
         next_insertion_idx_--;
 
         return true;
     }
+}
+
+void Pager::init_process_stats(Frame &frame)
+{
+    int target_pid = frame.pid();
+    ProcessStats ps = ProcessStats();
+    process_stats_map_.insert(std::pair<pid, ProcessStats>(target_pid, ps));
 }
 
 void Pager::print_process_stats_map() const
