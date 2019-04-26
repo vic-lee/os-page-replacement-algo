@@ -75,7 +75,7 @@ void Pager::random_swap(Frame newframe)
 void Pager::lru_swap(Frame newframe)
 {
     int lowest_frame_id = search_frame_with_oldest_access_time();
-    
+
     write_frame_at_index(lowest_frame_id, newframe);
 }
 
@@ -137,9 +137,7 @@ bool Pager::insert_front(Frame frame)
     }
     else
     {
-        std::cout << "Inserting frame " << frame << std::endl;
         frame_table_[next_insertion_idx_] = frame;
-        std::cout << "Inserted frame " << frame_table_[next_insertion_idx_] << std::endl;
         next_insertion_idx_--;
         return true;
     }
