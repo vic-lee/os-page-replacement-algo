@@ -38,9 +38,9 @@ int RandIntReader::read_next_int()
     int nextint;
     infile_ >> nextint;
     
-    if (dp::debug())
+    if (dp::showrand())
         std::cout << "uses random number " << nextint << std::endl;
-        
+
     return nextint;
 }
 } // namespace io
