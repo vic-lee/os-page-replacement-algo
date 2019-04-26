@@ -35,7 +35,7 @@ std::ostream &operator<<(std::ostream &stream, const Frame &fr)
     return stream;
 }
 
-bool Frame::is_initialized() const { return pid_ == -10; }
+bool Frame::is_initialized() const { return pid_ != UNDEF_; }
 
 int Frame::pid() const { return pid_; }
 
