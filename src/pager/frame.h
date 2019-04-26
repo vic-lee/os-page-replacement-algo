@@ -12,6 +12,7 @@ public:
     Frame(int pageid, int pid, int access_time);
 
     bool is_initialized() const;
+    bool is_older_than(Frame &other) const;
 
     int pid() const;
     int page_id() const;

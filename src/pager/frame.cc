@@ -11,6 +11,11 @@ Frame::Frame() : page_id_(UNDEF_), pid_(UNDEF_), latest_access_time_(UNDEF_){};
 Frame::Frame(int pageid, int pid, int access_time)
     : page_id_(pageid), pid_(pid), latest_access_time_(access_time){};
 
+bool Frame::is_older_than(Frame &other) const
+{
+    return (is_initialized() && (latest_access_time_ < other.latest_access_time()));
+}
+
 Frame &Frame::operator=(Frame &rhs)
 {
     page_id_ = rhs.page_id_;
