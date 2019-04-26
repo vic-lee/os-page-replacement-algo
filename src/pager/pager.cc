@@ -135,15 +135,16 @@ bool Pager::write_frame_at_index(int idx, Frame newframe)
 
 void Pager::record_process_stats_before_eviction(Frame &oldframe, Frame &newframe)
 {
+    int target_pid = newframe.pid();
     int eviction_time = newframe.latest_access_time();
     int residency_time = oldframe.residency_time(eviction_time);
 
-    auto target = process_stats_map_.find(oldframe.pid());
+    auto target = process_stats_map_.find(target_pid);
 
     if (target == process_stats_map_.end())
     {
         ProcessStats ps = ProcessStats(residency_time);
-        process_stats_map_.insert(std::pair<pid, ProcessStats>(oldframe.pid(), ps));
+        process_stats_map_.insert(std::pair<pid, ProcessStats>(target_pid, ps));
     }
     else
     {
