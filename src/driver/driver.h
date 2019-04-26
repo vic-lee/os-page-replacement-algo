@@ -1,7 +1,7 @@
 #ifndef H_DRIVER
 #define H_DRIVER
 
-#include <list>
+#include <deque>
 
 #include "process.h"
 
@@ -44,7 +44,7 @@ private:
     JobMix *JOB_MIX_;
     pager::Pager *pager_;
 
-    std::list<Process> runnable_processes_;
+    std::deque<Process> runnable_processes_;
 };
 
 } // namespace driver

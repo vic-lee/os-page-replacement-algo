@@ -48,16 +48,11 @@ void Driver::roundrobin()
             runnable_processes_.push_back(front_process);
             runnable_processes_.pop_front();
             quantum_ctr = 0;
-
-            std::cout << "Quantum reached; popping front..." << std::endl;
-            debug_print_runnable_processes();
         }
 
-        Process current_process = runnable_processes_.front();
+        runnable_processes_.front().do_reference_of_type(next_ref_type, randref_num, pager_, runtime_);
 
-        current_process.do_reference_of_type(next_ref_type, randref_num, pager_, runtime_);
-
-        next_ref_type = determine_next_ref_type(current_process.id());
+        next_ref_type = determine_next_ref_type(runnable_processes_.front().id());
 
         if (next_ref_type == RAND_REF)
         {
@@ -66,7 +61,7 @@ void Driver::roundrobin()
 
         quantum_ctr++;
 
-        if (current_process.should_terminate())
+        if (runnable_processes_.front().should_terminate())
         {
             runnable_processes_.pop_front();
             quantum_ctr = 0;
