@@ -4,14 +4,14 @@
 
 namespace pager
 {
-Frame::Frame() : PAGE_ID_(-10), PID_(-10), latest_access_time_(-10){};
+Frame::Frame() : page_id_(-10), pid_(-10), latest_access_time_(-10){};
 
 Frame::Frame(int pageid, int pid, int access_time)
-    : PAGE_ID_(pageid), PID_(pid), latest_access_time_(access_time){};
+    : page_id_(pageid), pid_(pid), latest_access_time_(access_time){};
 
-int Frame::pid() const { return PID_; }
+int Frame::pid() const { return pid_; }
 
-int Frame::page_id() const { return PAGE_ID_; }
+int Frame::page_id() const { return page_id_; }
 
 int Frame::latest_access_time() const { return latest_access_time_; }
 
@@ -19,15 +19,15 @@ void Frame::set_latest_access_time(int t) { latest_access_time_ = t; }
 
 Frame &Frame::operator=(Frame &rhs)
 {
-    PAGE_ID_ = rhs.PAGE_ID_;
-    PID_ = rhs.PID_;
+    page_id_ = rhs.page_id_;
+    pid_ = rhs.pid_;
     latest_access_time_ = rhs.latest_access_time_;
     return *this;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Frame &fr)
 {
-    stream << "Frame: \tprocess id " << fr.PID_ << " page id " << fr.PAGE_ID_;
+    stream << "Frame: \tprocess id " << fr.pid_ << " page id " << fr.page_id_;
     return stream;
 }
 

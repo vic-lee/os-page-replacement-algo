@@ -20,8 +20,8 @@ public:
     friend std::ostream &operator<<(std::ostream &stream, const Frame &fr);
 
 private:
-    int PAGE_ID_;
-    int PID_;
+    int page_id_;
+    int pid_;
     int latest_access_time_;
 };
 } // namespace pager
