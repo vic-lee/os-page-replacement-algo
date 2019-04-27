@@ -50,7 +50,9 @@ void Driver::execute()
         next_ref_type = determine_next_ref_type(runnable_processes_.front().id());
 
         if (next_ref_type == RAND_REF)
-            runnable_processes_.front().read_next_randnum(randintreader_);
+        {
+            runnable_processes_.front().read_next_randnum(randintreader_);            
+        }
 
         quantum_ctr++;
 
