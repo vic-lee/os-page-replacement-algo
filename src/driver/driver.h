@@ -26,6 +26,7 @@ public:
     void execute();
 
 private:
+    void context_switch(int &qtm);
     bool is_all_process_terminated() const;
     RefType determine_next_ref_type(int pid);
 

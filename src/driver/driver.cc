@@ -36,12 +36,8 @@ void Driver::execute()
     while (!is_all_process_terminated())
     {
         if (quantum_ctr == QUANTUM_)
-        {
-            /* Perform context switch */
-            Process front_process = runnable_processes_.front();
-            runnable_processes_.push_back(front_process);
-            runnable_processes_.pop_front();
-            quantum_ctr = 0;
+        {   
+            context_switch(quantum_ctr);
         }
 
         runnable_processes_.front().do_reference(pager_, runtime_);
@@ -51,7 +47,7 @@ void Driver::execute()
 
         if (nextref == RAND_REF)
         {
-            runnable_processes_.front().read_next_randnum(randintreader_);            
+            runnable_processes_.front().read_next_randnum(randintreader_);
         }
 
         quantum_ctr++;
@@ -63,6 +59,14 @@ void Driver::execute()
         }
         runtime_++;
     }
+}
+
+void Driver::context_switch(int &qtm)
+{
+    Process front_process = runnable_processes_.front();
+    runnable_processes_.push_back(front_process);
+    runnable_processes_.pop_front();
+    qtm = 0;
 }
 
 bool Driver::is_all_process_terminated() const
