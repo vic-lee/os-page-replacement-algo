@@ -1,5 +1,5 @@
 #include <vector>
-#include "mrefspec.h"
+#include "memref.h"
 
 namespace driver
 {

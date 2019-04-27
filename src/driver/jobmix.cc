@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "jobmix.h"
-#include "mrefspec.h"
+#include "memref.h"
 
 namespace driver
 {

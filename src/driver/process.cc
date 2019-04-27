@@ -1,6 +1,6 @@
 #include "process.h"
 #include "jobmix.h"
-#include "mrefspec.h"
+#include "memref.h"
 #include "../pager/pager.h"
 #include "../io/randintreader.h"
 

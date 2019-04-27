@@ -2,7 +2,7 @@
 #define H_PROCESS
 
 #include <iostream>
-#include "mrefspec.h"
+#include "memref.h"
 
 namespace pager
 {

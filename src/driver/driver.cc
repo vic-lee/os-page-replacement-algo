@@ -2,7 +2,7 @@
 #include "../debug.h"
 #include "jobmix.h"
 #include "process.h"
-#include "mrefspec.h"
+#include "memref.h"
 #include "jobmixspec.h"
 #include "../pager/pager.h"
 #include "../io/randintreader.h"
@@ -58,7 +58,7 @@ void Driver::execute()
             runnable_processes_.pop_front();
             quantum_ctr = 0;
         }
-        
+
         runtime_++;
     }
 }
