@@ -25,7 +25,7 @@ JobMix::JobMix(int id, int proc_count, bool is_uniform, std::vector<JobMixPerPro
         jobmix.backward_ref_threshold = calc_back_ref_threshold(jobmix.sequential_ref_threshold,
                                                                 jobmix.backward_ref_dist);
         jobmix.jump_ref_threshold = calc_jmp_ref_threshold(jobmix.backward_ref_threshold,
-                                                           jobmix.sequential_ref_dist);
+                                                           jobmix.jump_ref_dist);
     }
 }
 
@@ -36,16 +36,24 @@ int JobMix::process_count() const
 
 RefType JobMix::next_ref_type(double quotient, int pid) const
 {
-    int access_idx = IS_UNIFORM_ ? 0 : pid;
+    int access_idx = IS_UNIFORM_ ? 0 : (pid - 1);
 
-    if (0.0 <= quotient <= JOBMIXES_[access_idx].sequential_ref_threshold)
+    if (0.0 <= quotient && quotient <= JOBMIXES_[access_idx].sequential_ref_threshold)
+    {
         return SEQ_REF;
+    }
     else if (quotient <= JOBMIXES_[access_idx].backward_ref_threshold)
+    {
         return BACK_REF;
+    }
     else if (quotient <= JOBMIXES_[access_idx].jump_ref_threshold)
+    {
         return JMP_REF;
+    }
     else
+    {
         return RAND_REF;
+    }
 }
 
 void JobMix::print() const
@@ -55,9 +63,12 @@ void JobMix::print() const
 
     for (auto &jobmix : JOBMIXES_)
     {
-        std::cout << "JobMix sequential ref dist (A): " << jobmix.sequential_ref_dist << "\n"
-                  << "JobMix backward ref dist (B): " << jobmix.backward_ref_dist << "\n"
-                  << "JobMix jump ref dist (C): " << jobmix.jump_ref_dist << "\n"
+        std::cout << "JobMix sequential ref dist (A): " << jobmix.sequential_ref_dist
+                  << "\tthreshold: " << jobmix.sequential_ref_threshold << "\n"
+                  << "JobMix backward ref dist (B): " << jobmix.backward_ref_dist
+                  << "\tthreshold: " << jobmix.backward_ref_threshold << "\n"
+                  << "JobMix jump ref dist (C): " << jobmix.jump_ref_dist
+                  << "\tthreshold: " << jobmix.jump_ref_threshold << "\n"
                   << "JobMix rand ref dist (D): " << jobmix.rand_ref_dist << "\n"
                   << std::endl;
     }
