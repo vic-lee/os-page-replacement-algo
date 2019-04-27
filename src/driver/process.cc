@@ -19,20 +19,31 @@ Process::Process(int id, int proc_size, int ref_count)
 
 void Process::do_reference_of_type(RefType ref_type, pager::Pager &pager, int access_time)
 {
-    if (ref_type == INIT_REF)
+    switch (ref_type)
+    {
+    case INIT_REF:
         do_next_reference(DELTA_UNDEF_, pager, access_time);
+        break;
 
-    else if (ref_type == SEQ_REF)
+    case SEQ_REF:
         do_next_reference(DELTA_SEQ_, pager, access_time);
+        break;
 
-    else if (ref_type == BACK_REF)
+    case BACK_REF:
         do_next_reference(DELTA_BACK_, pager, access_time);
+        break;
 
-    else if (ref_type == JMP_REF)
+    case JMP_REF:
         do_next_reference(DELTA_JMP_, pager, access_time);
+        break;
 
-    else if (ref_type == RAND_REF)
+    case RAND_REF:
         do_next_reference(DELTA_UNDEF_, pager, access_time);
+        break;
+
+    default:
+        break;
+    }
 }
 
 void Process::do_next_reference(int delta, pager::Pager &pager, int access_time)
