@@ -15,7 +15,10 @@ const int Process::DELTA_JMP_ = 4;
 
 Process::Process(int id, int proc_size, int ref_count)
     : ID_(id), SIZE_(proc_size), TOTAL_REF_COUNT_(ref_count),
-      current_ref_addr_(REF_ADDR_UNDEF_), next_randref_num_(RANDREF_UNDEF_), remaining_ref_count_(ref_count) {}
+      current_ref_addr_(REF_ADDR_UNDEF_),
+      next_randref_num_(RANDREF_UNDEF_),
+      next_ref_type_(INIT_REF),
+      remaining_ref_count_(ref_count) {}
 
 void Process::do_reference_of_type(RefType ref_type, pager::Pager &pager, int access_time)
 {
@@ -72,6 +75,11 @@ void Process::do_next_reference(int delta, pager::Pager &pager, int access_time)
 void Process::read_next_randnum(io::RandIntReader &randintreader)
 {
     next_randref_num_ = randintreader.read_next_int();
+}
+
+void Process::set_next_reftype(RefType nextref)
+{
+    next_ref_type_ = nextref;
 }
 
 bool Process::should_terminate() const

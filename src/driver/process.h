@@ -22,6 +22,7 @@ public:
     Process(int id, int proc_size, int ref_count);
     void do_reference_of_type(RefType ref_type, pager::Pager &pager, int access_time);
     void read_next_randnum(io::RandIntReader &randintreader);
+    void set_next_reftype(RefType nextref);
 
     bool should_terminate() const;
     int id() const;
@@ -47,6 +48,7 @@ private:
 
     int current_ref_addr_;
     int next_randref_num_;
+    RefType next_ref_type_;
     int remaining_ref_count_;
 };
 } // namespace driver
