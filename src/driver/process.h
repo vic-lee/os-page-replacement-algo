@@ -15,7 +15,7 @@ class Process
 {
 public:
     Process(int id, int proc_size, int ref_count);
-    void do_reference_of_type(RefType ref_type, int randref_num, pager::Pager *pager, int access_time);
+    void do_reference_of_type(RefType ref_type, int randref_num, pager::Pager &pager, int access_time);
 
     bool should_terminate() const;
     int id() const;
@@ -23,7 +23,7 @@ public:
     friend std::ostream &operator<<(std::ostream &stream, const Process &p);
 
 private:
-    void do_next_reference(int delta, int randref_num, pager::Pager *pager, int access_time);
+    void do_next_reference(int delta, int randref_num, pager::Pager &pager, int access_time);
 
     const int ID_;
     const int SIZE_;

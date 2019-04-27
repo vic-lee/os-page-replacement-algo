@@ -129,7 +129,7 @@ int main(int argc, char **argv)
     }
 
     pager::Pager pager = pager::Pager(MACHINE_SIZE, PAGE_SIZE, ALGO_NAME);
-    driver::Driver driver = driver::Driver(PROC_SIZE, JOB_MIX, REF_COUNT, &pager);
+    driver::Driver driver = driver::Driver(PROC_SIZE, JOB_MIX, REF_COUNT, pager);
 
     driver.roundrobin();
 

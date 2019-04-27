@@ -16,7 +16,7 @@ Process::Process(int id, int proc_size, int ref_count)
     : ID_(id), SIZE_(proc_size), TOTAL_REF_COUNT_(ref_count),
       current_ref_addr_(REF_ADDR_UNDEF_), remaining_ref_count_(ref_count) {}
 
-void Process::do_reference_of_type(RefType ref_type, int randref_num, pager::Pager *pager, int access_time)
+void Process::do_reference_of_type(RefType ref_type, int randref_num, pager::Pager &pager, int access_time)
 {
     if (ref_type == INIT_REF)
         do_next_reference(DELTA_UNDEF_, RANDREF_UNDEF_, pager, access_time);
@@ -34,7 +34,7 @@ void Process::do_reference_of_type(RefType ref_type, int randref_num, pager::Pag
         do_next_reference(DELTA_UNDEF_, randref_num, pager, access_time);
 }
 
-void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager, int access_time)
+void Process::do_next_reference(int delta, int randref_num, pager::Pager &pager, int access_time)
 {
     if (remaining_ref_count_ == 0)
         return;
@@ -52,7 +52,7 @@ void Process::do_next_reference(int delta, int randref_num, pager::Pager *pager,
     else
         current_ref_addr_ = calc_new_ref(delta);
 
-    pager->reference_by_virtual_addr(current_ref_addr_, ID_, access_time);
+    pager.reference_by_virtual_addr(current_ref_addr_, ID_, access_time);
 
     remaining_ref_count_--;
 }
