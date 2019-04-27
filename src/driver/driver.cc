@@ -1,4 +1,5 @@
 #include "driver.h"
+#include "../debug.h"
 #include "jobmix.h"
 #include "process.h"
 #include "mrefspec.h"
@@ -8,6 +9,8 @@
 
 namespace driver
 {
+namespace dp = demandpaging;
+
 const int Driver::QUANTUM_ = 3;
 
 Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager, io::RandIntReader &randintreader)
@@ -17,7 +20,11 @@ Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager, i
     /* Initialize job mix */
 
     JOB_MIX_ = driver::jobmixspecs::get_jobmix(JOB_MIX_DEF_);
-    // JOB_MIX_->print();
+
+    if (dp::debug())
+    {
+        JOB_MIX_->print();
+    }
 
     /* Initialize runnable processes */
 
