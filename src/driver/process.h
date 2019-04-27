@@ -26,7 +26,6 @@ class Process
 public:
     Process(int id, int proc_size, int ref_count);
     void do_reference(pager::Pager &pager, int access_time);
-    void read_next_randnum(io::RandIntReader &randintreader);
     void set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix);
 
     bool should_terminate() const;
@@ -35,6 +34,7 @@ public:
     friend std::ostream &operator<<(std::ostream &stream, const Process &p);
 
 private:
+    void read_next_randnum(io::RandIntReader &randintreader);
     void do_reference(int delta, pager::Pager &pager, int access_time);
 
     const int ID_;
