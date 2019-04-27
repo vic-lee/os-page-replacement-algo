@@ -21,7 +21,7 @@ class JobMix;
 class Driver
 {
 public:
-    Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager);
+    Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager, io::RandIntReader &randintreader);
     ~Driver();
     void execute();
 
@@ -38,7 +38,7 @@ private:
     static const int QUANTUM_;
     int runtime_;
 
-    io::RandIntReader *randintreader_;
+    io::RandIntReader &randintreader_;
     JobMix *JOB_MIX_;
     pager::Pager &pager_;
 

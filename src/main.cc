@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 
+#include "io/randintreader.h"
 #include "driver/driver.h"
 #include "pager/pager.h"
 #include "debug.h"
@@ -128,8 +129,10 @@ int main(int argc, char **argv)
                   << std::endl;
     }
 
-    pager::Pager pager = pager::Pager(MACHINE_SIZE, PAGE_SIZE, ALGO_NAME);
-    driver::Driver driver = driver::Driver(PROC_SIZE, JOB_MIX, REF_COUNT, pager);
+    io::RandIntReader randintreader;
+
+    pager::Pager pager = pager::Pager(MACHINE_SIZE, PAGE_SIZE, ALGO_NAME, randintreader);
+    driver::Driver driver = driver::Driver(PROC_SIZE, JOB_MIX, REF_COUNT, pager, randintreader);
 
     driver.execute();
 

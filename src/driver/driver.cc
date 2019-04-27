@@ -10,11 +10,10 @@ namespace driver
 {
 const int Driver::QUANTUM_ = 3;
 
-Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager)
-    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix), REF_COUNT_(ref_count), runtime_(1), pager_(pager)
+Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager, io::RandIntReader &randintreader)
+    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix),
+      REF_COUNT_(ref_count), runtime_(1), randintreader_(randintreader), pager_(pager)
 {
-    randintreader_ = new io::RandIntReader();
-
     /* Initialize job mix */
 
     JOB_MIX_ = driver::jobmixspecs::get_jobmix(JOB_MIX_DEF_);
@@ -28,10 +27,7 @@ Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager)
         runnable_processes_.push_back(Process(id, PROC_SIZE_, REF_COUNT_));
 }
 
-Driver::~Driver()
-{
-    delete randintreader_;
-}
+Driver::~Driver() {}
 
 void Driver::execute()
 {
@@ -56,7 +52,7 @@ void Driver::execute()
 
         if (next_ref_type == RAND_REF)
         {
-            randref_num = randintreader_->read_next_int();
+            randref_num = randintreader_.read_next_int();
         }
 
         quantum_ctr++;
@@ -77,7 +73,7 @@ bool Driver::is_all_process_terminated() const
 
 RefType Driver::determine_next_ref_type(int pid)
 {
-    double quotient = randintreader_->calc_next_probability();
+    double quotient = randintreader_.calc_next_probability();
     RefType reftype = JOB_MIX_->next_ref_type(quotient, pid);
     return reftype;
 }

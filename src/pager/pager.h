@@ -4,6 +4,11 @@
 #include <iostream>
 #include <map>
 
+namespace io
+{
+class RandIntReader;
+}
+
 namespace pager
 {
 
@@ -34,7 +39,7 @@ class Frame;
 class Pager
 {
 public:
-    Pager(int machine_size, int page_size, AlgoName algo_name);
+    Pager(int machine_size, int page_size, AlgoName algo_name, io::RandIntReader &randintreader);
     ~Pager();
     void reference_by_virtual_addr(int viraddr, int pid, int time_accessed);
 
@@ -64,6 +69,7 @@ private:
     static const int ERR_PAGE_NOT_FOUND_;
     static const int WARN_FRAME_TABLE_EMPTY_;
 
+    io::RandIntReader &randintreader_;
     Frame *frame_table_;
     int next_insertion_idx_;
 
