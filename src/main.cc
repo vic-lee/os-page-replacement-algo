@@ -118,16 +118,13 @@ int main(int argc, char **argv)
              JOB_MIX, REF_COUNT, ALGO_NAME,
              dp::debug_status, dp::show_rand) = uin;
 
-    if (dp::debug())
-    {
-        std::cout << "\nMachine size is " << MACHINE_SIZE << "\n"
-                  << "Page size is " << PAGE_SIZE << "\n"
-                  << "Process size is " << PROC_SIZE << "\n"
-                  << "Reference count is " << REF_COUNT << "\n"
-                  << "Name of algorithm is " << ALGO_NAME << "\n"
-                  << "Debug mode is " << dp::debug_status << "\n"
-                  << std::endl;
-    }
+    std::cout << "\nMachine size is " << MACHINE_SIZE << "\n"
+              << "Page size is " << PAGE_SIZE << "\n"
+              << "Process size is " << PROC_SIZE << "\n"
+              << "Reference count is " << REF_COUNT << "\n"
+              << "Name of algorithm is " << ALGO_NAME << "\n"
+              << "Debug mode is " << dp::debug_status << "\n"
+              << std::endl;
 
     io::RandIntReader randintreader;
 
