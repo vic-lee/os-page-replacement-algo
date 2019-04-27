@@ -32,10 +32,9 @@ Driver::~Driver() {}
 void Driver::execute()
 {
     int quantum_ctr = 0;
-    int randref_num = -10;
     RefType next_ref_type = INIT_REF;
 
-    while (!is_all_process_terminated() && runtime_ < 111)
+    while (!is_all_process_terminated())
     {
         if (quantum_ctr == QUANTUM_)
         {
@@ -46,14 +45,12 @@ void Driver::execute()
             quantum_ctr = 0;
         }
 
-        runnable_processes_.front().do_reference_of_type(next_ref_type, randref_num, pager_, runtime_);
+        runnable_processes_.front().do_reference_of_type(next_ref_type, pager_, runtime_);
 
         next_ref_type = determine_next_ref_type(runnable_processes_.front().id());
 
         if (next_ref_type == RAND_REF)
-        {
-            randref_num = randintreader_.read_next_int();
-        }
+            runnable_processes_.front().read_next_randnum(randintreader_);
 
         quantum_ctr++;
 

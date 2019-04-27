@@ -9,13 +9,19 @@ namespace pager
 class Pager;
 }
 
+namespace io
+{
+class RandIntReader;
+}
+
 namespace driver
 {
 class Process
 {
 public:
     Process(int id, int proc_size, int ref_count);
-    void do_reference_of_type(RefType ref_type, int randref_num, pager::Pager &pager, int access_time);
+    void do_reference_of_type(RefType ref_type, pager::Pager &pager, int access_time);
+    void read_next_randnum(io::RandIntReader &randintreader);
 
     bool should_terminate() const;
     int id() const;
@@ -23,7 +29,7 @@ public:
     friend std::ostream &operator<<(std::ostream &stream, const Process &p);
 
 private:
-    void do_next_reference(int delta, int randref_num, pager::Pager &pager, int access_time);
+    void do_next_reference(int delta, pager::Pager &pager, int access_time);
 
     const int ID_;
     const int SIZE_;
@@ -40,6 +46,7 @@ private:
     static const int REF_ADDR_UNDEF_; /* Current reference address undefined (uninitialized) */
 
     int current_ref_addr_;
+    int next_randref_num_;
     int remaining_ref_count_;
 };
 } // namespace driver
