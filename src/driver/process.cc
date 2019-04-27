@@ -1,4 +1,5 @@
 #include "process.h"
+#include "jobmix.h"
 #include "mrefspec.h"
 #include "../pager/pager.h"
 #include "../io/randintreader.h"
@@ -77,9 +78,13 @@ void Process::read_next_randnum(io::RandIntReader &randintreader)
     next_randref_num_ = randintreader.read_next_int();
 }
 
-void Process::set_next_reftype(RefType nextref)
+void Process::set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix)
 {
-    next_ref_type_ = nextref;
+    double quotient = randintreader.calc_next_probability();
+    next_ref_type_ = jobmix->next_ref_type(quotient, ID_);
+
+    if (next_ref_type_ == RAND_REF)
+        read_next_randnum(randintreader);
 }
 
 bool Process::should_terminate() const

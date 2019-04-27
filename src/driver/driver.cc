@@ -42,13 +42,7 @@ void Driver::execute()
 
         runnable_processes_.front().do_reference(pager_, runtime_);
 
-        RefType nextref = determine_next_ref_type(runnable_processes_.front().id());
-        runnable_processes_.front().set_next_reftype(nextref);
-
-        if (nextref == RAND_REF)
-        {
-            runnable_processes_.front().read_next_randnum(randintreader_);
-        }
+        runnable_processes_.front().set_next_ref_type(randintreader_, JOB_MIX_);
 
         quantum_ctr++;
 
@@ -72,13 +66,6 @@ void Driver::context_switch(int &qtm)
 bool Driver::is_all_process_terminated() const
 {
     return runnable_processes_.size() == 0;
-}
-
-RefType Driver::determine_next_ref_type(int pid)
-{
-    double quotient = randintreader_.calc_next_probability();
-    RefType reftype = JOB_MIX_->next_ref_type(quotient, pid);
-    return reftype;
 }
 
 void Driver::debug_print_runnable_processes() const

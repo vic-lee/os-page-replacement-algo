@@ -16,13 +16,18 @@ class RandIntReader;
 
 namespace driver
 {
+class JobMix;
+}
+
+namespace driver
+{
 class Process
 {
 public:
     Process(int id, int proc_size, int ref_count);
     void do_reference(pager::Pager &pager, int access_time);
     void read_next_randnum(io::RandIntReader &randintreader);
-    void set_next_reftype(RefType nextref);
+    void set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix);
 
     bool should_terminate() const;
     int id() const;
