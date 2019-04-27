@@ -62,11 +62,11 @@ void Process::do_reference(int delta, pager::Pager &pager, int access_time)
     if (current_ref_addr_ == REF_ADDR_UNDEF_)
         current_ref_addr_ = init_ref();
 
+    else if (delta != DELTA_UNDEF_)
+        current_ref_addr_ = calc_new_ref(delta);
+
     else if (next_randref_num_ > RANDREF_UNDEF_)
         current_ref_addr_ = calc_rand_ref(next_randref_num_);
-
-    else
-        current_ref_addr_ = calc_new_ref(delta);
 
     pager.reference_by_virtual_addr(current_ref_addr_, ID_, access_time);
 
