@@ -119,7 +119,7 @@ int Pager::search_least_recently_used_frame() const
 
     for (int i = oldest_idx; i >= 0; i--)
     {
-        if (frame_table_[i].is_older_than(frame_table_[oldest_idx]))
+        if (frame_table_[i].is_less_recently_used_than(frame_table_[oldest_idx]))
             oldest_idx = i;
     }
 
