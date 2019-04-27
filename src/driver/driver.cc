@@ -33,7 +33,7 @@ Driver::~Driver()
     delete randintreader_;
 }
 
-void Driver::roundrobin()
+void Driver::execute()
 {
     int quantum_ctr = 0;
     int randref_num = -10;

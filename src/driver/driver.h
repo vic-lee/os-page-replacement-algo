@@ -23,7 +23,7 @@ class Driver
 public:
     Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager);
     ~Driver();
-    void roundrobin();
+    void execute();
 
 private:
     bool is_all_process_terminated() const;
