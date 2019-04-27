@@ -1,4 +1,5 @@
 #include <tuple>
+#include <chrono>
 #include <iostream>
 #include <algorithm>
 
@@ -16,6 +17,26 @@ static bool show_rand;
 
 bool debug() { return debug_status; }
 bool showrand() { return show_rand; }
+
+struct Timer
+{
+    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
+    std::chrono::duration<float> duration;
+
+    Timer()
+    {
+        start = std::chrono::high_resolution_clock::now();
+    }
+
+    ~Timer()
+    {
+        end = std::chrono::high_resolution_clock::now();
+        duration = end - start;
+
+        float ms = duration.count() * 1000.0f;
+        std::cout << "\nProgram execution time " << ms << "ms\n";
+    }
+};
 
 pager::AlgoName map_to_algoname(std::string raw_algoname)
 {
@@ -84,6 +105,8 @@ UserInput read_input(int argc, char **argv)
 int main(int argc, char **argv)
 {
     namespace dp = demandpaging;
+
+    dp::Timer timer;
 
     int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT;
     pager::AlgoName ALGO_NAME;
