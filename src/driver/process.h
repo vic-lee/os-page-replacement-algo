@@ -26,7 +26,7 @@ class Process
 public:
     Process(int id, int proc_size, int ref_count);
     void do_reference(pager::Pager &pager, int access_time);
-    void set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix);
+    void compute_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix);
 
     bool should_terminate() const;
     int id() const;
