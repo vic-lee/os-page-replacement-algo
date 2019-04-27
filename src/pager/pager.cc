@@ -79,6 +79,9 @@ void Pager::swap_frame(Frame newframe)
 
 void Pager::fifo_swap(Frame newframe)
 {
+    int i_oldest_frame = search_oldest_frame();
+    
+    write_frame_at_index(i_oldest_frame, newframe);
 }
 
 void Pager::random_swap(Frame newframe)
@@ -86,9 +89,9 @@ void Pager::random_swap(Frame newframe)
     auto calc_evict_frame = [this](int randnum) -> int { return (randnum % FRAME_COUNT_); };
 
     int randnum = randintreader_.read_next_int();
-    
+
     int evict_frame_idx = calc_evict_frame(randnum);
-    
+
     write_frame_at_index(evict_frame_idx, newframe);
 }
 
@@ -107,9 +110,9 @@ int Pager::search_least_recently_used_frame() const
      * If the frame table is empty, a warning is raised.
      */
 
-    int oldest_idx = FRAME_COUNT_ - 1;
+    int i_lru = FRAME_COUNT_ - 1;
 
-    if (!frame_table_[oldest_idx].is_initialized())
+    if (!frame_table_[i_lru].is_initialized())
     {
         if (dp::debug())
             std::cout << "WARNING: encounter empty frame table when searching LRU frame";
@@ -117,13 +120,34 @@ int Pager::search_least_recently_used_frame() const
         return WARN_FRAME_TABLE_EMPTY_;
     }
 
-    for (int i = oldest_idx; i >= 0; i--)
+    for (int i = i_lru; i >= 0; i--)
     {
-        if (frame_table_[i].is_less_recently_used_than(frame_table_[oldest_idx]))
-            oldest_idx = i;
+        if (frame_table_[i].is_less_recently_used_than(frame_table_[i_lru]))
+            i_lru = i;
     }
 
-    return oldest_idx;
+    return i_lru;
+}
+
+int Pager::search_oldest_frame() const
+{
+    int i_oldest = FRAME_COUNT_ - 1;
+
+    if (!frame_table_[i_oldest].is_initialized())
+    {
+        if (dp::debug())
+            std::cout << "WARNING: encounter empty frame table when searching LRU frame";
+
+        return WARN_FRAME_TABLE_EMPTY_;
+    }
+
+    for (int i = i_oldest; i >= 0; i--)
+    {
+        if (frame_table_[i].is_older_than(frame_table_[i_oldest]))
+            i_oldest = i;
+    }
+
+    return i_oldest;
 }
 
 bool Pager::write_frame_at_index(int idx, Frame newframe)

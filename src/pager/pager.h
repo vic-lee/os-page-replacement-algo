@@ -52,6 +52,7 @@ private:
     bool write_frame_at_index(int idx, Frame newframe);
 
     int search_frame(Frame target) const;
+    int search_oldest_frame() const;
     int search_least_recently_used_frame() const;
 
     void swap_frame(Frame newframe);

@@ -12,6 +12,7 @@ public:
     Frame(int pageid, int pid, int access_time);
 
     bool is_initialized() const;
+    bool is_older_than(const Frame &other) const;
     bool is_less_recently_used_than(Frame &other) const;
 
     int pid() const;
