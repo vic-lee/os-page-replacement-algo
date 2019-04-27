@@ -83,6 +83,13 @@ void Pager::fifo_swap(Frame newframe)
 
 void Pager::random_swap(Frame newframe)
 {
+    auto calc_evict_frame = [this](int randnum) -> int { return (randnum % FRAME_COUNT_); };
+
+    int randnum = randintreader_.read_next_int();
+    
+    int evict_frame_idx = calc_evict_frame(randnum);
+    
+    write_frame_at_index(evict_frame_idx, newframe);
 }
 
 void Pager::lru_swap(Frame newframe)
@@ -234,8 +241,8 @@ std::ostream &operator<<(std::ostream &stream, const ProcessStats &p)
     if (p.page_fault_count == 0)
         stream << "\tavg residency N/A";
     else
-        stream << "\tavg residency " << (p.sum_residency_time / (float) p.page_fault_count);
-    
+        stream << "\tavg residency " << (p.sum_residency_time / (float)p.page_fault_count);
+
     return stream;
 }
 
