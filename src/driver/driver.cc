@@ -44,12 +44,12 @@ void Driver::execute()
             quantum_ctr = 0;
         }
 
-        runnable_processes_.front().do_reference_of_type(next_ref_type, pager_, runtime_);
+        runnable_processes_.front().do_reference(pager_, runtime_);
 
         RefType nextref = determine_next_ref_type(runnable_processes_.front().id());
         runnable_processes_.front().set_next_reftype(nextref);
 
-        if (next_ref_type == RAND_REF)
+        if (nextref == RAND_REF)
         {
             runnable_processes_.front().read_next_randnum(randintreader_);            
         }

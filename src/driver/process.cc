@@ -20,9 +20,9 @@ Process::Process(int id, int proc_size, int ref_count)
       next_ref_type_(INIT_REF),
       remaining_ref_count_(ref_count) {}
 
-void Process::do_reference_of_type(RefType ref_type, pager::Pager &pager, int access_time)
+void Process::do_reference(pager::Pager &pager, int access_time)
 {
-    switch (ref_type)
+    switch (next_ref_type_)
     {
     case INIT_REF:
         do_next_reference(DELTA_UNDEF_, pager, access_time);

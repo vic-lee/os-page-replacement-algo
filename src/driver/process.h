@@ -20,7 +20,7 @@ class Process
 {
 public:
     Process(int id, int proc_size, int ref_count);
-    void do_reference_of_type(RefType ref_type, pager::Pager &pager, int access_time);
+    void do_reference(pager::Pager &pager, int access_time);
     void read_next_randnum(io::RandIntReader &randintreader);
     void set_next_reftype(RefType nextref);
 
