@@ -13,7 +13,7 @@ public:
 
     bool is_initialized() const;
     bool is_older_than(const Frame &other) const;
-    bool is_less_recently_used_than(Frame &other) const;
+    bool is_less_recently_used_than(const Frame &other) const;
 
     int pid() const;
     int page_id() const;

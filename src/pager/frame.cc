@@ -16,7 +16,7 @@ bool Frame::is_older_than(const Frame &other) const
     return (is_initialized() && (time_loaded_ < other.time_loaded_));
 }
 
-bool Frame::is_less_recently_used_than(Frame &other) const
+bool Frame::is_less_recently_used_than(const Frame &other) const
 {
     return (is_initialized() && (latest_access_time_ < other.latest_access_time()));
 }
