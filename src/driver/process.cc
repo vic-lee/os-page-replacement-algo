@@ -25,23 +25,23 @@ void Process::do_reference(pager::Pager &pager, int access_time)
     switch (next_ref_type_)
     {
     case INIT_REF:
-        do_next_reference(DELTA_UNDEF_, pager, access_time);
+        do_reference(DELTA_UNDEF_, pager, access_time);
         break;
 
     case SEQ_REF:
-        do_next_reference(DELTA_SEQ_, pager, access_time);
+        do_reference(DELTA_SEQ_, pager, access_time);
         break;
 
     case BACK_REF:
-        do_next_reference(DELTA_BACK_, pager, access_time);
+        do_reference(DELTA_BACK_, pager, access_time);
         break;
 
     case JMP_REF:
-        do_next_reference(DELTA_JMP_, pager, access_time);
+        do_reference(DELTA_JMP_, pager, access_time);
         break;
 
     case RAND_REF:
-        do_next_reference(DELTA_UNDEF_, pager, access_time);
+        do_reference(DELTA_UNDEF_, pager, access_time);
         break;
 
     default:
@@ -49,7 +49,7 @@ void Process::do_reference(pager::Pager &pager, int access_time)
     }
 }
 
-void Process::do_next_reference(int delta, pager::Pager &pager, int access_time)
+void Process::do_reference(int delta, pager::Pager &pager, int access_time)
 {
     if (remaining_ref_count_ == 0)
         return;

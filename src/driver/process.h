@@ -30,7 +30,7 @@ public:
     friend std::ostream &operator<<(std::ostream &stream, const Process &p);
 
 private:
-    void do_next_reference(int delta, pager::Pager &pager, int access_time);
+    void do_reference(int delta, pager::Pager &pager, int access_time);
 
     const int ID_;
     const int SIZE_;
