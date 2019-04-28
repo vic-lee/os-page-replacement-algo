@@ -8,7 +8,7 @@ namespace memref
 class RandomReference : public Reference
 {
 public:
-    RandomReference(int pid);
+    RandomReference(int pid, int proc_size);
 };
 
 } // namespace memref
