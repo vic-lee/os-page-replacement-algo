@@ -29,7 +29,11 @@ pager::AlgoName map_to_algoname(std::string raw_algoname)
     }
 }
 
-UserInput read_input(int argc, char **argv)
+UserInput read_predefined_input(int argc, char **argv)
+{
+}
+
+UserInput read_custom_input(int argc, char **argv)
 {
     int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT = -1;
     pager::AlgoName ALGO_NAME;
@@ -72,6 +76,26 @@ UserInput read_input(int argc, char **argv)
     return std::make_tuple(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE,
                            JOB_MIX, REF_COUNT, ALGO_NAME,
                            DEBUG, SHOWRAND);
+}
+
+UserInput read_input(int argc, char **argv)
+{
+    if (argc >= 2 && argc <= 3)
+    {
+        return read_predefined_input(argc, argv);
+    }
+    else if (argc >= 7 && argc <= 9)
+    {
+        return read_custom_input(argc, argv);
+    }
+    else
+    {
+        std::cout
+            << "You did not enter the right number of parameters. Terminating..."
+            << std::endl;
+            
+        exit(10);
+    }
 }
 
 } // namespace demandpaging
