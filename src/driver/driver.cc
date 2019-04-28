@@ -49,7 +49,7 @@ void Driver::execute()
 
         runnable_processes_.front().do_reference(pager_, runtime_);
 
-        runnable_processes_.front().compute_next_ref_type(randintreader_, JOB_MIX_);
+        runnable_processes_.front().set_next_ref_type(randintreader_, JOB_MIX_);
 
         quantum_ctr++;
 

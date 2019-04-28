@@ -78,7 +78,7 @@ void Process::read_next_randnum(io::RandIntReader &randintreader)
     next_randref_num_ = randintreader.read_next_int();
 }
 
-void Process::compute_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix)
+void Process::set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix)
 {
     double quotient = randintreader.calc_next_probability();
     next_ref_type_ = jobmix->next_ref_type(quotient, ID_);
