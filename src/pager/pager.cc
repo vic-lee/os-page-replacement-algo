@@ -22,7 +22,7 @@ Pager::Pager(int machine_size, int page_size, AlgoName algo_name, io::RandIntRea
 
 Pager::~Pager()
 {
-    // print_process_stats_map();
+    print_process_stats_map();
     delete[] frame_table_;
 }
 
@@ -80,7 +80,7 @@ void Pager::swap_frame(Frame newframe)
 void Pager::fifo_swap(Frame newframe)
 {
     int i_oldest_frame = search_oldest_frame();
-    
+
     write_frame_at_index(i_oldest_frame, newframe);
 }
 
@@ -154,7 +154,7 @@ bool Pager::write_frame_at_index(int idx, Frame newframe)
 {
     Frame &oldframe = frame_table_[idx];
 
-    // record_process_stats_before_eviction(oldframe, newframe);
+    record_process_stats_before_eviction(oldframe, newframe);
 
     if (dp::debug())
     {
@@ -186,7 +186,7 @@ void Pager::record_process_stats_before_eviction(Frame &leaving_frame, Frame &in
     {
         leaving_process_stats->second.sum_residency_time += residency_time;
     }
-    std::cout << "Incr process " << old_pid << "'s restime by " << residency_time << "; ";
+    // std::cout << "Incr process " << old_pid << "'s restime by " << residency_time << "; ";
 
     auto incoming_process_stats = process_stats_map_.find(new_pid);
 
@@ -200,7 +200,7 @@ void Pager::record_process_stats_before_eviction(Frame &leaving_frame, Frame &in
     {
         incoming_process_stats->second.page_fault_count++;
     }
-    std::cout << "Incr process " << new_pid << "'s page fault; ";
+    // std::cout << "Incr process " << new_pid << "'s page fault; ";
 }
 
 int Pager::search_frame(Frame target) const
@@ -235,7 +235,7 @@ bool Pager::insert_front(Frame frame)
         if (dp::debug())
             std::cout << "using free frame " << next_insertion_idx_;
 
-        // init_process_stats(frame);
+        init_process_stats(frame);
 
         frame_table_[next_insertion_idx_] = frame;
         next_insertion_idx_--;
@@ -254,18 +254,22 @@ void Pager::init_process_stats(Frame &frame)
 
 void Pager::print_process_stats_map() const
 {
+    printf("\n");
+    
     for (auto pstat : process_stats_map_)
-        std::cout << "Process " << pstat.first << "\t" << pstat.second << std::endl;
+        std::cout << "Process " << pstat.first << " had " << pstat.second << std::endl;
 }
 
 std::ostream &operator<<(std::ostream &stream, const ProcessStats &p)
 {
-    stream << "Total residency time " << p.sum_residency_time << "\t# evictions " << p.page_fault_count;
+    stream << p.page_fault_count << " faults";
 
-    if (p.page_fault_count == 0)
-        stream << "\tavg residency N/A";
+    if (p.page_fault_count == 1)
+        stream << "\n\tWith no evictions, the average residence is undefined.";
     else
-        stream << "\tavg residency " << (p.sum_residency_time / (float)p.page_fault_count);
+        stream << " and "
+               << (p.sum_residency_time / (float)(p.page_fault_count - 1))
+               << " average residency.";
 
     return stream;
 }

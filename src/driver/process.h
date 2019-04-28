@@ -60,7 +60,7 @@ private:
     int current_ref_addr_;
     int next_randref_num_;
     RefType next_ref_type_;
-    memref::Reference *p_nextref_;
+    // memref::Reference *p_nextref_;
     int remaining_ref_count_;
 };
 } // namespace driver
