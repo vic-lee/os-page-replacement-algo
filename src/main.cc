@@ -1,5 +1,4 @@
 #include <tuple>
-#include <chrono>
 #include <iostream>
 #include <algorithm>
 
@@ -12,32 +11,6 @@ namespace demandpaging
 {
 
 typedef std::tuple<int, int, int, int, int, pager::AlgoName, bool, bool> UserInput;
-
-static bool debug_status;
-static bool show_rand;
-
-bool debug() { return debug_status; }
-bool showrand() { return show_rand; }
-
-struct Timer
-{
-    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-    std::chrono::duration<float> duration;
-
-    Timer()
-    {
-        start = std::chrono::high_resolution_clock::now();
-    }
-
-    ~Timer()
-    {
-        end = std::chrono::high_resolution_clock::now();
-        duration = end - start;
-
-        float ms = duration.count() * 1000.0f;
-        std::cout << "\nProgram execution time " << ms << "ms\n";
-    }
-};
 
 pager::AlgoName map_to_algoname(std::string raw_algoname)
 {
