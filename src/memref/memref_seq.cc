@@ -1,7 +1,5 @@
 #include "memref_seq.h"
 
-#include "../pager/pager.h"
-
 namespace memref
 {
 
