@@ -8,7 +8,7 @@ namespace memref
 class SequentialReference : public Reference
 {
 public:
-    SequentialReference(int pid, int proc_size);
+    SequentialReference(int pid);
 };
 
 } // namespace memref

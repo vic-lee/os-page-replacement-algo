@@ -8,8 +8,8 @@ namespace memref
 class RandomReference : public Reference
 {
 public:
-    RandomReference(int pid, int proc_size);
-    void simulate(int prior_refnum, pager::Pager &pager, int time_accessed) override;
+    RandomReference(int pid);
+    void simulate(int prior_refnum, int proc_size, pager::Pager &pager, int time_accessed) override;
 };
 
 } // namespace memref

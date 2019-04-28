@@ -8,8 +8,8 @@ namespace memref
 class InitialReference : public Reference
 {
 public:
-    InitialReference(int pid, int proc_size);
-    void simulate(int prior_refnum, pager::Pager &pager, int time_accessed) override;
+    InitialReference(int pid);
+    void simulate(int prior_refnum, int proc_size, pager::Pager &pager, int time_accessed) override;
 };
 
 } // namespace memref

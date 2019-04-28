@@ -3,6 +3,6 @@
 namespace memref
 {
 
-SequentialReference::SequentialReference(int pid, int proc_size) : Reference(pid, proc_size, 1) {}
+SequentialReference::SequentialReference(int pid) : Reference(pid, 1) {}
 
 }

@@ -8,7 +8,7 @@ namespace memref
 class JumpReference : public Reference
 {
 public:
-    JumpReference(int pid, int proc_size);
+    JumpReference(int pid);
 };
 
 } // namespace memref

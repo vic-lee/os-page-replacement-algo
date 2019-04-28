@@ -5,11 +5,11 @@
 namespace memref
 {
 
-InitialReference::InitialReference(int pid, int proc_size) : Reference(pid, proc_size, 1) {}
+InitialReference::InitialReference(int pid) : Reference(pid, 1) {}
 
-void InitialReference::simulate(int prior_refnum, pager::Pager &pager, int time_accessed)
+void InitialReference::simulate(int prior_refnum, int proc_size, pager::Pager &pager, int time_accessed)
 {
-    int viraddr = (INIT_FACTOR_ * pid_) % proc_size_;
+    int viraddr = (INIT_FACTOR_ * pid_) % proc_size;
 
     pager.reference_by_virtual_addr(viraddr, pid_, time_accessed);
 }
