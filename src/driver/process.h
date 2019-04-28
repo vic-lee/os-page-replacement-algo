@@ -2,8 +2,10 @@
 #define H_PROCESS
 
 #include <iostream>
+#include <memory>
 
 #include "memref.h"
+#include "../memref/memref.h"
 
 namespace pager
 {
@@ -18,11 +20,6 @@ class RandIntReader;
 namespace driver
 {
 class JobMix;
-}
-
-namespace memref
-{
-class Reference;
 }
 
 namespace driver
@@ -60,7 +57,7 @@ private:
     int current_ref_addr_;
     int next_randref_num_;
     RefType next_ref_type_;
-    memref::Reference *p_nextref_;
+    // memref::Reference nextref_;
     int remaining_ref_count_;
 };
 } // namespace driver

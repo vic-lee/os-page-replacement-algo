@@ -12,11 +12,12 @@ class Reference
 {
 public:
     Reference(int pid, int delta);
-    virtual void simulate(int prior_refnum, int proc_size, pager::Pager &pager, int time_accessed) = 0;
+    Reference &operator=(Reference &rhs);
+    virtual void simulate(int prior_refnum, int proc_size, pager::Pager &pager, int time_accessed);
 
 protected:
     int pid_;
     int delta_;
-    const int INIT_FACTOR_;
+    static const int INIT_FACTOR_;
 };
 } // namespace memref

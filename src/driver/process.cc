@@ -1,7 +1,12 @@
 #include "process.h"
+
+#include <memory>
+
 #include "jobmix.h"
 #include "memref.h"
 #include "../pager/pager.h"
+#include "../memref/memref.h"
+#include "../memref/memref_init.h"
 #include "../io/randintreader.h"
 
 namespace driver

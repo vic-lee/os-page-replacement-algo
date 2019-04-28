@@ -9,6 +9,7 @@ class InitialReference : public Reference
 {
 public:
     InitialReference(int pid);
+    InitialReference &operator=(Reference &rhs);
     void simulate(int prior_refnum, int proc_size, pager::Pager &pager, int time_accessed) override;
 };
 

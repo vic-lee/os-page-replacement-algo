@@ -1,6 +1,11 @@
 #include <vector>
 #include "memref.h"
 
+namespace memref
+{
+class Reference;
+}
+
 namespace driver
 {
 struct JobMixPerProcess
@@ -20,7 +25,10 @@ class JobMix
 public:
     JobMix(int id, int proc_count, bool is_uniform, std::vector<JobMixPerProcess> jobmixes);
     JobMix();
+
     RefType next_ref_type(double quotient, int pid) const;
+    // memref::Reference next_ref_type(double quotient, int pid) const;
+
     int process_count() const;
     void print() const;
 

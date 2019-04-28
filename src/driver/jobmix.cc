@@ -2,6 +2,12 @@
 
 #include "jobmix.h"
 #include "memref.h"
+#include "../memref/memref.h"
+#include "../memref/memref_back.h"
+#include "../memref/memref_init.h"
+#include "../memref/memref_jmp.h"
+#include "../memref/memref_rand.h"
+#include "../memref/memref_seq.h"
 
 namespace driver
 {
@@ -33,6 +39,28 @@ int JobMix::process_count() const
 {
     return PROC_COUNT_;
 }
+
+// memref::Reference JobMix::next_ref_type(double quotient, int pid) const
+// {
+//     int access_idx = IS_UNIFORM_ ? 0 : (pid - 1);
+
+//     if (0.0 <= quotient && quotient <= JOBMIXES_[access_idx].sequential_ref_threshold)
+//     {
+//         return memref::SequentialReference(pid);
+//     }
+//     else if (quotient <= JOBMIXES_[access_idx].backward_ref_threshold)
+//     {
+//         return memref::BackwardReference(pid);
+//     }
+//     else if (quotient <= JOBMIXES_[access_idx].jump_ref_threshold)
+//     {
+//         return memref::JumpReference(pid);
+//     }
+//     else
+//     {
+//         return memref::RandomReference(pid);
+//     }
+// }
 
 RefType JobMix::next_ref_type(double quotient, int pid) const
 {
