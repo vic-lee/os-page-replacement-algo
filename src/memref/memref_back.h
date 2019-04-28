@@ -8,7 +8,7 @@ namespace memref
 class BackwardReference : public Reference
 {
 public:
-    BackwardReference();
+    BackwardReference(int pid);
 };
 
 } // namespace memref
