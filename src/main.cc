@@ -44,36 +44,40 @@ UserInput read_predefined_input(int argc, char **argv)
     int machine_size, page_size, proc_size, jobmix, ref_count = -1;
     pager::AlgoName algoname;
     std::string raw_algoname;
+    
+    int input_id;
     bool debug = false;
     bool showrand = false;
 
     if (argc == 4)
     {
-        std::string argv3 = argv[3];
+        std::string arg = argv[2];
 
-        if (argv3 == "--showrand" || argv3 == "-s")
+        if (arg == "--showrand" || arg == "-s")
             showrand = true;
 
         else
             std::cout
                 << "Warning: You may have entered `--showrand` or `-s` incorrectly."
                 << std::endl;
+
+        input_id = atoi(argv[3]);
     }
 
     if (argc == 3)
     {
-        std::string argv2 = argv[2];
+        std::string arg = argv[1];
 
-        if (argv2 == "--debug" || argv2 == "-d")
+        if (arg == "--debug" || arg == "-d")
             debug = true;
 
         else
             std::cout
                 << "Warning: You may have entered `--debug` or `-d` incorrectly."
                 << std::endl;
-    }
 
-    int input_id = atoi(argv[1]);
+        input_id = atoi(argv[2]);
+    }
 
     if (input_id < 1 || input_id > 16)
     {
