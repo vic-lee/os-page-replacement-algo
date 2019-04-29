@@ -37,32 +37,4 @@ To run with debug and show random mode, type:
 Note that the program does not support specifying random mode but not debug mode (i.e. `./exec -s [input number]` would fail to turn on show random mode).
 
 
-(see `src/io/sample-in.txt` for their specifications)
-
-
-## Project architecture
-```
-.
-├── debug.h
-├── driver
-│   ├── driver.cc
-│   ├── driver.h
-│   ├── jobmix.cc
-│   ├── jobmix.h
-│   ├── jobmixspec.cc
-│   ├── jobmixspec.h
-│   ├── mrefspec.h
-│   ├── mrefspec.o
-│   ├── process.cc
-│   └── process.h
-├── io
-│   ├── randintreader.cc
-│   ├── randintreader.h
-│   └── random-numbers.txt
-├── main.cc
-└── pager
-    ├── frame.cc
-    ├── frame.h
-    ├── pager.cc
-    └── pager.h
-```
+(see `src/io/sample-in.txt` for their specifications.)
