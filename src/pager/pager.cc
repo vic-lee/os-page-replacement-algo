@@ -175,19 +175,7 @@ void Pager::record_process_stats_before_eviction(Frame &leaving_frame, Frame &in
     int eviction_time = incoming_frame.latest_access_time();
     int residency_time = leaving_frame.residency_time(eviction_time);
 
-    auto incoming_process_stats = process_stats_map_.find(new_pid);
     auto outgoing_process_stats = process_stats_map_.find(old_pid);
-
-    if (incoming_process_stats == process_stats_map_.end())
-    {
-        ProcessStats ps = ProcessStats();
-        ps.incr_page_fault_count();
-        process_stats_map_.insert(std::pair<int, ProcessStats>(new_pid, ps));
-    }
-    else
-    {
-        incoming_process_stats->second.incr_page_fault_count();
-    }
 
     if (outgoing_process_stats == process_stats_map_.end())
     {
@@ -199,6 +187,19 @@ void Pager::record_process_stats_before_eviction(Frame &leaving_frame, Frame &in
     {
         outgoing_process_stats->second.sum_residency_time += residency_time;
         outgoing_process_stats->second.incr_eviction_count();
+    }
+
+    auto incoming_process_stats = process_stats_map_.find(new_pid);
+
+    if (incoming_process_stats == process_stats_map_.end())
+    {
+        ProcessStats ps = ProcessStats();
+        ps.incr_page_fault_count();
+        process_stats_map_.insert(std::pair<int, ProcessStats>(new_pid, ps));
+    }
+    else
+    {
+        incoming_process_stats->second.incr_page_fault_count();
     }
 }
 
@@ -246,9 +247,19 @@ bool Pager::insert_front(Frame frame)
 void Pager::init_process_stats(Frame &frame)
 {
     int target_pid = frame.pid();
-    ProcessStats ps = ProcessStats();
-    ps.incr_page_fault_count();
-    process_stats_map_.insert(std::pair<pid, ProcessStats>(target_pid, ps));
+    
+    auto process_stats = process_stats_map_.find(target_pid);
+
+    if (process_stats == process_stats_map_.end())
+    {
+        ProcessStats ps = ProcessStats();
+        ps.incr_page_fault_count();
+        process_stats_map_.insert(std::pair<int, ProcessStats>(target_pid, ps));
+    }
+    else
+    {
+        process_stats->second.incr_page_fault_count();
+    }
 }
 
 void Pager::print_process_stats_map() const
