@@ -20,7 +20,7 @@ in which:
 - `R` supports FIFO, LRU, and Random (upper- and lower-case are both accepted)
 - Debug & show random mode: type `1` to turn on and `0` to turn off. They are off by default.
 
-Sample command: `./exec 10 10 20 1 10 lru 0 0       // debug mode off, show random mode off`
+Sample command: `./exec 10 10 20 1 10 lru 0 0           // debug mode off, show random mode off`
 
 #### Custom command
 
