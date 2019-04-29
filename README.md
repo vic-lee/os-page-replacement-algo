@@ -15,6 +15,7 @@ In the project root folder, enter command in the following format:
 `./exec [M] [P] [S] [J] [N] [R] [optional debug flag] [optional show random flag]`
 
 in which:
+
 - `M`, `P`, `S`, `N` are positive integers
 - `J` supports 1 to 4
 - `R` supports FIFO, LRU, and Random (upper- and lower-case are both accepted)
@@ -30,9 +31,8 @@ For instance, to test input 1, run `./exec 1`. This is equivalent to running `./
 
 To run with debug and show random flags, type:
 
-`./exec --debug --show-random [input number]` or `./exec -d -s [input number]` 
+`./exec --debug --show-random [input number]` or `./exec -d -s [input number]`
 
 Note that the program does not support specifying random flag but not debug flag (i.e. `./exec -s [input number]` would fail to turn on show random mode).
-
 
 (see `src/io/sample-in.txt` for their specifications.)
