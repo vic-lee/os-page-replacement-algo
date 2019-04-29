@@ -1,4 +1,6 @@
 #include <vector>
+#include <memory>
+
 #include "memref.h"
 
 namespace memref
@@ -26,8 +28,8 @@ public:
     JobMix(int id, int proc_count, bool is_uniform, std::vector<JobMixPerProcess> jobmixes);
     JobMix();
 
-    RefType next_ref_type(double quotient, int pid) const;
-    // memref::Reference next_ref_type(double quotient, int pid) const;
+    // RefType next_ref_type(double quotient, int pid) const;
+    std::unique_ptr<memref::Reference> next_ref_type(double quotient, int pid) const;
 
     int process_count() const;
     void print() const;

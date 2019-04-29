@@ -40,49 +40,50 @@ int JobMix::process_count() const
     return PROC_COUNT_;
 }
 
-// memref::Reference JobMix::next_ref_type(double quotient, int pid) const
-// {
-//     int access_idx = IS_UNIFORM_ ? 0 : (pid - 1);
-
-//     if (0.0 <= quotient && quotient <= JOBMIXES_[access_idx].sequential_ref_threshold)
-//     {
-//         return memref::SequentialReference(pid);
-//     }
-//     else if (quotient <= JOBMIXES_[access_idx].backward_ref_threshold)
-//     {
-//         return memref::BackwardReference(pid);
-//     }
-//     else if (quotient <= JOBMIXES_[access_idx].jump_ref_threshold)
-//     {
-//         return memref::JumpReference(pid);
-//     }
-//     else
-//     {
-//         return memref::RandomReference(pid);
-//     }
-// }
-
-RefType JobMix::next_ref_type(double quotient, int pid) const
+std::unique_ptr<memref::Reference> JobMix::next_ref_type(double quotient, int pid) const
 {
     int access_idx = IS_UNIFORM_ ? 0 : (pid - 1);
 
     if (0.0 <= quotient && quotient <= JOBMIXES_[access_idx].sequential_ref_threshold)
     {
-        return SEQ_REF;
+        return std::unique_ptr<memref::Reference>{new memref::SequentialReference(pid)};
     }
     else if (quotient <= JOBMIXES_[access_idx].backward_ref_threshold)
     {
-        return BACK_REF;
+        return std::unique_ptr<memref::Reference>{new memref::BackwardReference(pid)};
+
     }
     else if (quotient <= JOBMIXES_[access_idx].jump_ref_threshold)
     {
-        return JMP_REF;
+        return std::unique_ptr<memref::Reference>{new memref::JumpReference(pid)};
     }
     else
     {
-        return RAND_REF;
+        return std::unique_ptr<memref::Reference>{new memref::RandomReference(pid)};
     }
 }
+
+// RefType JobMix::next_ref_type(double quotient, int pid) const
+// {
+//     int access_idx = IS_UNIFORM_ ? 0 : (pid - 1);
+
+//     if (0.0 <= quotient && quotient <= JOBMIXES_[access_idx].sequential_ref_threshold)
+//     {
+//         return SEQ_REF;
+//     }
+//     else if (quotient <= JOBMIXES_[access_idx].backward_ref_threshold)
+//     {
+//         return BACK_REF;
+//     }
+//     else if (quotient <= JOBMIXES_[access_idx].jump_ref_threshold)
+//     {
+//         return JMP_REF;
+//     }
+//     else
+//     {
+//         return RAND_REF;
+//     }
+// }
 
 void JobMix::print() const
 {

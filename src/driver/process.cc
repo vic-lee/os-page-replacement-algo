@@ -7,6 +7,7 @@
 #include "../pager/pager.h"
 #include "../memref/memref.h"
 #include "../memref/memref_init.h"
+#include "../memref/memref_rand.h"
 #include "../io/randintreader.h"
 
 namespace driver
@@ -86,9 +87,9 @@ void Process::read_next_randnum(io::RandIntReader &randintreader)
 void Process::set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix)
 {
     double quotient = randintreader.calc_next_probability();
-    next_ref_type_ = jobmix->next_ref_type(quotient, ID_);
+    nextref_ = jobmix->next_ref_type(quotient, ID_);
 
-    if (next_ref_type_ == RAND_REF)
+    if (typeid(nextref_).name() == "RandomReference")
         read_next_randnum(randintreader);
 }
 
