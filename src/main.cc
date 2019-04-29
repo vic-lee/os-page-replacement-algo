@@ -1,5 +1,6 @@
 #include <tuple>
-#include <iostream>
+#include <string.h>
+#include <sstream>
 #include <algorithm>
 
 #include "io/randintreader.h"
@@ -18,10 +19,13 @@ pager::AlgoName map_to_algoname(std::string raw_algoname)
 
     if (raw_algoname == "lru")
         return pager::LRU;
+
     else if (raw_algoname == "fifo")
         return pager::FIFO;
+
     else if (raw_algoname == "random")
         return pager::RANDOM;
+
     else
     {
         std::cout << "The algorithm name entered is not correct. Please double check." << std::endl;
@@ -31,6 +35,84 @@ pager::AlgoName map_to_algoname(std::string raw_algoname)
 
 UserInput read_predefined_input(int argc, char **argv)
 {
+    int machine_size, page_size, proc_size, jobmix, ref_count = -1;
+    pager::AlgoName algoname;
+    std::string raw_algoname;
+    bool debug = false;
+    bool showrand = false;
+
+    if (argc == 4)
+    {
+        std::string argv3 = argv[3];
+
+        if (argv3 == "--showrand" || argv3 == "-s")
+            showrand = true;
+
+        else
+            std::cout
+                << "Warning: You may have entered `--showrand` or `-s` incorrectly."
+                << std::endl;
+    }
+
+    if (argc == 3)
+    {
+        std::string argv2 = argv[2];
+
+        if (argv2 == "--debug" || argv2 == "-d")
+            debug = true;
+
+        else
+            std::cout
+                << "Warning: You may have entered `--debug` or `-d` incorrectly."
+                << std::endl;
+    }
+
+    int input_id = atoi(argv[1]);
+
+    if (input_id < 1 || input_id > 16)
+    {
+        std::cout << "Input must be between 1 and 16. Terminating..." << std::endl;
+        exit(10);
+    }
+
+    int line_ctr = 0;
+
+    std::fstream infile("src/io/sample-in.txt");
+
+    if (infile)
+    {
+        std::string line;
+
+        while (std::getline(infile, line))
+        {
+            if (line_ctr != (input_id - 1))
+            {
+                line_ctr++;
+                continue;
+            }
+
+            std::istringstream iss(line);
+
+            if (!(iss >> machine_size >> page_size >> proc_size >> jobmix >> ref_count >> raw_algoname))
+            {
+                std::cout << "Text file corrupted. Terminating..." << std::endl;
+                exit(10);
+            }
+
+            algoname = map_to_algoname(raw_algoname);
+            break;
+        }
+
+        infile.close();
+    }
+    else
+    {
+        std::cout << "An error occured opening the text file. Terminating..." << std::endl;
+        exit(10);
+    }
+
+    return std::make_tuple(machine_size, page_size, proc_size, jobmix,
+                           ref_count, algoname, debug, showrand);
 }
 
 UserInput read_custom_input(int argc, char **argv)
@@ -80,7 +162,7 @@ UserInput read_custom_input(int argc, char **argv)
 
 UserInput read_input(int argc, char **argv)
 {
-    if (argc >= 2 && argc <= 3)
+    if (argc >= 2 && argc <= 4)
     {
         return read_predefined_input(argc, argv);
     }
@@ -93,7 +175,7 @@ UserInput read_input(int argc, char **argv)
         std::cout
             << "You did not enter the right number of parameters. Terminating..."
             << std::endl;
-            
+
         exit(10);
     }
 }
