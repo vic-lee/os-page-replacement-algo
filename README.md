@@ -8,7 +8,7 @@ In the project root folder, run `make`. Type `clean` to delete all binary files.
 
 ### Run
 
-####Standard command
+#### Standard command
 
 In the project root folder, enter command in the following format:
 
