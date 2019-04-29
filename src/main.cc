@@ -1,6 +1,6 @@
 #include <tuple>
-#include <chrono>
-#include <iostream>
+#include <string.h>
+#include <sstream>
 #include <algorithm>
 
 #include "io/randintreader.h"
@@ -11,33 +11,13 @@
 namespace demandpaging
 {
 
-typedef std::tuple<int, int, int, int, int, pager::AlgoName, bool, bool> UserInput;
-
 static bool debug_status;
 static bool show_rand;
 
 bool debug() { return debug_status; }
 bool showrand() { return show_rand; }
 
-struct Timer
-{
-    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-    std::chrono::duration<float> duration;
-
-    Timer()
-    {
-        start = std::chrono::high_resolution_clock::now();
-    }
-
-    ~Timer()
-    {
-        end = std::chrono::high_resolution_clock::now();
-        duration = end - start;
-
-        float ms = duration.count() * 1000.0f;
-        std::cout << "\nProgram execution time " << ms << "ms\n";
-    }
-};
+typedef std::tuple<int, int, int, int, int, pager::AlgoName, bool, bool> UserInput;
 
 pager::AlgoName map_to_algoname(std::string raw_algoname)
 {
@@ -45,10 +25,13 @@ pager::AlgoName map_to_algoname(std::string raw_algoname)
 
     if (raw_algoname == "lru")
         return pager::LRU;
+
     else if (raw_algoname == "fifo")
         return pager::FIFO;
+
     else if (raw_algoname == "random")
         return pager::RANDOM;
+
     else
     {
         std::cout << "The algorithm name entered is not correct. Please double check." << std::endl;
@@ -56,7 +39,96 @@ pager::AlgoName map_to_algoname(std::string raw_algoname)
     }
 }
 
-UserInput read_input(int argc, char **argv)
+UserInput read_predefined_input(int argc, char **argv)
+{
+    int machine_size, page_size, proc_size, jobmix, ref_count = -1;
+    pager::AlgoName algoname;
+    std::string raw_algoname;
+
+    int input_id;
+    bool debug = false;
+    bool showrand = false;
+
+    if (argc == 4)
+    {
+        std::string arg = argv[2];
+
+        if (arg == "--showrand" || arg == "-s")
+            showrand = true;
+
+        else
+            std::cout
+                << "Warning: You may have entered `--showrand` or `-s` incorrectly."
+                << std::endl;
+
+        input_id = atoi(argv[3]);
+    }
+
+    if (argc == 3)
+    {
+        std::string arg = argv[1];
+
+        if (arg == "--debug" || arg == "-d")
+            debug = true;
+
+        else
+            std::cout
+                << "Warning: You may have entered `--debug` or `-d` incorrectly."
+                << std::endl;
+
+        input_id = atoi(argv[2]);
+    }
+
+    if (argc == 2)
+        input_id = atoi(argv[1]);
+
+    if (input_id < 1 || input_id > 16)
+    {
+        std::cout << "Input must be between 1 and 16. Terminating..." << std::endl;
+        exit(10);
+    }
+
+    int line_ctr = 0;
+
+    std::fstream infile("src/io/sample-in.txt");
+
+    if (infile)
+    {
+        std::string line;
+
+        while (std::getline(infile, line))
+        {
+            if (line_ctr != (input_id - 1))
+            {
+                line_ctr++;
+                continue;
+            }
+
+            std::istringstream iss(line);
+
+            if (!(iss >> machine_size >> page_size >> proc_size >> jobmix >> ref_count >> raw_algoname))
+            {
+                std::cout << "Text file corrupted. Terminating..." << std::endl;
+                exit(10);
+            }
+
+            algoname = map_to_algoname(raw_algoname);
+            break;
+        }
+
+        infile.close();
+    }
+    else
+    {
+        std::cout << "An error occured opening the text file. Terminating..." << std::endl;
+        exit(10);
+    }
+
+    return std::make_tuple(machine_size, page_size, proc_size, jobmix,
+                           ref_count, algoname, debug, showrand);
+}
+
+UserInput read_custom_input(int argc, char **argv)
 {
     int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT = -1;
     pager::AlgoName ALGO_NAME;
@@ -99,6 +171,26 @@ UserInput read_input(int argc, char **argv)
     return std::make_tuple(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE,
                            JOB_MIX, REF_COUNT, ALGO_NAME,
                            DEBUG, SHOWRAND);
+}
+
+UserInput read_input(int argc, char **argv)
+{
+    if (argc >= 2 && argc <= 4)
+    {
+        return read_predefined_input(argc, argv);
+    }
+    else if (argc >= 7 && argc <= 9)
+    {
+        return read_custom_input(argc, argv);
+    }
+    else
+    {
+        std::cout
+            << "You did not enter the right number of parameters. Terminating..."
+            << std::endl;
+
+        exit(10);
+    }
 }
 
 } // namespace demandpaging

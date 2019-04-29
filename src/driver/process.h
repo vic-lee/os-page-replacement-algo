@@ -29,7 +29,7 @@ class Process
 public:
     Process(int id, int proc_size, int ref_count);
     void do_reference(pager::Pager &pager, int access_time);
-    void compute_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix);
+    void set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix);
 
     bool should_terminate() const;
     int id() const;
@@ -57,7 +57,7 @@ private:
     int current_ref_addr_;
     int next_randref_num_;
     RefType next_ref_type_;
-    // memref::Reference nextref_;
+    // memref::Reference *p_nextref_;
     int remaining_ref_count_;
 };
 } // namespace driver
