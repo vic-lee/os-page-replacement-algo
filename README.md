@@ -26,7 +26,7 @@ Sample command: `./exec 10 10 20 1 10 lru 0 0           // debug mode off, show 
 
 To test the 16 sample inputs from the requirement, simply run `./exec [input number]`.
 
-For instance, `./exec 1` is equivalent to running `./exec 10 10 20 1 10 lru 0`.
+For instance, to test input 1, run `./exec 1`. This is equivalent to running `./exec 10 10 20 1 10 lru 0`.
 
 To run with debug and show random mode, type:
 
