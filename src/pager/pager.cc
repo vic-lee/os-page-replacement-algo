@@ -247,7 +247,7 @@ bool Pager::insert_front(Frame frame)
 void Pager::init_process_stats(Frame &frame)
 {
     int target_pid = frame.pid();
-    
+
     auto process_stats = process_stats_map_.find(target_pid);
 
     if (process_stats == process_stats_map_.end())
@@ -266,9 +266,29 @@ void Pager::print_process_stats_map() const
 {
     printf("\n");
 
+    int page_faults_sum = 0;
+    int eviction_sum = 0;
+    int residency_sum = 0;
+
     for (auto pstat : process_stats_map_)
     {
         std::cout << "Process " << pstat.first << " had " << pstat.second << std::endl;
+        page_faults_sum += pstat.second.page_fault_count;
+        eviction_sum += pstat.second.eviction_count;
+        residency_sum += pstat.second.sum_residency_time;
+    }
+    std::cout << "\nThe total number of faults is " << page_faults_sum;
+
+    if (eviction_sum > 0)
+    {
+        std::cout
+            << " and the overall average residency is " << (residency_sum / (double)eviction_sum)
+            << std::endl;
+    }
+    else
+    {
+        std::cout
+            << "\n\tWith no evictions, the overall average residence is undefined." << std::endl;
     }
 }
 
