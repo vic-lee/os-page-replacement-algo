@@ -11,6 +11,12 @@
 namespace demandpaging
 {
 
+static bool debug_status;
+static bool show_rand;
+
+bool debug() { return debug_status; }
+bool showrand() { return show_rand; }
+
 typedef std::tuple<int, int, int, int, int, pager::AlgoName, bool, bool> UserInput;
 
 pager::AlgoName map_to_algoname(std::string raw_algoname)

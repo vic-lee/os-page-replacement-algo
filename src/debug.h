@@ -7,9 +7,6 @@
 namespace demandpaging
 {
 
-static bool debug_status;
-static bool show_rand;
-
 bool debug();
 bool showrand();
 
