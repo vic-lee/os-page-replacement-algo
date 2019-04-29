@@ -22,23 +22,22 @@ enum AlgoName
 struct ProcessStats
 {
     int sum_residency_time;
-    int fault_count;
     int page_fault_count;
+    int eviction_count;
 
-    ProcessStats() : sum_residency_time(0), fault_count(0), page_fault_count(0){};
+    ProcessStats() : sum_residency_time(0), page_fault_count(0), eviction_count(0){};
 
     ProcessStats(int sum_residency_time)
-        : sum_residency_time(sum_residency_time), fault_count(0), page_fault_count(0){};
+        : sum_residency_time(sum_residency_time), page_fault_count(0), eviction_count(0){};
+
+    void incr_eviction_count()
+    {
+        eviction_count++;
+    }
 
     void incr_page_fault_count()
     {
         page_fault_count++;
-        fault_count++;
-    }
-
-    void incr_fault_count()
-    {
-        fault_count++;
     }
 
     friend std::ostream &operator<<(std::ostream &stream, const ProcessStats &p);
