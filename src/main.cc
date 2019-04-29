@@ -44,7 +44,7 @@ UserInput read_predefined_input(int argc, char **argv)
     int machine_size, page_size, proc_size, jobmix, ref_count = -1;
     pager::AlgoName algoname;
     std::string raw_algoname;
-    
+
     int input_id;
     bool debug = false;
     bool showrand = false;
@@ -78,6 +78,9 @@ UserInput read_predefined_input(int argc, char **argv)
 
         input_id = atoi(argv[2]);
     }
+
+    if (argc == 2)
+        input_id = atoi(argv[1]);
 
     if (input_id < 1 || input_id > 16)
     {
