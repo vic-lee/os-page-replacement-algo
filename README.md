@@ -1,5 +1,21 @@
 # OS Lab 4: Page Replacement Algorithms
 
+## Getting started
+
+### Compile
+
+In the project root folder, run `make`. Type `clean` to delete all binary files.
+
+### Run
+
+In the project root folder, enter command in the following format:
+
+`./exec [M] [P] [S] [J] [N] [R] [debug mode] [show random mode]`
+
+in which `M`, `P`, `S`, `N` are positive integers; `J` supports 1 to 4; and `R` supports FIFO, LRU, and Random (capitalization doesn't matter). 
+
+For both debug and show random mode, type `1` to turn on and `0` to turn off. They are `0` if user does not specify. 
+
 ## Project architecture
 ```
 .
