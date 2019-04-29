@@ -193,12 +193,12 @@ void Pager::record_process_stats_before_eviction(Frame &leaving_frame, Frame &in
     if (incoming_process_stats == process_stats_map_.end())
     {
         ProcessStats ps = ProcessStats();
-        ps.page_fault_count++;
+        ps.incr_page_fault_count();
         process_stats_map_.insert(std::pair<pid, ProcessStats>(new_pid, ps));
     }
     else
     {
-        incoming_process_stats->second.page_fault_count++;
+        incoming_process_stats->second.incr_page_fault_count();
     }
     // std::cout << "Incr process " << new_pid << "'s page fault; ";
 }
@@ -248,27 +248,29 @@ void Pager::init_process_stats(Frame &frame)
 {
     int target_pid = frame.pid();
     ProcessStats ps = ProcessStats();
-    ps.page_fault_count++;
+    ps.incr_fault_count();
     process_stats_map_.insert(std::pair<pid, ProcessStats>(target_pid, ps));
 }
 
 void Pager::print_process_stats_map() const
 {
     printf("\n");
-    
+
     for (auto pstat : process_stats_map_)
+    {
         std::cout << "Process " << pstat.first << " had " << pstat.second << std::endl;
+    }
 }
 
 std::ostream &operator<<(std::ostream &stream, const ProcessStats &p)
 {
-    stream << p.page_fault_count << " faults";
+    stream << p.fault_count << " faults";
 
-    if (p.page_fault_count == 1)
+    if (p.page_fault_count == 0)
         stream << "\n\tWith no evictions, the average residence is undefined.";
     else
         stream << " and "
-               << (p.sum_residency_time / (float)(p.page_fault_count - 1))
+               << (p.sum_residency_time / (float)(p.page_fault_count))
                << " average residency.";
 
     return stream;
