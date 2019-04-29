@@ -24,9 +24,7 @@ Sample command: `./exec 10 10 20 1 10 lru 0 0           // debug mode off, show 
 
 #### Custom command
 
-To test the 16 sample inputs from the requirement, the program supports a simpler syntax. Simply run:
-
-`./exec [input number]`
+To test the 16 sample inputs from the requirement, simply run `./exec [input number]`.
 
 For instance, `./exec 1` is equivalent to running `./exec 10 10 20 1 10 lru 0`.
 
