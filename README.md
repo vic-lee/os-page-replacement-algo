@@ -12,9 +12,12 @@ In the project root folder, enter command in the following format:
 
 `./exec [M] [P] [S] [J] [N] [R] [debug mode] [show random mode]`
 
-in which `M`, `P`, `S`, `N` are positive integers; `J` supports 1 to 4; and `R` supports FIFO, LRU, and Random (capitalization doesn't matter). 
+in which:
+- `M`, `P`, `S`, `N` are positive integers
+- `J` supports 1 to 4
+- `R` supports FIFO, LRU, and Random (upper- and lower-case are both accepted)
+- Debug & show random mode: type `1` to turn on and `0` to turn off. They are `0` if user does not specify. 
 
-For both debug and show random mode, type `1` to turn on and `0` to turn off. They are `0` if user does not specify. 
 
 ## Project architecture
 ```
