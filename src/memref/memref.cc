@@ -17,11 +17,13 @@ Reference &Reference::operator=(Reference &rhs)
     return *this;
 }
 
-void Reference::simulate(int prior_refnum, int proc_size, pager::Pager &pager, int time_accessed)
+int Reference::simulate(int ref_input, int proc_size, pager::Pager &pager, int time_accessed)
 {
-    int viradddr = (prior_refnum + delta_ + proc_size) % proc_size;
+    int viraddr = (ref_input + delta_ + proc_size) % proc_size;
 
-    pager.reference_by_virtual_addr(viradddr, pid_, time_accessed);
+    pager.reference_by_virtual_addr(viraddr, pid_, time_accessed);
+
+    return viraddr;
 }
 
 } // namespace memref
