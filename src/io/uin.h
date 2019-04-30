@@ -21,4 +21,6 @@ struct UserInput
           jobmix(-1), ref_count(-1), debug(false), showrand(false){};
 };
 
+io::UserInput read_input(int argc, char **argv);
+
 } // namespace io
