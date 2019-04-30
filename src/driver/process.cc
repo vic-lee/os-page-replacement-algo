@@ -16,7 +16,7 @@ const int Process::REF_ADDR_UNDEF_ = -1;
 
 Process::Process(int id, int proc_size, int ref_count)
     : ID_(id), SIZE_(proc_size), TOTAL_REF_COUNT_(ref_count),
-      current_ref_addr_(REF_ADDR_UNDEF_),
+      prior_ref_addr_(REF_ADDR_UNDEF_),
       remaining_ref_count_(ref_count)
 {
     nextref_ = std::unique_ptr<memref::Reference>{new memref::InitialReference(ID_)};
@@ -27,7 +27,7 @@ void Process::do_reference(pager::Pager &pager, int access_time)
     if (remaining_ref_count_ == 0)
         return;
 
-    current_ref_addr_ = nextref_->simulate(current_ref_addr_, SIZE_, pager, access_time);
+    prior_ref_addr_ = nextref_->simulate(prior_ref_addr_, SIZE_, pager, access_time);
 
     remaining_ref_count_--;
 }

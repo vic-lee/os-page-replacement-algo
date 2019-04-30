@@ -43,7 +43,7 @@ private:
 
     static const int REF_ADDR_UNDEF_; /* Current reference address undefined (uninitialized) */
 
-    int current_ref_addr_;
+    int prior_ref_addr_;
     std::shared_ptr<memref::Reference> nextref_;
     int remaining_ref_count_;
 };
