@@ -2,6 +2,7 @@
 
 #include "jobmix.h"
 #include "memref.h"
+#include "../io/randintreader.h"
 #include "../memref/memref.h"
 #include "../memref/memref_back.h"
 #include "../memref/memref_init.h"
@@ -40,7 +41,7 @@ int JobMix::process_count() const
     return PROC_COUNT_;
 }
 
-std::shared_ptr<memref::Reference> JobMix::next_ref_type(double quotient, int pid) const
+std::shared_ptr<memref::Reference> JobMix::next_ref_type(double quotient, int pid, io::RandIntReader &randintreader) const
 {
     int access_idx = IS_UNIFORM_ ? 0 : (pid - 1);
 
@@ -59,7 +60,8 @@ std::shared_ptr<memref::Reference> JobMix::next_ref_type(double quotient, int pi
     }
     else
     {
-        return std::unique_ptr<memref::Reference>{new memref::RandomReference(pid)};
+        int randnum = randintreader.read_next_int();
+        return std::unique_ptr<memref::Reference>{new memref::RandomReference(pid, randnum)};
     }
 }
 
