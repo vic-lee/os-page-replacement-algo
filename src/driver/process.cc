@@ -30,10 +30,7 @@ void Process::do_reference(pager::Pager &pager, int access_time)
     if (remaining_ref_count_ == 0)
         return;
 
-    std::string reftype = typeid(nextref_).name();
-    int ref_input = (reftype == "RandomReference") ? next_randref_num_ : current_ref_addr_;
-
-    current_ref_addr_ = nextref_->simulate(ref_input, SIZE_, pager, access_time);
+    current_ref_addr_ = nextref_->simulate(current_ref_addr_, SIZE_, pager, access_time);
 
     remaining_ref_count_--;
 }
@@ -46,11 +43,7 @@ void Process::read_next_randnum(io::RandIntReader &randintreader)
 void Process::set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix *jobmix)
 {
     double quotient = randintreader.calc_next_probability();
-    nextref_ = jobmix->next_ref_type(quotient, ID_);
-
-    std::string reftype = typeid(nextref_).name();
-    if (reftype == "RandomReference")
-        read_next_randnum(randintreader);
+    nextref_ = jobmix->next_ref_type(quotient, ID_, randintreader);
 }
 
 bool Process::should_terminate() const
