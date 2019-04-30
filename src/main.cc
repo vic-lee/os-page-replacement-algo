@@ -183,6 +183,9 @@ int main(int argc, char **argv)
     dp::Timer timer;
 
     io::UserInput uin = demandpaging::read_input(argc, argv);
+    
+    dp::debug_status = uin.debug;
+    dp::show_rand = uin.showrand;
 
     std::cout << "\nMachine size is " << uin.machine_size << "\n"
               << "Page size is " << uin.page_size << "\n"
