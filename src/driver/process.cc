@@ -30,7 +30,10 @@ void Process::do_reference(pager::Pager &pager, int access_time)
     if (remaining_ref_count_ == 0)
         return;
 
-    current_ref_addr_ = nextref_->simulate(current_ref_addr_, SIZE_, pager, access_time);
+    std::string reftype = typeid(nextref_).name();
+    int ref_input = (reftype == "RandomReference") ? next_randref_num_ : current_ref_addr_;
+
+    current_ref_addr_ = nextref_->simulate(ref_input, SIZE_, pager, access_time);
 
     remaining_ref_count_--;
 }
