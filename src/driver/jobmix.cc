@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "jobmix.h"
-#include "memref.h"
 #include "../io/randintreader.h"
 #include "../memref/memref.h"
 #include "../memref/memref_back.h"

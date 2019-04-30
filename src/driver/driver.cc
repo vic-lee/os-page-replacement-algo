@@ -2,7 +2,6 @@
 #include "../debug.h"
 #include "jobmix.h"
 #include "process.h"
-#include "memref.h"
 #include "jobmixspec.h"
 #include "../pager/pager.h"
 #include "../io/randintreader.h"

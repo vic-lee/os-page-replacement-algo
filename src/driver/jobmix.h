@@ -1,8 +1,6 @@
 #include <vector>
 #include <memory>
 
-#include "memref.h"
-
 namespace memref
 {
 class Reference;
