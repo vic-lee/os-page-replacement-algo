@@ -33,7 +33,6 @@ public:
     JobMix(int id, int proc_count, bool is_uniform, std::vector<JobMixPerProcess> jobmixes);
     JobMix();
 
-    // RefType next_ref_type(double quotient, int pid) const;
     std::shared_ptr<memref::Reference> next_ref_type(double quotient, int pi, io::RandIntReader &randintreader) const;
 
     int process_count() const;

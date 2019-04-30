@@ -65,28 +65,6 @@ std::shared_ptr<memref::Reference> JobMix::next_ref_type(double quotient, int pi
     }
 }
 
-// RefType JobMix::next_ref_type(double quotient, int pid) const
-// {
-//     int access_idx = IS_UNIFORM_ ? 0 : (pid - 1);
-
-//     if (0.0 <= quotient && quotient <= JOBMIXES_[access_idx].sequential_ref_threshold)
-//     {
-//         return SEQ_REF;
-//     }
-//     else if (quotient <= JOBMIXES_[access_idx].backward_ref_threshold)
-//     {
-//         return BACK_REF;
-//     }
-//     else if (quotient <= JOBMIXES_[access_idx].jump_ref_threshold)
-//     {
-//         return JMP_REF;
-//     }
-//     else
-//     {
-//         return RAND_REF;
-//     }
-// }
-
 void JobMix::print() const
 {
     std::cout << "JobMix " << ID_ << ":\n"
