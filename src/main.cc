@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "io/randintreader.h"
+#include "io/uin.h"
 #include "driver/driver.h"
 #include "pager/pager.h"
 #include "debug.h"
@@ -16,22 +17,6 @@ static bool show_rand;
 
 bool debug() { return debug_status; }
 bool showrand() { return show_rand; }
-
-struct UserInput
-{
-    int machine_size;
-    int page_size;
-    int proc_size;
-    int jobmix;
-    int ref_count;
-    pager::AlgoName algoname;
-    bool debug;
-    bool showrand;
-
-    UserInput()
-        : machine_size(-1), page_size(-1), proc_size(-1),
-          jobmix(-1), ref_count(-1), debug(false), showrand(false){};
-};
 
 pager::AlgoName map_to_algoname(std::string raw_algoname)
 {
@@ -53,9 +38,9 @@ pager::AlgoName map_to_algoname(std::string raw_algoname)
     }
 }
 
-UserInput read_predefined_input(int argc, char **argv)
+io::UserInput read_predefined_input(int argc, char **argv)
 {
-    UserInput uin = UserInput();
+    io::UserInput uin = io::UserInput();
     std::string raw_algoname;
 
     int input_id;
@@ -138,9 +123,9 @@ UserInput read_predefined_input(int argc, char **argv)
     return uin;
 }
 
-UserInput read_custom_input(int argc, char **argv)
+io::UserInput read_custom_input(int argc, char **argv)
 {
-    UserInput uin = UserInput();
+    io::UserInput uin = io::UserInput();
     std::string raw_algoname = "";
 
     try
@@ -169,7 +154,7 @@ UserInput read_custom_input(int argc, char **argv)
     return uin;
 }
 
-UserInput read_input(int argc, char **argv)
+io::UserInput read_input(int argc, char **argv)
 {
     if (argc >= 2 && argc <= 4)
     {
@@ -197,7 +182,7 @@ int main(int argc, char **argv)
 
     dp::Timer timer;
 
-    demandpaging::UserInput uin = demandpaging::read_input(argc, argv);
+    io::UserInput uin = demandpaging::read_input(argc, argv);
 
     std::cout << "\nMachine size is " << uin.machine_size << "\n"
               << "Page size is " << uin.page_size << "\n"
@@ -209,8 +194,8 @@ int main(int argc, char **argv)
 
     io::RandIntReader randintreader;
 
-    pager::Pager pager = pager::Pager(MACHINE_SIZE, PAGE_SIZE, ALGO_NAME, randintreader);
-    driver::Driver driver = driver::Driver(PROC_SIZE, JOB_MIX, REF_COUNT, pager, randintreader);
+    pager::Pager pager = pager::Pager(uin, randintreader);
+    driver::Driver driver = driver::Driver(uin, pager, randintreader);
 
     driver.execute();
 
