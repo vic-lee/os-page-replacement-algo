@@ -140,47 +140,33 @@ UserInput read_predefined_input(int argc, char **argv)
 
 UserInput read_custom_input(int argc, char **argv)
 {
-    int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT = -1;
-    pager::AlgoName ALGO_NAME;
-    std::string RAW_ALGO_NAME = "";
-    bool DEBUG = false;
-    bool SHOWRAND = false;
+    UserInput uin = UserInput();
+    std::string raw_algoname = "";
 
-    if (argc < 7 || argc > 9)
+    try
     {
-        std::cout << "You did not enter the right number of parameters. Terminating..." << std::endl;
+        uin.machine_size = atoi(argv[1]);
+        uin.page_size = atoi(argv[2]);
+        uin.proc_size = atoi(argv[3]);
+        uin.jobmix = atoi(argv[4]);
+        uin.ref_count = atoi(argv[5]);
+        raw_algoname = argv[6];
+        uin.algoname = map_to_algoname(raw_algoname);
+
+        if (argc >= 8 && (atoi(argv[7]) == 1))
+            uin.debug = true;
+
+        if (argc >= 9 && (atoi(argv[8]) == 1))
+            uin.showrand = true;
+    }
+    catch (const std::exception &e)
+    {
+        std::cout << "An error has occured while reading user input. Terminating..." << std::endl;
+        std::cerr << e.what() << '\n';
         exit(10);
     }
-    else
-    {
-        try
-        {
-            MACHINE_SIZE = atoi(argv[1]);
-            PAGE_SIZE = atoi(argv[2]);
-            PROC_SIZE = atoi(argv[3]);
-            JOB_MIX = atoi(argv[4]);
-            REF_COUNT = atoi(argv[5]);
-            RAW_ALGO_NAME = argv[6];
 
-            if (argc >= 8 && (atoi(argv[7]) == 1))
-                DEBUG = true;
-
-            if (argc >= 9 && (atoi(argv[8]) == 1))
-                SHOWRAND = true;
-        }
-        catch (const std::exception &e)
-        {
-            std::cout << "An error has occured while reading user input. Terminating..." << std::endl;
-            std::cerr << e.what() << '\n';
-            exit(10);
-        }
-
-        ALGO_NAME = map_to_algoname(RAW_ALGO_NAME);
-    }
-
-    return std::make_tuple(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE,
-                           JOB_MIX, REF_COUNT, ALGO_NAME,
-                           DEBUG, SHOWRAND);
+    return uin;
 }
 
 UserInput read_input(int argc, char **argv)
