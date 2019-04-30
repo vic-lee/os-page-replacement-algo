@@ -17,7 +17,21 @@ static bool show_rand;
 bool debug() { return debug_status; }
 bool showrand() { return show_rand; }
 
-typedef std::tuple<int, int, int, int, int, pager::AlgoName, bool, bool> UserInput;
+struct UserInput
+{
+    int machine_size;
+    int page_size;
+    int proc_size;
+    int jobmix;
+    int ref_count;
+    pager::AlgoName algoname;
+    bool debug;
+    bool showrand;
+
+    UserInput()
+        : machine_size(-1), page_size(-1), proc_size(-1),
+          jobmix(-1), ref_count(-1), debug(false), showrand(false){};
+};
 
 pager::AlgoName map_to_algoname(std::string raw_algoname)
 {
@@ -41,20 +55,17 @@ pager::AlgoName map_to_algoname(std::string raw_algoname)
 
 UserInput read_predefined_input(int argc, char **argv)
 {
-    int machine_size, page_size, proc_size, jobmix, ref_count = -1;
-    pager::AlgoName algoname;
+    UserInput uin = UserInput();
     std::string raw_algoname;
 
     int input_id;
-    bool debug = false;
-    bool showrand = false;
 
     if (argc == 4)
     {
         std::string arg = argv[2];
 
         if (arg == "--showrand" || arg == "-s")
-            showrand = true;
+            uin.showrand = true;
 
         else
             std::cout
@@ -69,7 +80,7 @@ UserInput read_predefined_input(int argc, char **argv)
         std::string arg = argv[1];
 
         if (arg == "--debug" || arg == "-d")
-            debug = true;
+            uin.debug = true;
 
         else
             std::cout
@@ -106,13 +117,13 @@ UserInput read_predefined_input(int argc, char **argv)
 
             std::istringstream iss(line);
 
-            if (!(iss >> machine_size >> page_size >> proc_size >> jobmix >> ref_count >> raw_algoname))
+            if (!(iss >> uin.machine_size >> uin.page_size >> uin.proc_size >> uin.jobmix >> uin.ref_count >> raw_algoname))
             {
                 std::cout << "Text file corrupted. Terminating..." << std::endl;
                 exit(10);
             }
 
-            algoname = map_to_algoname(raw_algoname);
+            uin.algoname = map_to_algoname(raw_algoname);
             break;
         }
 
@@ -124,8 +135,7 @@ UserInput read_predefined_input(int argc, char **argv)
         exit(10);
     }
 
-    return std::make_tuple(machine_size, page_size, proc_size, jobmix,
-                           ref_count, algoname, debug, showrand);
+    return uin;
 }
 
 UserInput read_custom_input(int argc, char **argv)
@@ -205,10 +215,6 @@ int main(int argc, char **argv)
     pager::AlgoName ALGO_NAME;
 
     demandpaging::UserInput uin = demandpaging::read_input(argc, argv);
-
-    std::tie(MACHINE_SIZE, PAGE_SIZE, PROC_SIZE,
-             JOB_MIX, REF_COUNT, ALGO_NAME,
-             dp::debug_status, dp::show_rand) = uin;
 
     std::cout << "\nMachine size is " << MACHINE_SIZE << "\n"
               << "Page size is " << PAGE_SIZE << "\n"
