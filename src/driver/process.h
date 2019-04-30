@@ -37,19 +37,13 @@ public:
     friend std::ostream &operator<<(std::ostream &stream, const Process &p);
 
 private:
-    void read_next_randnum(io::RandIntReader &randintreader);
-    void do_reference(int delta, pager::Pager &pager, int access_time);
-
     const int ID_;
     const int SIZE_;
     const int TOTAL_REF_COUNT_;
 
-    static const int DELTA_UNDEF_;    /* Special status code signifying Delta is undefined */
-    static const int RANDREF_UNDEF_;  /* Special status code signifying random reference number is undefined */
     static const int REF_ADDR_UNDEF_; /* Current reference address undefined (uninitialized) */
 
     int current_ref_addr_;
-    int next_randref_num_;
     std::shared_ptr<memref::Reference> nextref_;
     int remaining_ref_count_;
 };
