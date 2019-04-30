@@ -35,7 +35,7 @@ private:
     const int JOB_MIX_DEF_;
     const int REF_COUNT_;
 
-    static const int QUANTUM_;
+    static const int MAX_QUANTUM_;
     int runtime_;
 
     io::RandIntReader &randintreader_;

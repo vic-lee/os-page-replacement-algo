@@ -10,7 +10,7 @@ namespace driver
 {
 namespace dp = demandpaging;
 
-const int Driver::QUANTUM_ = 3;
+const int Driver::MAX_QUANTUM_ = 3;
 
 Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager, io::RandIntReader &randintreader)
     : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix),
@@ -41,7 +41,7 @@ void Driver::execute()
 
     while (!is_all_process_terminated())
     {
-        if (quantum_ctr == QUANTUM_)
+        if (quantum_ctr == MAX_QUANTUM_)
         {   
             context_switch(quantum_ctr);
         }
