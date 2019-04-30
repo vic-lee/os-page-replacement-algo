@@ -29,7 +29,7 @@ public:
     JobMix();
 
     // RefType next_ref_type(double quotient, int pid) const;
-    std::unique_ptr<memref::Reference> next_ref_type(double quotient, int pid) const;
+    std::shared_ptr<memref::Reference> next_ref_type(double quotient, int pid) const;
 
     int process_count() const;
     void print() const;

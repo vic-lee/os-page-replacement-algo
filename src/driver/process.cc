@@ -92,7 +92,8 @@ void Process::set_next_ref_type(io::RandIntReader &randintreader, driver::JobMix
     double quotient = randintreader.calc_next_probability();
     nextref_ = jobmix->next_ref_type(quotient, ID_);
 
-    if (typeid(nextref_).name() == "RandomReference")
+    std::string reftype = typeid(nextref_).name();
+    if (reftype == "RandomReference")
         read_next_randnum(randintreader);
 }
 

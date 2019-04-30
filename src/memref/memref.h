@@ -12,6 +12,7 @@ class Reference
 {
 public:
     Reference(int pid, int delta);
+    virtual ~Reference();
     Reference &operator=(Reference &rhs);
     virtual void simulate(int prior_refnum, int proc_size, pager::Pager &pager, int time_accessed);
 

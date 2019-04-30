@@ -34,6 +34,10 @@ public:
     bool should_terminate() const;
     int id() const;
 
+    // Process &operator=(const Process &pr);
+    // Process &operator=(Process &&pr);
+    // Process(Process &&pr);
+
     friend std::ostream &operator<<(std::ostream &stream, const Process &p);
 
 private:
@@ -57,7 +61,7 @@ private:
     int current_ref_addr_;
     int next_randref_num_;
     RefType next_ref_type_;
-    std::unique_ptr<memref::Reference> nextref_;
+    std::shared_ptr<memref::Reference> nextref_;
     // memref::Reference *p_nextref_;
     int remaining_ref_count_;
 };

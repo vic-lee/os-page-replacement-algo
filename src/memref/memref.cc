@@ -8,6 +8,8 @@ const int Reference::INIT_FACTOR_ = 111;
 
 Reference::Reference(int pid, int delta) : pid_(pid), delta_(delta) {}
 
+Reference::~Reference() {}
+
 Reference &Reference::operator=(Reference &rhs)
 {
     pid_ = rhs.pid_;

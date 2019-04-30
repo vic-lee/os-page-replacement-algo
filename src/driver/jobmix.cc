@@ -40,7 +40,7 @@ int JobMix::process_count() const
     return PROC_COUNT_;
 }
 
-std::unique_ptr<memref::Reference> JobMix::next_ref_type(double quotient, int pid) const
+std::shared_ptr<memref::Reference> JobMix::next_ref_type(double quotient, int pid) const
 {
     int access_idx = IS_UNIFORM_ ? 0 : (pid - 1);
 
