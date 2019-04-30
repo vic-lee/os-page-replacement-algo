@@ -1,6 +1,7 @@
 #include "pager.h"
 #include "frame.h"
 #include "../debug.h"
+#include "../io/uin.h"
 #include "../io/randintreader.h"
 
 namespace pager
@@ -10,9 +11,9 @@ const int Pager::WARN_FRAME_TABLE_EMPTY_ = -11;
 
 namespace dp = demandpaging;
 
-Pager::Pager(int machine_size, int page_size, AlgoName algo_name, io::RandIntReader &randintreader)
-    : MACHINE_SIZE_(machine_size), PAGE_SIZE_(page_size),
-      FRAME_COUNT_(MACHINE_SIZE_ / PAGE_SIZE_), ALGO_NAME_(algo_name), randintreader_(randintreader)
+Pager::Pager(io::UserInput uin, io::RandIntReader &randintreader)
+    : MACHINE_SIZE_(uin.machine_size), PAGE_SIZE_(uin.page_size),
+      FRAME_COUNT_(MACHINE_SIZE_ / PAGE_SIZE_), ALGO_NAME_(uin.algoname), randintreader_(randintreader)
 {
     frame_table_ = new Frame[FRAME_COUNT_];
     next_insertion_idx_ = FRAME_COUNT_ - 1;

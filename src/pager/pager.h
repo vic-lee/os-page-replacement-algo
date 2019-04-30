@@ -7,6 +7,7 @@
 namespace io
 {
 class RandIntReader;
+struct UserInput;
 }
 
 namespace pager
@@ -50,7 +51,7 @@ class Frame;
 class Pager
 {
 public:
-    Pager(int machine_size, int page_size, AlgoName algo_name, io::RandIntReader &randintreader);
+    Pager(io::UserInput uin, io::RandIntReader &randintreader);
     ~Pager();
     void reference_by_virtual_addr(int viraddr, int pid, int time_accessed);
 

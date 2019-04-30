@@ -4,6 +4,7 @@
 #include "process.h"
 #include "jobmixspec.h"
 #include "../pager/pager.h"
+#include "../io/uin.h"
 #include "../io/randintreader.h"
 
 namespace driver
@@ -12,9 +13,9 @@ namespace dp = demandpaging;
 
 const int Driver::MAX_QUANTUM_ = 3;
 
-Driver::Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager, io::RandIntReader &randintreader)
-    : PROC_SIZE_(proc_size), JOB_MIX_DEF_(job_mix),
-      REF_COUNT_(ref_count), runtime_(1), randintreader_(randintreader), pager_(pager)
+Driver::Driver(io::UserInput uin, pager::Pager &pager, io::RandIntReader &randintreader)
+    : PROC_SIZE_(uin.proc_size), JOB_MIX_DEF_(uin.jobmix),
+      REF_COUNT_(uin.ref_count), runtime_(1), randintreader_(randintreader), pager_(pager)
 {
     /* Initialize job mix */
 

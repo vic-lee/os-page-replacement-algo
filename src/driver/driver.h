@@ -8,6 +8,7 @@
 namespace io
 {
 class RandIntReader;
+struct UserInput;
 }
 
 namespace pager
@@ -21,7 +22,7 @@ class JobMix;
 class Driver
 {
 public:
-    Driver(int proc_size, int job_mix, int ref_count, pager::Pager &pager, io::RandIntReader &randintreader);
+    Driver(io::UserInput uin, pager::Pager &pager, io::RandIntReader &randintreader);
     ~Driver();
     void execute();
 
