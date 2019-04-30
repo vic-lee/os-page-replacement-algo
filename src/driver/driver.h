@@ -29,8 +29,6 @@ private:
     void context_switch(int &qtm);
     bool is_all_process_terminated() const;
 
-    void debug_print_runnable_processes() const;
-
     const int PROC_SIZE_;
     const int JOB_MIX_DEF_;
     const int REF_COUNT_;

@@ -42,7 +42,7 @@ void Driver::execute()
     while (!is_all_process_terminated())
     {
         if (quantum_ctr == MAX_QUANTUM_)
-        {   
+        {
             context_switch(quantum_ctr);
         }
 
@@ -73,12 +73,6 @@ void Driver::context_switch(int &qtm)
 bool Driver::is_all_process_terminated() const
 {
     return runnable_processes_.size() == 0;
-}
-
-void Driver::debug_print_runnable_processes() const
-{
-    for (auto &proc : runnable_processes_)
-        std::cout << proc << std::endl;
 }
 
 } // namespace driver
