@@ -25,7 +25,10 @@ Process::Process(int id, int proc_size, int ref_count)
       current_ref_addr_(REF_ADDR_UNDEF_),
       next_randref_num_(RANDREF_UNDEF_),
       next_ref_type_(INIT_REF),
-      remaining_ref_count_(ref_count) {}
+      remaining_ref_count_(ref_count)
+{
+    nextref_ = std::unique_ptr<memref::Reference>{new memref::InitialReference(ID_)};
+}
 
 void Process::do_reference(pager::Pager &pager, int access_time)
 {
