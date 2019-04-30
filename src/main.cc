@@ -197,16 +197,13 @@ int main(int argc, char **argv)
 
     dp::Timer timer;
 
-    int MACHINE_SIZE, PAGE_SIZE, PROC_SIZE, JOB_MIX, REF_COUNT;
-    pager::AlgoName ALGO_NAME;
-
     demandpaging::UserInput uin = demandpaging::read_input(argc, argv);
 
-    std::cout << "\nMachine size is " << MACHINE_SIZE << "\n"
-              << "Page size is " << PAGE_SIZE << "\n"
-              << "Process size is " << PROC_SIZE << "\n"
-              << "Reference count is " << REF_COUNT << "\n"
-              << "Name of algorithm is " << ALGO_NAME << "\n"
+    std::cout << "\nMachine size is " << uin.machine_size << "\n"
+              << "Page size is " << uin.page_size << "\n"
+              << "Process size is " << uin.proc_size << "\n"
+              << "Reference count is " << uin.ref_count << "\n"
+              << "Name of algorithm is " << uin.algoname << "\n"
               << "Debug mode is " << dp::debug_status << "\n"
               << std::endl;
 
