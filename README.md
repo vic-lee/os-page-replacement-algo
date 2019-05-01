@@ -4,7 +4,7 @@
 
 ### Compile
 
-In the project root folder, run `make`. Type `clean` to delete all binary files.
+In the project root folder, run `make`. Type `make clean` to delete all binary files.
 
 ### Run
 
