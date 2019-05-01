@@ -60,7 +60,7 @@ private:
     bool insert_front(Frame frame);
 
     void init_process_stats(Frame &frame);
-    void record_process_stats_before_eviction(Frame &oldframe, Frame &newframe);
+    void record_process_stats_before_eviction(const Frame &oldframe, const Frame &newframe);
     bool write_frame_at_index(int idx, Frame newframe);
 
     int search_frame(Frame target) const;

@@ -171,7 +171,8 @@ bool Pager::write_frame_at_index(int idx, Frame newframe)
     return true;
 }
 
-void Pager::record_process_stats_before_eviction(Frame &leaving_frame, Frame &incoming_frame)
+void Pager::record_process_stats_before_eviction(const Frame &leaving_frame,
+                                                 const Frame &incoming_frame)
 {
     int old_pid = leaving_frame.pid();
     int new_pid = incoming_frame.pid();
