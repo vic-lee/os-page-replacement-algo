@@ -3,6 +3,6 @@
 namespace memref
 {
 
-JumpReference::JumpReference(int pid) : Reference(pid, 1) {}
+JumpReference::JumpReference(int pid) : Reference(pid, 4) {}
 
 }
