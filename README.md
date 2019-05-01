@@ -2,7 +2,7 @@
 
 ## Getting started
 
-In the root directory:
+Run the following commands in the root directory:
 
 ```
 make                                          // compile
