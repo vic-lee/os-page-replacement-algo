@@ -59,7 +59,7 @@ private:
     bool can_insert() const;
     bool insert_front(Frame frame);
 
-    void init_process_stats(Frame &frame);
+    void init_process_stats(const Frame &frame);
     void record_process_stats_before_eviction(const Frame &oldframe, const Frame &newframe);
     bool write_frame_at_index(int idx, Frame newframe);
 

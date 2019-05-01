@@ -249,7 +249,7 @@ bool Pager::insert_front(Frame frame)
     }
 }
 
-void Pager::init_process_stats(Frame &frame)
+void Pager::init_process_stats(const Frame &frame)
 {
     int target_pid = frame.pid();
 
