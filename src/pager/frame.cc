@@ -21,7 +21,7 @@ bool Frame::is_less_recently_used_than(const Frame &other) const
     return (is_initialized() && (latest_access_time_ < other.latest_access_time()));
 }
 
-int Frame::residency_time(int eviction_time)
+int Frame::residency_time(int eviction_time) const
 {
     return (eviction_time - time_loaded_);
 }

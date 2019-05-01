@@ -19,7 +19,7 @@ public:
     int page_id() const;
     int latest_access_time() const;
     void set_latest_access_time(int t);
-    int residency_time(int eviction_time);
+    int residency_time(int eviction_time) const;
 
     Frame &operator=(Frame &rhs);
     bool operator==(Frame &rhs);
