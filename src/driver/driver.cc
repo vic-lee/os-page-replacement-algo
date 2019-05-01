@@ -48,15 +48,13 @@ void Driver::execute()
         }
 
         runnable_processes_.front().do_reference(pager_, runtime_);
-
         runnable_processes_.front().set_next_ref_type(randintreader_, JOB_MIX_);
 
         quantum_ctr++;
 
         if (runnable_processes_.front().should_terminate())
         {
-            runnable_processes_.pop_front();
-            quantum_ctr = 0;
+            remove_terminated_process(quantum_ctr);
         }
 
         runtime_++;
@@ -67,6 +65,12 @@ void Driver::context_switch(int &qtm)
 {
     Process front_process = runnable_processes_.front();
     runnable_processes_.push_back(front_process);
+    runnable_processes_.pop_front();
+    qtm = 0;
+}
+
+void Driver::remove_terminated_process(int &qtm)
+{
     runnable_processes_.pop_front();
     qtm = 0;
 }

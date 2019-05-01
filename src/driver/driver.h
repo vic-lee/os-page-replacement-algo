@@ -28,6 +28,7 @@ public:
 
 private:
     void context_switch(int &qtm);
+    void remove_terminated_process(int &qtm);
     bool is_all_process_terminated() const;
 
     const int PROC_SIZE_;
