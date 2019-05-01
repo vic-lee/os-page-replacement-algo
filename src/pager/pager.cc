@@ -12,8 +12,11 @@ const int Pager::WARN_FRAME_TABLE_EMPTY_ = -11;
 namespace dp = demandpaging;
 
 Pager::Pager(io::UserInput uin, io::RandIntReader &randintreader)
-    : MACHINE_SIZE_(uin.machine_size), PAGE_SIZE_(uin.page_size),
-      FRAME_COUNT_(MACHINE_SIZE_ / PAGE_SIZE_), ALGO_NAME_(uin.algoname), randintreader_(randintreader)
+    : MACHINE_SIZE_(uin.machine_size),
+      PAGE_SIZE_(uin.page_size),
+      FRAME_COUNT_(MACHINE_SIZE_ / PAGE_SIZE_),
+      ALGO_NAME_(uin.algoname),
+      randintreader_(randintreader)
 {
     frame_table_ = new Frame[FRAME_COUNT_];
     next_insertion_idx_ = FRAME_COUNT_ - 1;
