@@ -20,8 +20,6 @@ Pager::Pager(const io::UserInput &uin, io::RandIntReader &randintreader)
 {
     frame_table_ = new Frame[FRAME_COUNT_];
     next_insertion_idx_ = FRAME_COUNT_ - 1;
-
-    std::cout << "Frame count is " << FRAME_COUNT_ << std::endl;
 }
 
 Pager::~Pager()
@@ -269,7 +267,6 @@ void Pager::init_process_stats(const Frame &frame)
 
 void Pager::print_process_stats_map() const
 {
-    printf("\n");
 
     int page_faults_sum = 0;
     int eviction_sum = 0;
@@ -287,7 +284,7 @@ void Pager::print_process_stats_map() const
     if (eviction_sum > 0)
     {
         std::cout
-            << " and the overall average residency is " << (residency_sum / (double)eviction_sum)
+            << " and the overall average residency is " << (residency_sum / (double)eviction_sum) << "."
             << std::endl;
     }
     else
@@ -306,9 +303,7 @@ std::ostream &operator<<(std::ostream &stream, const ProcessStats &p)
     else
         stream << " and "
                << (p.sum_residency_time / (float)(p.eviction_count))
-               << " average residency. "
-               << "(total residency is " << p.sum_residency_time
-               << "; eviction count is " << p.eviction_count << ").";
+               << " average residency. ";
 
     return stream;
 }
