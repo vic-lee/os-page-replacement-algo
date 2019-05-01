@@ -31,30 +31,14 @@ pager::AlgoName map_to_algoname(std::string raw_algoname)
 io::UserInput read_predefined_input(int argc, char **argv)
 {
     io::UserInput uin = io::UserInput();
-    std::string raw_algoname;
 
     int input_id;
 
-    if (argc == 4)
+    if (argc >= 3)
     {
-        std::string arg = argv[2];
+        std::string argdebug = argv[1];
 
-        if (arg == "--showrand" || arg == "-s")
-            uin.showrand = true;
-
-        else
-            std::cout
-                << "Warning: You may have entered `--showrand` or `-s` incorrectly."
-                << std::endl;
-
-        input_id = atoi(argv[3]);
-    }
-
-    if (argc == 3)
-    {
-        std::string arg = argv[1];
-
-        if (arg == "--debug" || arg == "-d")
+        if (argdebug == "--debug" || argdebug == "-d")
             uin.debug = true;
 
         else
@@ -62,7 +46,24 @@ io::UserInput read_predefined_input(int argc, char **argv)
                 << "Warning: You may have entered `--debug` or `-d` incorrectly."
                 << std::endl;
 
-        input_id = atoi(argv[2]);
+        if (argc == 4)
+        {
+            std::string arg = argv[2];
+
+            if (arg == "--showrand" || arg == "-s")
+                uin.showrand = true;
+
+            else
+                std::cout
+                    << "Warning: You may have entered `--showrand` or `-s` incorrectly."
+                    << std::endl;
+
+            input_id = atoi(argv[3]);
+        }
+        else if (argc == 3)
+        {
+            input_id = atoi(argv[2]);
+        }
     }
 
     if (argc == 2)
@@ -92,13 +93,13 @@ io::UserInput read_predefined_input(int argc, char **argv)
 
             std::istringstream iss(line);
 
-            if (!(iss >> uin.machine_size >> uin.page_size >> uin.proc_size >> uin.jobmix >> uin.ref_count >> raw_algoname))
+            if (!(iss >> uin.machine_size >> uin.page_size >> uin.proc_size >> uin.jobmix >> uin.ref_count >> uin.raw_algoname))
             {
                 std::cout << "Text file corrupted. Terminating..." << std::endl;
                 exit(10);
             }
 
-            uin.algoname = map_to_algoname(raw_algoname);
+            uin.algoname = map_to_algoname(uin.raw_algoname);
             break;
         }
 
@@ -110,13 +111,14 @@ io::UserInput read_predefined_input(int argc, char **argv)
         exit(10);
     }
 
+    std::cout << uin.debug << uin.showrand << std::endl;
+
     return uin;
 }
 
 io::UserInput read_custom_input(int argc, char **argv)
 {
     io::UserInput uin = io::UserInput();
-    std::string raw_algoname = "";
 
     try
     {
@@ -125,8 +127,8 @@ io::UserInput read_custom_input(int argc, char **argv)
         uin.proc_size = atoi(argv[3]);
         uin.jobmix = atoi(argv[4]);
         uin.ref_count = atoi(argv[5]);
-        raw_algoname = argv[6];
-        uin.algoname = map_to_algoname(raw_algoname);
+        uin.raw_algoname = argv[6];
+        uin.algoname = map_to_algoname(uin.raw_algoname);
 
         if (argc >= 8 && (atoi(argv[7]) == 1))
             uin.debug = true;
@@ -164,4 +166,4 @@ io::UserInput read_input(const int &argc, char **argv)
     }
 }
 
-}
+} // namespace io

@@ -12,6 +12,7 @@ struct UserInput
     int proc_size;
     int jobmix;
     int ref_count;
+    std::string raw_algoname;
     pager::AlgoName algoname;
     bool debug;
     bool showrand;
