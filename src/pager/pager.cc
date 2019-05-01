@@ -11,7 +11,7 @@ const int Pager::WARN_FRAME_TABLE_EMPTY_ = -11;
 
 namespace dp = demandpaging;
 
-Pager::Pager(io::UserInput uin, io::RandIntReader &randintreader)
+Pager::Pager(const io::UserInput &uin, io::RandIntReader &randintreader)
     : MACHINE_SIZE_(uin.machine_size),
       PAGE_SIZE_(uin.page_size),
       FRAME_COUNT_(MACHINE_SIZE_ / PAGE_SIZE_),

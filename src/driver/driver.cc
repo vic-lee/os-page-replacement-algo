@@ -13,7 +13,7 @@ namespace dp = demandpaging;
 
 const int Driver::MAX_QUANTUM_ = 3;
 
-Driver::Driver(io::UserInput uin, pager::Pager &pager, io::RandIntReader &randintreader)
+Driver::Driver(const io::UserInput &uin, pager::Pager &pager, io::RandIntReader &randintreader)
     : PROC_SIZE_(uin.proc_size), JOB_MIX_DEF_(uin.jobmix),
       REF_COUNT_(uin.ref_count), runtime_(1), randintreader_(randintreader), pager_(pager)
 {

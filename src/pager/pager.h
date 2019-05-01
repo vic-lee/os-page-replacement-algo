@@ -51,7 +51,7 @@ class Frame;
 class Pager
 {
 public:
-    Pager(io::UserInput uin, io::RandIntReader &randintreader);
+    Pager(const io::UserInput &uin, io::RandIntReader &randintreader);
     ~Pager();
     void reference_by_virtual_addr(int viraddr, int pid, int time_accessed);
 

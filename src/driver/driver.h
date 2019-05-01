@@ -22,7 +22,7 @@ class JobMix;
 class Driver
 {
 public:
-    Driver(io::UserInput uin, pager::Pager &pager, io::RandIntReader &randintreader);
+    Driver(const io::UserInput &uin, pager::Pager &pager, io::RandIntReader &randintreader);
     ~Driver();
     void execute();
 
