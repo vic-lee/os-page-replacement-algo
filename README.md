@@ -17,7 +17,7 @@ In the project root folder, enter command in the following format:
 Note:
 
 - `R` supports FIFO, LRU, and Random (upper- and lower-case are both accepted)
-- Debug & show random flag: type `1` to turn on and `0` to turn off. They are off by default.
+- Debug & show random flag: type `1` to turn on and `0` to turn off. If not specified, they are off by default.
 
 Sample command: `./exec 10 10 20 1 10 lru 0 0           // debug mode off, show random mode off`
 
