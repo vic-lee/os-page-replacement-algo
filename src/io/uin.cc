@@ -8,22 +8,22 @@
 namespace io
 {
 
-pager::AlgoName map_to_algoname(std::string raw_algoname)
+io::UserInput read_input(int argc, char **argv)
 {
-    std::transform(raw_algoname.begin(), raw_algoname.end(), raw_algoname.begin(), ::tolower);
-
-    if (raw_algoname == "lru")
-        return pager::LRU;
-
-    else if (raw_algoname == "fifo")
-        return pager::FIFO;
-
-    else if (raw_algoname == "random")
-        return pager::RANDOM;
-
+    if (argc >= 2 && argc <= 4)
+    {
+        return read_predefined_input(argc, argv);
+    }
+    else if (argc >= 7 && argc <= 9)
+    {
+        return read_custom_input(argc, argv);
+    }
     else
     {
-        std::cout << "The algorithm name entered is not correct. Please double check." << std::endl;
+        std::cout
+            << "You did not enter the right number of parameters. Terminating..."
+            << std::endl;
+
         exit(10);
     }
 }
@@ -144,22 +144,22 @@ io::UserInput read_custom_input(int argc, char **argv)
     return uin;
 }
 
-io::UserInput read_input(int argc, char **argv)
+pager::AlgoName map_to_algoname(std::string raw_algoname)
 {
-    if (argc >= 2 && argc <= 4)
-    {
-        return read_predefined_input(argc, argv);
-    }
-    else if (argc >= 7 && argc <= 9)
-    {
-        return read_custom_input(argc, argv);
-    }
+    std::transform(raw_algoname.begin(), raw_algoname.end(), raw_algoname.begin(), ::tolower);
+
+    if (raw_algoname == "lru")
+        return pager::LRU;
+
+    else if (raw_algoname == "fifo")
+        return pager::FIFO;
+
+    else if (raw_algoname == "random")
+        return pager::RANDOM;
+
     else
     {
-        std::cout
-            << "You did not enter the right number of parameters. Terminating..."
-            << std::endl;
-
+        std::cout << "The algorithm name entered is not correct. Please double check." << std::endl;
         exit(10);
     }
 }
