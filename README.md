@@ -14,10 +14,8 @@ In the project root folder, enter command in the following format:
 
 `./exec [M] [P] [S] [J] [N] [R] [optional debug flag] [optional show random flag]`
 
-in which:
+Note:
 
-- `M`, `P`, `S`, `N` are positive integers
-- `J` supports 1 to 4
 - `R` supports FIFO, LRU, and Random (upper- and lower-case are both accepted)
 - Debug & show random flag: type `1` to turn on and `0` to turn off. They are off by default.
 
