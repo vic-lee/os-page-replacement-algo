@@ -144,7 +144,7 @@ io::UserInput read_custom_input(int argc, char **argv)
     return uin;
 }
 
-io::UserInput read_input(int argc, char **argv)
+io::UserInput read_input(const int &argc, char **argv)
 {
     if (argc >= 2 && argc <= 4)
     {
